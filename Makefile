@@ -6,23 +6,23 @@
 #    By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 11:20:52 by yait-iaz          #+#    #+#              #
-#    Updated: 2022/05/29 11:21:26 by yait-iaz         ###   ########.fr        #
+#    Updated: 2022/06/09 13:08:07 by yait-iaz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = 
+SRC = main.c utils.c extra_utils.c
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 HEADER = minishell.h
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADER)
-	$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME)
 
 %.o : %.c
 	$(CC) $(FLAGS) -c $<

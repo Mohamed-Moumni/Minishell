@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/09 13:48:40 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:15:53 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,75 +63,10 @@
 // 	new_node->prev = tmp;
 // }
 
-void	single_quote(char *word, char *line, char *quote)
-{
-	char *line_rest;
-	char *second_quote;
-
-	second_quote = ft_strchr(quote, '"');
-	line_rest = NULL;
-	if (second_quote == 0)
-	{
-		line_rest = readline(">>");
-		line = ft_strjoin(line, line_rest);
-	}
-	word = ft_substr(line, 0, advanced_strlen(quote, second_quote));
-}
-
-void	double_quote(char *word, char *line, char *quote)
-{
-	char *line_rest;
-	char *second_quote;
-
-	second_quote = ft_strchr(quote, '\'');
-	line_rest = NULL;
-	if (second_quote == 0)
-	{
-		line_rest = readline(">>");
-		line = ft_strjoin(line, line_rest);
-	}
-	word = ft_substr(line, 0, advanced_strlen(quote, second_quote));
-}
-
-void	join_quote(char *quote, char *line)
-{
-	char *tmp;
-
-	tmp = quote - 1;
-	while (ft_strcmp(tmp, " ") != 0 && tmp != line)
-		tmp--;
-	if (tmp != line)
-		quote = tmp + 1;
-	else
-		quote = line;
-}
-
-void	quote_handle(char *word, char *line)
-{
-	char	*double_q;
-	char	*single_q;
-
-	double_q = ft_strchr(word, '"');
-	single_q = ft_strchr(word, '\'');
-	if (double_q || single_q)
-	{
-		if (double_q > single_q)
-		{
-			join_quote(double_q, line);
-			double_quote(word, line, double_q);
-		}
-		else
-		{
-			join_quote(single_q, line);
-			single_quote(word, line, single_q);
-		}
-	}
-}
-
-t_grammar *get_grammar(char *line)
+t_lexer *get_lexer(char *line)
 {
 	int			i;
-	t_grammar	*list;
+	t_lexer		*list;
 	char		*start;
 	char		*word;
 	int			word_len;
@@ -146,7 +81,7 @@ t_grammar *get_grammar(char *line)
 		if (word_len > 0)
 		{
 			word = ft_substr(line, 0, word_len);
-			quote_handle(word, line);
+			start = quote_handle(&word, line, start);
 			printf("word: %s\n", word);
 		}
 		line = start + 1;
@@ -154,12 +89,12 @@ t_grammar *get_grammar(char *line)
 	return (NULL);
 }
 
-int main(void)
+int	main(void)
 {
 	char 		*line;
-	t_grammar	*list;
+	t_lexer	*list;
 
 	line = readline("@minishell >>");
 	if (line != NULL)
-		list = get_grammar(line);
+		list = get_lexer(line);
 }

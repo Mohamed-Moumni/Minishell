@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:09:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/08 15:02:14 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:31:37 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	advanced_strlen(char *start, char *end)
 	int	i;
 
 	i = 0;
-	while (start[i] && start[i] != end[0])
+	while (start[i] && &start[i] != &end[0])
 		i++;
 	return (i);
 }
@@ -55,7 +55,7 @@ int	ft_strcmp(char *s1, char *s2)
 char	*ft_substr(char *s, int start, int len)
 {
 	int		i;
-	char				*str;
+	char	*str;
 
 	i = 0;
 	if (!s)

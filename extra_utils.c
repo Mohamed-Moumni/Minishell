@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:06:59 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/10 15:06:48 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/12 11:45:05 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	str[i] = '\0';
-	free((void *)s1);
+	// free((void *)s1);
 	return (str);
 }

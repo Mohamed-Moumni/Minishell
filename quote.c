@@ -6,41 +6,26 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:34:00 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/11 15:11:47 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/12 13:40:37 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*add_after_quote(char *line, char *quote_ad, char quote)
+char	*add_after_quote(char *quote_ad)
 {
 	char	*tmp;
-	char	*line_rest;
 
-	while (quote_ad == 0)
+	if (quote_ad[0] == 0)
 	{
-		line_rest = readline(">>");
-		line = ft_strjoin(line, line_rest);
-		quote_ad = ft_strchr(line, quote);
+		printf("error! unmatched quote\n");
+		return (NULL);
 	}
 	tmp = quote_ad + 1;
 	while (tmp[0] && tmp[0] != ' ')
 		tmp++;
-	if (tmp[0])
-		quote_ad = tmp - 1;
-	else
-		quote_ad = tmp;
+	quote_ad = tmp - 1;
 	return (quote_ad);
-}
-
-char	*single_quote(char **word, char *line, char *quote, char *start)
-{
-	char	*second_quote;
-
-	second_quote = ft_strchr(quote + 1, '\'');
-	second_quote = add_after_quote(line, second_quote, '\'');
-	*word = ft_substr(line, 0, advanced_strlen(start, second_quote) + 1);
-	return (second_quote);
 }
 
 char	*double_quote(char **word, char *line, char *quote, char *start)
@@ -48,7 +33,21 @@ char	*double_quote(char **word, char *line, char *quote, char *start)
 	char	*second_quote;
 
 	second_quote = ft_strchr(quote + 1, '"');
-	second_quote = add_after_quote(line, second_quote, '"');
+	second_quote = add_after_quote(second_quote);
+	if (!second_quote)
+		return (NULL);
+	*word = ft_substr(line, 0, advanced_strlen(start, second_quote) + 1);
+	return (second_quote);
+}
+
+char	*single_quote(char **word, char *line, char *quote, char *start)
+{
+	char	*second_quote;
+
+	second_quote = ft_strchr(quote + 1, '\'');
+	second_quote = add_after_quote(second_quote);
+	if (!second_quote)
+		return (NULL);
 	*word = ft_substr(line, 0, advanced_strlen(start, second_quote) + 1);
 	return (second_quote);
 }
@@ -89,6 +88,8 @@ char	*quote_handle(char **word, char *line, char *start)
 			start_quote = add_before_quote(single_q, line);
 			start = single_quote(word, line, single_q, start_quote);
 		}
+		if (!start)
+			return (NULL);
 		return (start + 1);
 	}
 	return (start);

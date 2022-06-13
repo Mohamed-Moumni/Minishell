@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/13 08:43:47 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/13 10:01:21 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ typedef enum e_token
 	SINGLE_QUOTE,	// '			3
 	DOUBLE_QUOTE,	// "			4
 	OPERATOR,		// < << >> >	5
+	RIGHT_OPER,
+	LEFT_OPER,
+	RRIGHT_OPER,
+	LLEFT_OPER,
+	FILENAME,
+	CMD,
+	PATHNAME
 }			e_token;
 
 typedef struct s_lexer
@@ -84,5 +91,8 @@ t_ast	*create_node(e_token nodetype, char *value, t_ast *left, t_ast *right);
 void	next_token(void);
 void	prev_token(void);
 int		list_size(t_lexer *tokens);
+void	exepect(void);
+void	free_tree(t_ast *tree);
+void	free_tokens(t_lexer *tokens);
 
 #endif

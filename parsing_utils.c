@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 08:35:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/13 08:53:03 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/13 10:04:44 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,18 @@ t_ast	*create_node(e_token nodetype, char *value, t_ast *left, t_ast *right)
 	node->left = left;
 	node->right = right;
 	return (node);
+}
+
+void	free_tokens(t_lexer **tokens)
+{
+	t_lexer	*tmp;
+	int		size;
+
+	size = list_size(*tokens);
+	tmp = *tokens;
+	while (tmp->n != size)
+	{
+		free(tmp);
+		tmp = tmp->next;
+	}
 }

@@ -1,0 +1,9 @@
+<execution> ::= <command>
+            | < execution> '|' <command>
+        
+<command> ::= <simple command>
+            | <simple command> '<' or '<<' <filename>
+            | <simple command> '>' or '>>' <filename>
+
+<simple command> ::= <pahtname>
+            | <simple command> <params>

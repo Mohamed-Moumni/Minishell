@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/12 15:31:52 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/13 08:43:47 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -19,7 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef enum token
+typedef enum e_token
 {
 	WORD,			// SIMPLE WORD	0
 	PIPE,			// |			1
@@ -37,6 +38,21 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 	struct s_lexer	*next;
 }				t_lexer;
+
+// typedef enum e_node
+// {
+	
+// }e_node;
+
+typedef struct s_ast
+{
+	e_token			node_type;
+	char			*value;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}t_ast;
+
+
 
 int		ft_strlen(char *str);
 char	*ft_strchr(char *s, int c);
@@ -61,5 +77,12 @@ void	remove_quote(char **word, char quote);
 void	check_option(char *word, e_token *token);
 void	check_term(char **word, e_token *token);
 e_token	ft_tokenize(char **word);
+t_ast	*execution(void);
+t_ast	*command(void);
+t_ast	*simple_command(void);
+t_ast	*create_node(e_token nodetype, char *value, t_ast *left, t_ast *right);
+void	next_token(void);
+void	prev_token(void);
+int		list_size(t_lexer *tokens);
 
 #endif

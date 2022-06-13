@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/13 10:01:21 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/13 18:26:46 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }				t_lexer;
 
-// typedef enum e_node
-// {
-	
-// }e_node;
-
 typedef struct s_ast
 {
 	e_token			node_type;
@@ -58,6 +53,8 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 }t_ast;
+
+
 
 
 
@@ -84,7 +81,7 @@ void	remove_quote(char **word, char quote);
 void	check_option(char *word, e_token *token);
 void	check_term(char **word, e_token *token);
 e_token	ft_tokenize(char **word);
-t_ast	*execution(void);
+t_ast	*pipeline(void);
 t_ast	*command(void);
 t_ast	*simple_command(void);
 t_ast	*create_node(e_token nodetype, char *value, t_ast *left, t_ast *right);
@@ -93,6 +90,6 @@ void	prev_token(void);
 int		list_size(t_lexer *tokens);
 void	exepect(void);
 void	free_tree(t_ast *tree);
-void	free_tokens(t_lexer *tokens);
+void	free_tokens(t_lexer **tokens);
 
 #endif

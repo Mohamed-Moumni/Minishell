@@ -7,23 +7,3 @@
 
 <simple command> ::= <pahtname>
             | <simple command> <params>
-
-pipeline ::=  command
-          |   pipeline "|" command
-
-command  ::=  word
-          |   redirection
-          |   command word
-          |   command redirection
-
-redirection  ::=  redirectionop filename
-redirectionop  ::=  "<"  |  ">"  |  "2>"pipeline ::=  command
-          |   pipeline "|" command
-
-command  ::=  word
-          |   redirection
-          |   command word
-          |   command redirection
-
-redirection  ::=  redirectionop filename
-redirectionop  ::=  "<"  |  ">"  |  "2>"

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 08:35:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/13 10:04:44 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/14 11:39:03 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,21 @@ void	free_tokens(t_lexer **tokens)
 		free(tmp);
 		tmp = tmp->next;
 	}
+}
+
+int	is_pathname(t_lexer *tokens)
+{
+	t_lexer	*tmp_token;
+	int		size;
+
+	size = 0;
+	tmp_token = tokens;
+	while (tmp_token)
+	{
+		if (tmp_token->token == PIPE || tmp_token->token == OPERATOR)
+			break ;
+		size++;	
+		tmp_token = tmp_token->next;
+	}
+	return (size);
 }

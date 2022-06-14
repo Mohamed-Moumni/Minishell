@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/13 18:22:48 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/14 11:34:20 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 // int	main(void)
 // {
-// 	// t_lexer	*list;
+// 	t_lexer	*list;
 
 // 	while (1)
 // 	{
-// 		g_tokens = get_lexer(readline("@minishell >>"));
-// 		// print_lexer(list);
-		
+// 		list = get_lexer(readline("@minishell >>"));
+// 		print_lexer(list);
 // 	}
 // }

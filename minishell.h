@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/15 17:51:58 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/15 19:06:14 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ typedef struct s_ast
 	struct s_ast	*right;
 }t_ast;
 
+typedef struct s_envp
+{
+	char			*key;
+	char			*value;
+	struct s_envp	*next;
+}t_envp;
+
+
 int		ft_strlen(char *str);
 char	*ft_strchr(char *s, int c);
 int		ft_strcmp(char *s1, char *s2);
@@ -94,5 +102,11 @@ void	ft_print(char **str, int condition);
 void	echo(char ** str);
 int		is_nl_valid(char *str);
 void	ft_print(char **str, int condition);
+char	**ft_split(char const *s, char c);
+void	envp_add_back(t_envp **envp_list, t_envp *node);
+t_envp	*envp_to_list(char **envp);
+t_envp	*creat_node(char *str);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+t_envp  *ft_list_last(t_envp *env_list);
 
 #endif

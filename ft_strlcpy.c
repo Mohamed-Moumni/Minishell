@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/15 17:53:39 by mmoumni          ###   ########.fr       */
+/*   Created: 2022/06/15 18:52:16 by mmoumni           #+#    #+#             */
+/*   Updated: 2022/06/15 18:54:31 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo(char ** str)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	int	i;
-	
+	size_t	i;
+
 	i = 0;
-	while (str[i])
+	if (dstsize == 0)
+		return (ft_strlen((char *)src));
+	while (src[i] && i < dstsize - 1)
 	{
-		if (is_nl_valid(str[i]))
-			break ;
+		dst[i] = src[i];
 		i++;
 	}
-	if (is_nl_valid(str[i - 1]) == 0)
-		ft_print(&str[i], 1);
-	else
-		ft_print(&str[i], 0);
+	dst[i] = '\0';
+	return (ft_strlen((char *)src));
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/15 19:06:14 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/15 19:26:42 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,6 @@ t_envp	*envp_to_list(char **envp);
 t_envp	*creat_node(char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 t_envp  *ft_list_last(t_envp *env_list);
+t_envp	*search_key(t_envp *envp_list, char *key);
 
 #endif

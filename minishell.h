@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/14 15:37:22 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/15 17:51:58 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 typedef enum e_token
 {
@@ -85,5 +86,13 @@ void	free_tokens(t_lexer **tokens);
 int		next_operator(t_lexer *tokens, char c);
 t_lexer	*next_pipe(t_lexer *tokens);
 int		is_pathname(t_lexer *tokens);
+
+/* Buitlins Functions */
+
+int		is_nl_valid(char *str);
+void	ft_print(char **str, int condition);
+void	echo(char ** str);
+int		is_nl_valid(char *str);
+void	ft_print(char **str, int condition);
 
 #endif

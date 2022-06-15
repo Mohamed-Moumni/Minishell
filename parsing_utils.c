@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 08:35:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/14 11:39:03 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/15 11:37:07 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,7 @@ void	free_tokens(t_lexer **tokens)
 
 int	is_pathname(t_lexer *tokens)
 {
-	t_lexer	*tmp_token;
-	int		size;
-
-	size = 0;
-	tmp_token = tokens;
-	while (tmp_token)
-	{
-		if (tmp_token->token == PIPE || tmp_token->token == OPERATOR)
-			break ;
-		size++;	
-		tmp_token = tmp_token->next;
-	}
-	return (size);
+	if (tokens->next == NULL || tokens->next->token == PIPE || tokens->next->token == OPERATOR)
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/15 19:31:36 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/16 15:34:09 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,49 @@ void	ft_pwd(t_envp *envp_list)
 	printf("%s\n", pwd->value);
 }
 
-int main(int ac, char **av, char **env)
+int	ft_unset(t_envp *envp, char *env_to_unset)
 {
-	t_envp	*envp;
+	t_envp	*ret;
+	t_envp	*prev_env;
+	t_envp	*next_env;
 
-	envp = envp_to_list(env);
-	ft_pwd(envp);
+	ret = search_key(envp, env_to_unset);
+	if (ret == NULL)
+		return (-1);
+	while (envp->next != ret)
+	{
+		envp = envp->next;
+	}
+	prev_env = envp;
+	next_env = envp->next->next;
+	prev_env->next = next_env;
+	free(ret);
+	return (1);
 }
+
+// int main(int ac, char **av, char **env)
+// {
+// 	t_envp	*envp;
+// 	t_envp	*tmp;
+	
+// 	envp = envp_to_list(env);
+// 	// ft_pwd(envp);
+// 	// tmp = envp;
+// 	// while (envp)
+// 	// {
+// 	// 	printf("%s=",envp->key);
+// 	// 	printf("%s\n",envp->value);
+// 	// 	envp = envp->next;
+// 	// }
+// 	t_envp *ret;
+
+// 	// ret = search_key(envp, av[1]);
+// 	ft_unset(envp, av[1]);
+// 	tmp = envp;
+// 	while (envp)
+// 	{
+// 		printf("%s=",envp->key);
+// 		printf("%s\n",envp->value);
+// 		envp = envp->next;
+// 	}
+// }

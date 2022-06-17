@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/16 17:32:34 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/17 14:41:42 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,38 +73,38 @@ void	ft_cd(t_envp *envp, const char *str)
 	}
 }
 
-int main(int ac, char **av, char **env)
-{
-	t_envp	*envp;
-	// char 	*dic;
-	// t_envp	*tmp;
+// int main(int ac, char **av, char **env)
+// {
+// 	t_envp	*envp;
+// 	// char 	*dic;
+// 	// t_envp	*tmp;
 	
-	envp = envp_to_list(env);
-	// // ft_pwd(envp);
-	// // tmp = envp;
-	// // while (envp)
-	// // {
-	// // 	printf("%s=",envp->key);
-	// // 	printf("%s\n",envp->value);
-	// // 	envp = envp->next;
-	// // }
-	// t_envp *ret;
+// 	envp = envp_to_list(env);
+// 	// // ft_pwd(envp);
+// 	// // tmp = envp;
+// 	// // while (envp)
+// 	// // {
+// 	// // 	printf("%s=",envp->key);
+// 	// // 	printf("%s\n",envp->value);
+// 	// // 	envp = envp->next;
+// 	// // }
+// 	// t_envp *ret;
 
-	// // ret = search_key(envp, av[1]);
-	// ft_unset(envp, av[1]);
-	// tmp = envp;
-	// while (envp)
-	// {
-	// 	printf("%s=",envp->key);
-	// 	printf("%s\n",envp->value);
-	// 	envp = envp->next;
-	// }
-	char *read_line;
+// 	// // ret = search_key(envp, av[1]);
+// 	// ft_unset(envp, av[1]);
+// 	// tmp = envp;
+// 	// while (envp)
+// 	// {
+// 	// 	printf("%s=",envp->key);
+// 	// 	printf("%s\n",envp->value);
+// 	// 	envp = envp->next;
+// 	// }
+// 	char *read_line;
 	
-	while ((read_line = readline("minishell>>")))
-	{
-		printf("%s\n", read_line);
-		ft_cd(envp, read_line);
-		ft_pwd(envp);
-	}
-}
+// 	while ((read_line = readline("minishell>>")))
+// 	{
+// 		printf("%s\n", read_line);
+// 		ft_cd(envp, read_line);
+// 		ft_pwd(envp);
+// 	}
+// }

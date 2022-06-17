@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:50:36 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/17 14:16:36 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:16:39 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	split_operator(t_lexer **list, char *line)
 	{
 		if (line[i] == '>' || line[i] == '<' || line[i] == '|')
 		{
-			state = create_node(list, line, &i, &j);
+			state = create_node_lex(list, line, &i, &j);
 			if (state < 0)
 			{
 				free_list(*list);
@@ -88,7 +88,7 @@ int	split_operator(t_lexer **list, char *line)
 		}
 		i++;
 	}
-	create_node(list, line, &i, &j);
+	create_node_lex(list, line, &i, &j);
 	return (1);
 }
 

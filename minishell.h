@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/17 14:20:50 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/17 17:53:47 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum e_token
 	LEFT_REDIR,			//			7
 	DOUBLE_LEFT_REDIR,	//			8
 	UNCHECKED,			//			9
+	FILENAME			//			10
 }			e_token;
 
 typedef struct s_lexer
@@ -63,6 +64,12 @@ typedef struct s_history
 	char				*histo;
 	struct s_history	*next;
 }t_hist;
+
+// typedef struct	s_infos
+// {
+// 	t_ast	*ast;
+// 	t_lexer *lexer
+// }t_info;
 
 int		ft_strlen(char *str);
 char	*ft_strchr(char *s, int c);
@@ -96,18 +103,12 @@ void	check_option(char *word, e_token *token);
 void	check_term(char **word, e_token *token);
 char	*split_redirection(t_lexer **list, char *word);
 e_token	ft_tokenize(char **word);
-t_ast	*pipeline(t_lexer *tokens);
-t_ast	*command(t_lexer *tokens);
-t_ast	*simple_command(t_lexer *tokens);
 t_ast	*create_node(e_token nodetype, char *value, t_ast *left, t_ast *right);
 t_lexer	*next_token(t_lexer *tokens);
-int		list_size(t_lexer *tokens);
-void	exepect(void);
+t_ast	*pipeline(t_lexer *lex);
+t_ast	*command(t_lexer **lex);
 void	free_tree(t_ast *tree);
-void	free_tokens(t_lexer **tokens);
-int		next_operator(t_lexer *tokens, char c);
-t_lexer	*next_pipe(t_lexer *tokens);
-int		is_pathname(t_lexer *tokens);
+void    display(t_ast *ast);
 
 /* Buitlins Functions */
 
@@ -123,5 +124,6 @@ t_envp	*creat_node(char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 t_envp  *ft_list_last(t_envp *env_list);
 t_envp	*search_key(t_envp *envp_list, char *key);
+void	redirection(t_ast **tree, t_lexer **lex);
 
 #endif

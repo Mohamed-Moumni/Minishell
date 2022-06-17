@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 08:18:15 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/15 11:46:43 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/17 18:02:37 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,89 +19,70 @@ t_lexer	*next_token(t_lexer *tokens)
 	return (tokens);
 }
 
-t_ast	*pipeline(t_lexer *tokens)
+t_ast	*pipeline(t_lexer *lex)
 {
 	t_ast	*tree;
 
 	tree = NULL;
-	tree = command(tokens);
-	printf("%s\n",tokens->content);
-	while (tokens->token == PIPE)
+	tree = command(&lex);
+	if (lex == NULL)
+		return (NULL);
+	while (lex && lex->token == PIPE)
 	{
-		tree = create_node(PIPE, "|", tree, command(tokens));
-		if (tokens == NULL)
+		lex = next_token(lex);
+		tree = create_node(PIPE, "|", tree, command(&lex));
+		if (lex == NULL)
 			return (tree);
 	}
 	return (tree);
 }
 
-t_ast	*command(t_lexer *tokens)
+
+t_ast	*command(t_lexer **lex)
 {
 	t_ast	*tree;
-	t_lexer	*temp_token;
-	
+
 	tree = NULL;
-	if (tokens == NULL)
-		return (NULL);
-	temp_token = tokens;
-	tree = simple_command(temp_token);
-	printf("%s\n", tokens->content);
-	// while (tokens->token != PIPE && tokens->token != OPERATOR)
-	// 	tokens = tokens->next;
-	// while (ft_strcmp(tokens->content, "<") == 0 || ft_strcmp(tokens->content, "<<") == 0 ||
-	// 	ft_strcmp(tokens->content, ">") == 0 || ft_strcmp(tokens->content, ">>") == 0)
-	// {
-	// 	if (ft_strcmp(tokens->content, "<") == 0)
-	// 	{
-	// 		tokens = tokens->next;
-	// 		tree = create_node(OPERATOR, "<", tree, create_node(FILENAME, tokens->content, NULL, NULL));
-	// 		tokens = tokens->next;
-	// 	}
-	// 	else if (ft_strcmp(tokens->content, "<<") == 0)
-	// 	{
-	// 		tokens = tokens->next;
-	// 		tree = create_node(OPERATOR, "<<", tree, create_node(FILENAME, tokens->content, NULL, NULL));
-	// 		tokens = tokens->next;
-	// 	}
-	// 	else if (ft_strcmp(tokens->content, ">") == 0)
-	// 	{
-	// 		tokens = tokens->next;
-	// 		tree = create_node(OPERATOR, ">", tree, create_node(FILENAME, tokens->content, NULL, NULL));
-	// 		tokens = tokens->next;
-	// 	}
-	// 	else if (ft_strcmp(tokens->content, ">>") == 0)
-	// 	{
-	// 		tokens = tokens->next;
-	// 		tree = create_node(OPERATOR, ">>", tree, create_node(FILENAME, tokens->content, NULL, NULL));
-	// 		tokens = tokens->next;
-	// 	}
-	// 	if (tokens == NULL)
-	// 		return (tree);
-	// }
-	return (tree);	
+	if ((*lex) && (*lex)->token == WORD)
+	{
+		tree = create_node(WORD, (*lex)->content, NULL, NULL);
+		(*lex) = next_token((*lex));
+	}
+	while ((*lex) && ((*lex)->token == LEFT_REDIR
+		|| (*lex)->token == DOUBLE_LEFT_REDIR
+		|| (*lex)->token == RIGHT_REDIR
+		|| (*lex)->token == DOUBLE_RIGHT_REDIR))
+	{
+		redirection(&tree, lex);
+		(*lex) = next_token((*lex));
+		if ((*lex) == NULL)
+			return (tree);	
+	}	
+	return (tree);
 }
 
-// // <simple command> ::= <pahtname>
-//             | <simple command> <params>
-
-t_ast	*simple_command(t_lexer *tokens)
+void	redirection(t_ast **tree, t_lexer **lex)
 {
-	t_ast	*tree;
-	t_lexer	*temp_token;
-
-	tree = NULL;
-	if (tokens == NULL)
-		return (tree);
-	temp_token = tokens;
-	if (is_pathname(temp_token))
-		tree = create_node(PATHNAME, (tokens)->content, NULL, NULL);
-	else
+	if ((*lex)->token == LEFT_REDIR)
 	{
-		temp_token = next_token(temp_token);
-		tree = simple_command(temp_token);
-		tree = create_node(PARAMS, tokens->content, tree, NULL);
+		(*lex) = next_token((*lex));
+		(*tree) = create_node(LEFT_REDIR, "<", (*tree), create_node(FILENAME, (*lex)->content, NULL, NULL));
 	}
-	return (tree);
+	else if ((*lex)->token == DOUBLE_LEFT_REDIR)
+	{
+		(*lex) = next_token((*lex));
+		(*tree) = create_node(DOUBLE_LEFT_REDIR, "<<", (*tree), create_node(FILENAME, (*lex)->content, NULL, NULL));
+	}
+	else if ((*lex)->token == RIGHT_REDIR)
+	{
+		(*lex) = next_token((*lex));
+		(*tree) = create_node(RIGHT_REDIR, ">", (*tree), create_node(FILENAME, (*lex)->content, NULL, NULL));
+	}
+	else if ((*lex)->token == DOUBLE_RIGHT_REDIR)
+	{
+		(*lex) = next_token((*lex));
+		(*tree) = create_node(DOUBLE_RIGHT_REDIR, ">>", (*tree), create_node(FILENAME, (*lex)->content, NULL, NULL));
+	}
 }
 
 void    display(t_ast *ast)
@@ -111,24 +92,4 @@ void    display(t_ast *ast)
     display(ast->left);
     display(ast->right);
     printf("%s\n",ast->value);
-}
-
-int	main(void)
-{
-	t_lexer	*tokens = NULL;
-
-	while (1)
-	{
-		t_ast *tree;
-		tokens = get_lexer(readline("@minishell >>"));
-		// while (tokens != NULL)
-		// {
-		// 	printf("%s\n",tokens->content);
-		// 	g_tokens = g_tokens->next;
-		// }
-		// print_lexer(g_tokens);
-		// tree = pipeline();
-		tree = command(tokens);
-		display(tree);
-	}
 }

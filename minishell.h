@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/15 19:26:42 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/16 21:03:31 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ typedef struct s_envp
 	struct s_envp	*next;
 }t_envp;
 
+typedef struct s_history
+{
+	char				*histo;
+	struct s_history	*next;
+}t_hist;
 
 int		ft_strlen(char *str);
 char	*ft_strchr(char *s, int c);

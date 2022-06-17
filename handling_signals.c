@@ -1,25 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handling_signals.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/17 14:15:10 by yait-iaz         ###   ########.fr       */
+/*   Created: 2022/06/15 14:41:30 by mmoumni           #+#    #+#             */
+/*   Updated: 2022/06/15 14:42:14 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
-{
-	t_lexer	*list;
-
-	while (1)
-	{
-		list = get_lexer(readline("@minishell >> "));
-		if (list)
-			print_lexer(list);
-	}
-}
+void 

@@ -6,11 +6,31 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:06:59 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/12 11:45:05 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:50:01 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_strrchr(char *s, int c)
+{
+	int		l;
+	char	ch;
+
+	l = ft_strlen(s);
+	ch = ((char) c);
+	if (s[l] == ch)
+		return ((char *)&s[l]);
+	while (l > 0)
+	{
+		if (s[l] == ch)
+			return ((char *)&s[l]);
+		l--;
+	}
+	if (s[l] == ch)
+		return ((char *)&s[l]);
+	return (0);
+}
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

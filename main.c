@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/12 15:27:22 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/17 14:09:22 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	main(void)
 
 	while (1)
 	{
-		list = get_lexer(readline("@minishell >>"));
-		print_lexer(list);
+		list = get_lexer(readline("@minishell >> "));
+		if (list)
+			print_lexer(list);
 	}
 }

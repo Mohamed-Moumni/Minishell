@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:52 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/12 15:30:26 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:46:10 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,15 @@ e_token	ft_tokenize(char **word)
 {
 	e_token	token;
 
-	if ((ft_strchr(*word, '"')[0] || ft_strchr(*word, '\'')[0]))
-		check_term(word, &token);
-	else if (!ft_strcmp(*word, ">") || !ft_strcmp(*word, ">>") \
-		|| !ft_strcmp(*word, "<") || !ft_strcmp(*word, "<<"))
-		token = OPERATOR;
-	else if (!ft_strcmp(*word, "|"))
+	if (!ft_strcmp(*word, ">"))
+		token = RIGHT_REDIR;
+	if (!ft_strcmp(*word, ">>"))
+		token = DOUBLE_RIGHT_REDIR;
+	if (!ft_strcmp(*word, "<"))
+		token = LEFT_REDIR;
+	if (!ft_strcmp(*word, "<<"))
+		token = DOUBLE_LEFT_REDIR;
+	if (!ft_strcmp(*word, "|"))
 		token = PIPE;
 	else
 		token = WORD;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/16 15:34:09 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/18 21:33:41 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,38 @@ int	ft_unset(t_envp *envp, char *env_to_unset)
 	prev_env->next = next_env;
 	free(ret);
 	return (1);
+}
+
+int	ft_cd(char *path)
+{
+	int		i;
+	char	**new_path;
+
+	i = 0;
+	new_path = ft_split(path, '/');
+	while (new_path[i])
+	{
+		if (chdir(new_path[i]) < 0)
+		{
+			printf("no such file or directory: %s\n", path);
+			break ;
+		}
+		i++;
+	}
+	free (path);
+	return (1);
+}
+
+int	main()
+{
+	char *str;
+
+	str = readline(">>");
+	while (str)
+	{
+		ft_cd(str);
+		str = readline(">>");
+	}
 }
 
 // int main(int ac, char **av, char **env)

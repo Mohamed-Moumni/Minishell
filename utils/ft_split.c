@@ -6,11 +6,11 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:42:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/15 19:10:23 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/24 18:27:17 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../headers/minishell.h"
 
 static int	ft_words(char const *s, char c)
 {

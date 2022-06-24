@@ -6,11 +6,11 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:53:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/15 19:26:35 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/24 18:55:05 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../headers/minishell.h"
 
 int	is_nl_valid(char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/17 14:41:42 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/24 19:27:16 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../headers/minishell.h"
 
 void	echo(char ** str)
 {
@@ -58,20 +58,20 @@ int	ft_unset(t_envp *envp, char *env_to_unset)
 	return (1);
 }
 
-void	ft_cd(t_envp *envp, const char *str)
-{
-	const char *pathname;
+// void	ft_cd(t_envp *envp, const char *str)
+// {
+// 	const char *pathname;
 
-	if (ft_strcmp(str, "") == 0)
-	{
-		pathname = (const char *)envp->value[1];
-		chdir(pathname);
-	}
-	else
-	{
+// 	if (ft_strcmp((char *)str, "") == 0)
+// 	{
+// 		pathname = (const char *)envp->value[1];
+// 		chdir(pathname);
+// 	}
+// 	else
+// 	{
 		
-	}
-}
+// 	}
+// }
 
 // int main(int ac, char **av, char **env)
 // {

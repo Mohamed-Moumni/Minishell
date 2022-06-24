@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/24 19:15:11 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/24 20:39:14 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,37 @@
 // 	return (temp);
 // }
 
-// void	ft_env_sort(t_envp *list)
-// {
-	
-// }
+void	ft_env_sort(t_envp *list)
+{
+	t_envp	*temp1;
+	t_envp	*temp2;
+
+	temp1 = list;
+	while (temp1)
+	{
+		temp2 = list;
+		while (temp2)
+		{
+			if (ft_strcmp(temp1->key, temp2->key) <= 0)
+				ft_swap(temp1, temp2);
+			temp2 = temp2->next;	
+		}
+		temp1 = temp1->next;
+	}
+}
+
+void	ft_swap(t_envp *a, t_envp *b)
+{
+	char	*temp_key;
+	char	*temp_value;
+
+	temp_key = a->key;
+	temp_value = a->value;
+	a->key = b->key;
+	a->value = b->value;
+	b->key = temp_key;
+	b->value = temp_value;
+}
 
 void	env_with_ex_key(char *key, char *value)
 {
@@ -114,6 +141,7 @@ int	main(int ac, char **av, char **env)
 	t_envp	*temp;
 
 	temp = envp_to_list(env);
+	ft_env_sort(temp);
 	ft_export(temp);
 	return (0);
 }

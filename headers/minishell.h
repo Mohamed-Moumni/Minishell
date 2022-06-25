@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/24 18:30:18 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:59:40 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,6 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }				t_lexer;
 
-typedef struct s_ast
-{
-	e_token			node_type;
-	char			*value;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}t_ast;
-
-
-
-typedef struct s_history
-{
-	char				*histo;
-	struct s_history	*next;
-}t_hist;
-
-// typedef struct	s_infos
-// {
-// 	t_ast	*ast;
-// 	t_lexer *lexer
-// }t_info;
-
 int		ft_strlen(char *str);
 char	*ft_strchr(char *s, int c);
 int		ft_strcmp(char *s1, char *s2);
@@ -99,12 +77,6 @@ void	check_option(char *word, e_token *token);
 void	check_term(char **word, e_token *token);
 char	*split_redirection(t_lexer **list, char *word);
 e_token	ft_tokenize(char **word);
-t_ast	*create_node(e_token nodetype, char *value, t_ast *left, t_ast *right);
-t_lexer	*next_token(t_lexer *tokens);
-t_ast	*pipeline(t_lexer *lex);
-t_ast	*command(t_lexer **lex);
-void	free_tree(t_ast *tree);
-void    display(t_ast *ast);
 
 /* Buitlins Functions */
 
@@ -118,7 +90,6 @@ char	**ft_split(char const *s, char c);
 // t_envp	*envp_to_list(char **envp);
 // t_envp	*creat_node(char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-// t_envp  *ft_list_last(t_envp *env_list);
 // t_envp	*search_key(t_envp *envp_list, char *key);
 // void	redirection(t_ast **tree, t_lexer **lex);
 

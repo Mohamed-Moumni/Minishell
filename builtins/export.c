@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/24 20:39:14 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:59:02 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,12 @@ void	ft_export(t_envp *envp_list)
 	}
 }
 
-int	main(int ac, char **av, char **env)
-{
-	t_envp	*temp;
+// int	main(int ac, char **av, char **env)
+// {
+// 	t_envp	*temp;
 
-	temp = envp_to_list(env);
-	ft_env_sort(temp);
-	ft_export(temp);
-	return (0);
-}
+// 	temp = envp_to_list(env);
+// 	ft_env_sort(temp);
+// 	ft_export(temp);
+// 	return (0);
+// }

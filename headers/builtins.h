@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/24 18:35:46 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:59:47 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ char		*ft_append_dqoute(char *str);
 t_export	*env_to_expo_list(char **env);
 t_export	*export_node(char *key, char *value);
 t_export	*last_expo(t_export *export);
+void		ft_swap(t_envp *a, t_envp *b);
+t_envp		*ft_list_last(t_envp *env_list);
 
 #endif

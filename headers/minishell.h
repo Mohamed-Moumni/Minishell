@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/25 14:59:21 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:30:18 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include "builtins.h"
 
 typedef enum e_token
 {
@@ -52,12 +53,7 @@ typedef struct s_ast
 	struct s_ast	*right;
 }t_ast;
 
-typedef struct s_envp
-{
-	char			*key;
-	char			*value;
-	struct s_envp	*next;
-}t_envp;
+
 
 typedef struct s_history
 {
@@ -80,7 +76,6 @@ char	*ft_substr(char *s, int start, int len);
 char	*ft_strdupi(const char *s1, int l);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strrchr(char *s, int c);
-char	*ft_strtrim(char *s1, char *set);
 
 char	*single_quote(char **word, char *line, char *quote, char *first_q);
 char	*double_quote(char **word, char *line, char *quote, char *first_q);
@@ -113,18 +108,18 @@ void    display(t_ast *ast);
 
 /* Buitlins Functions */
 
-int		is_nl_valid(char *str);
-void	ft_print(char **str, int condition);
-void	echo(char ** str);
-int		is_nl_valid(char *str);
-void	ft_print(char **str, int condition);
+// int		is_nl_valid(char *str);
+// void	ft_print(char **str, int condition);
+// void	echo(char ** str);
+// int		is_nl_valid(char *str);
+// void	ft_print(char **str, int condition);
 char	**ft_split(char const *s, char c);
-void	envp_add_back(t_envp **envp_list, t_envp *node);
-t_envp	*envp_to_list(char **envp);
-t_envp	*creat_node(char *str);
+// void	envp_add_back(t_envp **envp_list, t_envp *node);
+// t_envp	*envp_to_list(char **envp);
+// t_envp	*creat_node(char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-t_envp  *ft_list_last(t_envp *env_list);
-t_envp	*search_key(t_envp *envp_list, char *key);
-void	redirection(t_ast **tree, t_lexer **lex);
+// t_envp  *ft_list_last(t_envp *env_list);
+// t_envp	*search_key(t_envp *envp_list, char *key);
+// void	redirection(t_ast **tree, t_lexer **lex);
 
 #endif

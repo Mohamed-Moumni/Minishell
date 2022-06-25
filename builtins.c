@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 14:57:05 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/25 14:59:51 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,34 @@ int		ft_unset(t_envp *env, char *key)
 	tmp1->next = tmp2->next;
 	free(tmp2);
 	return (1);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	char	*str;
+	t_envp	*env;
+	t_envp	*tmp;
+
+	env = envp_to_list(envp);
+	str = readline(">>");
+	while (str)
+	{
+		// ft_cd(env, str);
+		tmp = env;
+		while (tmp)
+		{
+			printf("%s = ",tmp->key);
+			printf("%s\n",tmp->value);
+			tmp = tmp->next;
+		}
+		ft_unset(env, str);
+		tmp = env;
+		while (tmp)
+		{
+			printf("%s = ",tmp->key);
+			printf("%s\n",tmp->value);
+			tmp = tmp->next;
+		}
+		str = readline(">>");
+	}
 }

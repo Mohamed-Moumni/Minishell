@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:50:36 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/25 15:02:26 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:16:39 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	create_node_lex(t_lexer **list, char *line, int *i, int *j)
 			return (-1);
 		return (0);
 	}
-	word = ft_strtrim(ft_strdupi(&line[*j], *i - *j), " ");
+	word = ft_strdupi(&line[*j], *i - *j);
 	if (!ft_strlen(word))
 		return (0);
 	add_node(list, word, WORD);

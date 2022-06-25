@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/18 21:33:41 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/25 14:57:05 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,81 +38,87 @@ void	ft_pwd(t_envp *envp_list)
 	printf("%s\n", pwd->value);
 }
 
-int	ft_unset(t_envp *envp, char *env_to_unset)
-{
-	t_envp	*ret;
-	t_envp	*prev_env;
-	t_envp	*next_env;
-
-	ret = search_key(envp, env_to_unset);
-	if (ret == NULL)
-		return (-1);
-	while (envp->next != ret)
-	{
-		envp = envp->next;
-	}
-	prev_env = envp;
-	next_env = envp->next->next;
-	prev_env->next = next_env;
-	free(ret);
-	return (1);
-}
-
-int	ft_cd(char *path)
-{
-	int		i;
-	char	**new_path;
-
-	i = 0;
-	new_path = ft_split(path, '/');
-	while (new_path[i])
-	{
-		if (chdir(new_path[i]) < 0)
-		{
-			printf("no such file or directory: %s\n", path);
-			break ;
-		}
-		i++;
-	}
-	free (path);
-	return (1);
-}
-
-int	main()
-{
-	char *str;
-
-	str = readline(">>");
-	while (str)
-	{
-		ft_cd(str);
-		str = readline(">>");
-	}
-}
-
-// int main(int ac, char **av, char **env)
+// int	ft_unset(t_envp *envp, char *env_to_unset)
 // {
-// 	t_envp	*envp;
-// 	t_envp	*tmp;
-	
-// 	envp = envp_to_list(env);
-// 	// ft_pwd(envp);
-// 	// tmp = envp;
-// 	// while (envp)
-// 	// {
-// 	// 	printf("%s=",envp->key);
-// 	// 	printf("%s\n",envp->value);
-// 	// 	envp = envp->next;
-// 	// }
-// 	t_envp *ret;
+// 	t_envp	*ret;
+// 	t_envp	*prev_env;
+// 	t_envp	*next_env;
 
-// 	// ret = search_key(envp, av[1]);
-// 	ft_unset(envp, av[1]);
-// 	tmp = envp;
-// 	while (envp)
+// 	ret = search_key(envp, env_to_unset);
+// 	if (ret == NULL)
+// 		return (-1);
+// 	while (envp->next != ret)
 // 	{
-// 		printf("%s=",envp->key);
-// 		printf("%s\n",envp->value);
 // 		envp = envp->next;
 // 	}
+// 	prev_env = envp;
+// 	next_env = envp->next->next;
+// 	prev_env->next = next_env;
+// 	free(ret);
+// 	return (1);
 // }
+
+char	*ft_cd_home(t_envp *envp, char *path)
+{
+	char	*home;
+
+	home = getenv("HOME");
+	if (!home)
+	{
+		printf("HOME not set!\n");
+		return (0);
+	}
+	if (chdir(home) < 0)
+		return (0);
+	return (path + 1);
+}
+
+int	ft_cd(t_envp *env, char *path)
+{
+	int		home;
+	char	*pwd;
+	t_envp	*pwd_env;
+
+	home = 0;
+	pwd = getcwd(NULL, 1000);
+	pwd_env = search_key(env, "PWD");
+	search_key(env, "OLDPWD")->value = pwd_env->value;
+	if (path[0] == '~' || !path[0])
+	{
+		path = ft_cd_home(env, path);
+		home = 1;
+	}
+	if (path[0] == '/')
+	{
+		if (home == 0)
+			chdir("/");
+		path++;
+	}
+	if (path[0])
+	{
+		if (chdir(path) < 0)
+		{
+			chdir(pwd);
+			printf("%s no such file or directory!\n", path);
+			return (0);
+		}
+	}
+	pwd_env->value = getcwd(NULL, 10000);
+	return (1);
+}
+
+int		ft_unset(t_envp *env, char *key)
+{
+	t_envp	*tmp1;
+	t_envp	*tmp2;
+
+	tmp1 = env;
+	tmp2 = search_key(env, key);
+	if (!key[0] || !tmp2)
+		return (1);
+	while (tmp1->next != tmp2)
+		tmp1 = tmp1->next;
+	tmp1->next = tmp2->next;
+	free(tmp2);
+	return (1);
+}

@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:50:36 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/17 14:16:36 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/24 21:11:23 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	create_node_lex(t_lexer **list, char *line, int *i, int *j)
 			return (-1);
 		return (0);
 	}
-	word = ft_strdupi(&line[*j], *i - *j);
+	word = ft_strtrim(ft_strdupi(&line[*j], *i - *j), " ");
 	if (!ft_strlen(word))
 		return (0);
 	add_node(list, word, WORD);
@@ -79,7 +79,7 @@ int	split_operator(t_lexer **list, char *line)
 	{
 		if (line[i] == '>' || line[i] == '<' || line[i] == '|')
 		{
-			state = create_node(list, line, &i, &j);
+			state = create_node_lex(list, line, &i, &j);
 			if (state < 0)
 			{
 				free_list(*list);
@@ -88,7 +88,7 @@ int	split_operator(t_lexer **list, char *line)
 		}
 		i++;
 	}
-	create_node(list, line, &i, &j);
+	create_node_lex(list, line, &i, &j);
 	return (1);
 }
 

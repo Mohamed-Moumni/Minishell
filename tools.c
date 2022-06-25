@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:58:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/16 15:59:05 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/24 21:04:49 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_lexer(t_lexer *list)
 {
 	while (list)
 	{
-		printf("content: %s ---> token: %d\n", list->content, \
+		printf("content: |%s| ---> token: %d\n\n", list->content, \
 			list->token);
 		list = list->next;
 	}

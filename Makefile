@@ -6,11 +6,12 @@
 #    By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 11:20:52 by yait-iaz          #+#    #+#              #
-#    Updated: 2022/06/17 14:15:43 by yait-iaz         ###   ########.fr        #
+#    Updated: 2022/06/24 21:11:51 by yait-iaz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c utils.c extra_utils.c quote.c lexer.c tokenize.c operator.c tools.c
+SRC = main.c utils.c extra_utils.c quote.c lexer.c tokenize.c operator.c tools.c\
+	ft_strtrim.c
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 HEADER = minishell.h

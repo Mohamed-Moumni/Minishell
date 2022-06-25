@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/17 14:16:52 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/24 21:12:35 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	*ft_substr(char *s, int start, int len);
 char	*ft_strdupi(const char *s1, int l);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strrchr(char *s, int c);
+char	*ft_strtrim(char *s1, char *set);
 
 char	*single_quote(char **word, char *line, char *quote, char *first_q);
 char	*double_quote(char **word, char *line, char *quote, char *first_q);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/27 10:40:52 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 15:11:21 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,17 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }			t_lexer;
 
+
+typedef struct s_char
+{
+	char 			*argv;
+	struct s_char	*next;
+}				t_char;
+
 typedef struct s_cmds
 {
 	e_token			type;
-	char			**argv;
+	t_char			*argv;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }			t_cmds;

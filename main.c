@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/27 13:49:13 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/27 14:22:12 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(void)
 		adjust_heredoc(list);
 		if (list)
 			print_lexer(list);
+		start_execution(list);
 	}
 	// char *line;
 	// line = NULL;

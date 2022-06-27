@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+         #
+#    By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 11:20:52 by yait-iaz          #+#    #+#              #
-#    Updated: 2022/06/25 20:54:20 by mmoumni          ###   ########.fr        #
+#    Updated: 2022/06/27 15:30:21 by yait-iaz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 SRC = builtins/builtins_utils.c builtins/builtins.c builtins/export.c \
 		lexer/lexer.c lexer/operator.c lexer/quote.c lexer/tokenize.c \
 		utils/extra_utils.c utils/ft_split.c utils/tools.c utils/ft_last.c \
-		utils/ft_strlcpy.c utils/utils.c main.c
+		utils/ft_strlcpy.c utils/utils.c main.c execution/execute.c execution/execute_utils.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/25 16:17:12 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/27 10:50:41 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./headers/minishell.h"
 
 void	replace_content(t_lexer *node)
 {
@@ -48,13 +48,22 @@ void	adjust_heredoc(t_lexer *list)
 
 int	main(void)
 {
-	t_lexer	*list;
+	// t_lexer	*list;
 
-	while (1)
+	// while (1)
+	// {
+	// 	list = get_lexer(readline("@minishell >> "));
+	// 	adjust_heredoc(list);
+	// 	if (list)
+	// 		print_lexer(list);
+	// }
+	char *line;
+	line = NULL;
+	char *read_line;
+	while ((read_line = readline(">>")))
 	{
-		list = get_lexer(readline("@minishell >> "));
-		adjust_heredoc(list);
-		if (list)
-			print_lexer(list);
+		add_history(read_line);
 	}
+	// printf("%s\n", read_line);
+	return (0);
 }

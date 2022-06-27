@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 15:59:47 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 10:26:17 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ typedef struct s_export
 	char	*value;
 	struct s_export *next;
 }t_export;
+
+typedef struct s_history
+{
+	char				*hist;
+	struct s_history	*next;
+}t_hist;
 
 void		echo(char ** str);
 void		ft_pwd(t_envp *envp_list);

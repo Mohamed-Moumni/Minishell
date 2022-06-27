@@ -6,7 +6,7 @@
 #    By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 11:20:52 by yait-iaz          #+#    #+#              #
-#    Updated: 2022/06/25 16:55:57 by mmoumni          ###   ########.fr        #
+#    Updated: 2022/06/25 20:54:20 by mmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ all: $(NAME)
 $(NAME): $(OBJ) $(HEADERS)
 	$(CC) $(FLAGS) $(OBJ) -o $(NAME) -lreadline -L$(shell brew --prefix readline)/lib
 
-%.o : %.c
+%.o : %.c $(HEADERS)
 	$(CC) $(FLAGS) -I$(shell brew --prefix readline)/include -c $< -o $@
 
 clean:

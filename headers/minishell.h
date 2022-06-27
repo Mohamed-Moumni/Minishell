@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/25 15:59:40 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 10:40:52 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include "builtins.h"
+# include <fcntl.h>
 
 typedef enum e_token
 {
@@ -43,7 +44,15 @@ typedef struct s_lexer
 	e_token			token;
 	struct s_lexer	*prev;
 	struct s_lexer	*next;
-}				t_lexer;
+}			t_lexer;
+
+typedef struct s_cmds
+{
+	e_token			type;
+	char			**argv;
+	struct s_cmds	*next;
+	struct s_cmds	*prev;
+}			t_cmds;
 
 int		ft_strlen(char *str);
 char	*ft_strchr(char *s, int c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/27 10:26:17 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 14:09:15 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ typedef struct s_history
 
 void		echo(char ** str);
 void		ft_pwd(t_envp *envp_list);
-int			ft_unset(t_envp *envp, char *env_to_unset);
-void		ft_cd(t_envp *envp, const char *str);
+int			ft_unset(t_envp *env, char *key);
+char		*ft_cd_home(char *path);
+int			ft_cd(t_envp *env, char *path);
 int			is_nl_valid(char *str);
 void		ft_print(char **str, int condition);
 t_envp		*creat_node(char *str);

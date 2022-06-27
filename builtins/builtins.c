@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/27 12:35:17 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 14:09:24 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,7 @@ void	ft_pwd(t_envp *envp_list)
 	printf("%s\n", pwd->value);
 }
 
-int	ft_unset(t_envp *envp, char *env_to_unset)
-{
-	t_envp	*ret;
-	t_envp	*prev_env;
-	t_envp	*next_env;
-
-	ret = search_key(envp, env_to_unset);
-	if (ret == NULL)
-		return (-1);
-	while (envp->next != ret)
-	{
-		envp = envp->next;
-	}
-	prev_env = envp;
-	next_env = envp->next->next;
-	prev_env->next = next_env;
-	free(ret);
-	return (1);
-}
-char	*ft_cd_home(t_envp *envp, char *path)
+char	*ft_cd_home(char *path)
 {
 	char	*home;
 
@@ -84,7 +65,7 @@ int	ft_cd(t_envp *env, char *path)
 	search_key(env, "OLDPWD")->value = pwd_env->value;
 	if (path[0] == '~' || !path[0])
 	{
-		path = ft_cd_home(env, path);
+		path = ft_cd_home( path);
 		home = 1;
 	}
 	if (path[0] == '/')

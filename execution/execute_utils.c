@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:31:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/28 09:42:40 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 09:52:03 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ char    *cmd_valid(char *cmd)
 	int		i;
 	char	*temp;
 
+	if (check_absolut_path(cmd))
+	{
+		if (!access(cmd, (X_OK & F_OK)))
+			return (cmd);
+		return (NULL);
+	}
 	i = 0;
 	paths = std_paths(_PATH_STDPATH);
 	while (paths[i])

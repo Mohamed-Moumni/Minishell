@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:58:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/28 09:34:20 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 09:53:25 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,17 @@ void	print_lexer(t_lexer *list)
 			list->token);
 		list = list->next;
 	}
+}
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free (tab[i]);
+		i++;
+	}
+	free(tab);
 }

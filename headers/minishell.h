@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/28 09:37:39 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 09:53:36 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int		split_operator(t_lexer **list, char *line);
 void	specify_operator(char *word, e_token *token);
 void	free_list(t_lexer *list);
 void	print_lexer(t_lexer *list);
+void	free_tab(char **tab);
 
 void	remove_quote(char **word, char quote);
 void	check_option(char *word, e_token *token);

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/28 09:53:36 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 10:36:45 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_cmds
 {
 	e_token			type;
 	t_char			*argv;
+	int				fd[2];
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }			t_cmds;

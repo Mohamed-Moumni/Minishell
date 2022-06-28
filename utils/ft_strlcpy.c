@@ -6,11 +6,12 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:52:16 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/24 18:27:32 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 09:34:11 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {

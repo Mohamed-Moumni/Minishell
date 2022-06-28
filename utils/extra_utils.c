@@ -6,11 +6,12 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:06:59 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/24 18:31:11 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 09:33:56 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 char	*ft_strrchr(char *s, int c)
 {

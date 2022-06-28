@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/27 15:11:21 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/28 09:37:39 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
-# include "builtins.h"
 # include <fcntl.h>
+# include <paths.h>
 
 typedef enum e_token
 {
@@ -93,6 +93,8 @@ void	check_option(char *word, e_token *token);
 void	check_term(char **word, e_token *token);
 char	*split_redirection(t_lexer **list, char *word);
 e_token	ft_tokenize(char **word);
+// char		*cmd_valid(char *cmd);
+
 
 /* Buitlins Functions */
 

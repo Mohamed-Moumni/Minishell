@@ -6,10 +6,11 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/26 17:00:06 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 09:35:30 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
 // t_export	*export_node(char *key, char *value)

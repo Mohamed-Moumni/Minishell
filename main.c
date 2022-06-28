@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/27 14:22:12 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/28 09:43:36 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./headers/minishell.h"
+#include "./headers/builtins.h"
 
 void	replace_content(t_lexer *node)
 {
@@ -48,16 +49,16 @@ void	adjust_heredoc(t_lexer *list)
 
 int	main(void)
 {
-	t_lexer	*list;
+	// t_lexer	*list;
 
-	while (1)
-	{
-		list = get_lexer(readline("@minishell >> "));
-		adjust_heredoc(list);
-		if (list)
-			print_lexer(list);
-		start_execution(list);
-	}
+	// while (1)
+	// {
+	// 	list = get_lexer(readline("@minishell >> "));
+	// 	adjust_heredoc(list);
+	// 	if (list)
+	// 		print_lexer(list);
+	// 	start_execution(list);
+	// }
 	// char *line;
 	// line = NULL;
 	// char *read_line;
@@ -66,5 +67,9 @@ int	main(void)
 	// 	add_history(read_line);
 	// }
 	// printf("%s\n", read_line);
+	char *cmd;
+
+	cmd = cmd_valid("wc");
+	execve(cmd, NULL, NULL);
 	return (0);
 }

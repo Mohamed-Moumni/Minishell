@@ -3,19 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/27 14:09:15 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/28 09:39:11 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 #define BUILTINS_H
 
-#include "minishell.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <paths.h>
 
-#define EXPORT_KEY "declare -x "
+# define EXPORT_KEY "declare -x "
 
 typedef struct s_envp
 {
@@ -55,6 +62,9 @@ t_export	*env_to_expo_list(char **env);
 t_export	*export_node(char *key, char *value);
 t_export	*last_expo(t_export *export);
 void		ft_swap(t_envp *a, t_envp *b);
+char		*cmd_valid(char *cmd);
+char		**std_paths(char *str);
+int			check_absolut_path(char *cmd);
 t_envp		*ft_list_last(t_envp *env_list);
 
 #endif

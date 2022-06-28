@@ -6,11 +6,12 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:52 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/25 13:20:54 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 09:34:40 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 void	remove_quote(char **word, char quote)
 {

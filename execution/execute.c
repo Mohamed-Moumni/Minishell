@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/27 21:25:30 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 16:16:22 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,37 +106,69 @@ int	element_count(t_char *list)
 	return (n);
 }
 
-int	treat_word(t_cmds *cmds, t_lexer *node, e_token token)
+t_cmds	*cmd_last_node(t_cmds *cmd)
 {
-	char		*start;
-	char		*word;
-	int			word_len;
+	t_cmds	*tmp;
 
-	if (!add_node_cmd(&cmds, WORD))
+	tmp = cmd;
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
+}
+
+int	treat_word(t_cmds **cmds, t_lexer *node, e_token token)
+{
+	char	*start;
+	char	*end;
+	char	*word;
+
+	if (!add_node_cmd(cmds, token))
 		return (0);
+	if (node->prev && node->prev->token == HEREDOC) 
+		return (add_char_node(&cmd_last_node(*cmds)->argv, ft_strdupi(node->content, ft_strlen(node->content))));
+	node->content = ft_strtrim(node->content, " ");
 	start = node->content;
-	while (start[0] && node->content[0])
+	end = start + 1;
+	while (start[0] || end[0])
 	{
-		start = ft_strchr(node->content, ' ');
-		word_len = advanced_strlen(node->content, start);
-		if (word_len > 0)
+		if ((end[0] == ' ' && between_quote(start, end, '"') \
+			&& between_quote(start, end, '\'') ) || !end[0])
 		{
-			word = ft_substr(node->content, 0, word_len);
-			start = quote_handle(&word, node->content, start);
-			if (!start)
+			word = hundle_quote(ft_substr(start, 0, advanced_strlen(start, end)));
+			if (!word)
 				return (0);
+			if (!add_char_node(&cmd_last_node(*cmds)->argv, word))
+				return (0);
+			start = end + 1;
 		}
-		node->content = start + 1;
-		if (!add_char_node(&cmds->argv, word))
-			return (0);
+		end++;
 	}
-	print_char(cmds->argv);
 	return (1);
 }
 
-int	treat_redir(t_cmds *cmds, t_lexer *node, e_token token)
+int	treat_redir(t_cmds **cmds, t_lexer *node)
 {
-	
+	// t_cmds	*tmp;
+
+	if (!treat_word(cmds, node->next, node->token))
+		return (0);
+	// tmp = cmds;
+	// while (tmp->next)
+	// 	tmp = tmp->next;
+	// if (element_count(tmp->argv) > 1)
+	return (1);
+}
+
+void	print_cmd(t_cmds *cmd)
+{
+	while (cmd)
+	{
+		printf("----------------------------\n");
+		print_char(cmd->argv);
+		printf("token: %d\n", cmd->type);
+		printf("-----------------------\n");
+		cmd = cmd->next;
+	}
 }
 
 int start_execution(t_lexer *list)
@@ -148,18 +180,20 @@ int start_execution(t_lexer *list)
 	cmds = NULL;
 	while (tmp)
 	{
-		if (tmp->token == 0)
+		if (tmp->token == WORD)
 		{
-			if (!treat_word(cmds, tmp, WORD))
+			if (!treat_word(&cmds, tmp, WORD))
 				return (0);
 		}
 		else
 		{
-			if (!treat_redir(cmds, tmp, UNCHECKED))
+			if (!treat_redir(&cmds, tmp))
 				return (0);
+			tmp = tmp->next;
 		}
 		tmp = tmp->next;
 	}
+	print_cmd(cmds);
 	return (1);
 }
 

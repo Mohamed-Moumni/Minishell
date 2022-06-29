@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:21:22 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/25 16:22:52 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/29 13:50:12 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ char	*ft_strtrim(char *s1, char *set)
 		str = ft_strdupi("", 0);
 	else
 		str = ft_strdupi(&s1[i], (end - i));
+	free(s1);
 	return (str);
 }

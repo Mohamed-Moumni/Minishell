@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:03 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/27 15:26:18 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:39:54 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	between_quote(char *line, char *operator, char quote)
 	first_quote = ft_strchr(line, quote);
 	if (first_quote[0])
 	{
-		second_quote = ft_strrchr(line, quote);
+		second_quote = ft_strchr(first_quote + 1, quote);
 		if (second_quote == first_quote)
 		{
 			printf("error! unmatched quote\n");

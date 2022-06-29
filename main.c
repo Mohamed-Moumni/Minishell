@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/27 14:22:12 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 15:58:44 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	replace_content(t_lexer *node)
 	new_content = ft_strdupi("", 0);
 	while (ft_strcmp(line, node->content))
 	{
-		printf("line: %s\n", line);
+		printf("line: |%s|\n", line);
 		line = ft_strjoin(line, "\n");
 		new_content = ft_strjoin(new_content, line);
 		printf("new content:\n%s", new_content);
@@ -54,8 +54,10 @@ int	main(void)
 	{
 		list = get_lexer(readline("@minishell >> "));
 		adjust_heredoc(list);
+		printf("---------------------------------\n");
 		if (list)
 			print_lexer(list);
+		printf("---------------------------------\n");
 		start_execution(list);
 	}
 	// char *line;

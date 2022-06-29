@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/27 15:28:27 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 16:10:59 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ typedef enum e_token
 	DOUBLE_QUOTE,		// "		3
 	PIPE,				// |		4
 	RIGHT_REDIR,		//			5
-	DOUBLE_RIGHT_REDIR,	//			6	
+	DOUBLE_RIGHT_REDIR,	//			6
 	LEFT_REDIR,			//			7
-	DOUBLE_LEFT_REDIR,	//			8
+	HEREDOC,			//			8
 	UNCHECKED,			//			9
 	FILENAME			//			10
 }			e_token;
@@ -70,9 +70,11 @@ char	*ft_substr(char *s, int start, int len);
 char	*ft_strdupi(const char *s1, int l);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strrchr(char *s, int c);
+char	*ft_strtrim(char *s1, char *set);
 
-char	*single_quote(char **word, char *line, char *quote, char *first_q);
-char	*double_quote(char **word, char *line, char *quote, char *first_q);
+// int		double_quote(char **word);
+// int		single_quote(char **word);
+char	*hundle_quote(char	*word);
 char	*add_before_quote(char *quote, char *line);
 char	*quote_handle(char **word, char *line, char *start);
 int		between_quote(char *line, char *operator, char quote);
@@ -87,8 +89,9 @@ int		split_operator(t_lexer **list, char *line);
 void	specify_operator(char *word, e_token *token);
 void	free_list(t_lexer *list);
 void	print_lexer(t_lexer *list);
+int		ft_char_counter(char *str, char ch);
 
-void	remove_quote(char **word, char quote);
+void	remove_quote(char **word);
 void	check_option(char *word, e_token *token);
 void	check_term(char **word, e_token *token);
 char	*split_redirection(t_lexer **list, char *word);

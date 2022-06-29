@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:58:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/28 09:53:25 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:32:44 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,18 @@ void	free_tab(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+void	write_in_file(int fd)
+{
+	char *temp;
+
+	temp = get_next_line(fd);
+	while (temp)
+	{
+		write (fd, temp, ft_strlen(temp));
+		free(temp);
+		temp = get_next_line(fd);	
+	}
+	free (temp);
 }

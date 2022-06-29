@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/28 09:35:30 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:27:21 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	ft_export(t_envp *envp_list)
 	t_envp	*temp;
 
 	temp = envp_list;
+	ft_env_sort(envp_list);
 	while (temp)
 	{
 		env_with_ex_key(temp->key, temp->value);

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/28 10:36:45 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:32:52 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <paths.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+
+# define BUFFER_SIZE 1
 
 typedef enum e_token
 {
@@ -95,6 +99,13 @@ void	check_option(char *word, e_token *token);
 void	check_term(char **word, e_token *token);
 char	*split_redirection(t_lexer **list, char *word);
 e_token	ft_tokenize(char **word);
+
+// Get_next_line 
+
+char	*ft_strdup(char *s1);
+char	*get_next_line(int fd);
+void	write_in_file(int fd);
+
 // char		*cmd_valid(char *cmd);
 
 

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/28 09:39:11 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:06:52 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ char		*cmd_valid(char *cmd);
 char		**std_paths(char *str);
 int			check_absolut_path(char *cmd);
 t_envp		*ft_list_last(t_envp *env_list);
-
+void		ft_export(t_envp *envp_list);
 #endif

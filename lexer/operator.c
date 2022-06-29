@@ -6,11 +6,12 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:50:36 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 16:11:56 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:17:00 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 int	create_node_lex(t_lexer **list, char *line, int *i, int *j)
 {

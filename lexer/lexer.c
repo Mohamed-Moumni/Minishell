@@ -6,11 +6,12 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:03 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/28 15:39:54 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:18:51 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 void	node_init(t_lexer **list, char *word, e_token token)
 {

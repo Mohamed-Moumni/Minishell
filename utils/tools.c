@@ -6,11 +6,12 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:58:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/24 18:28:07 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:32:44 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 void	free_list(t_lexer *list)
 {
@@ -33,4 +34,31 @@ void	print_lexer(t_lexer *list)
 			list->token);
 		list = list->next;
 	}
+}
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free (tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+void	write_in_file(int fd)
+{
+	char *temp;
+
+	temp = get_next_line(fd);
+	while (temp)
+	{
+		write (fd, temp, ft_strlen(temp));
+		free(temp);
+		temp = get_next_line(fd);	
+	}
+	free (temp);
 }

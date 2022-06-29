@@ -6,11 +6,12 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:34:00 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 15:02:52 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:18:57 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 char	*hundle_quote(char	*word)
 {

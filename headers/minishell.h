@@ -6,7 +6,7 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 16:10:59 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:18:02 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
-# include "builtins.h"
 # include <fcntl.h>
+# include <paths.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+
+# define BUFFER_SIZE 1
 
 typedef enum e_token
 {
@@ -57,6 +61,7 @@ typedef struct s_cmds
 {
 	e_token			type;
 	t_char			*argv;
+	int				fd[2];
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }			t_cmds;
@@ -89,15 +94,23 @@ int		split_operator(t_lexer **list, char *line);
 void	specify_operator(char *word, e_token *token);
 void	free_list(t_lexer *list);
 void	print_lexer(t_lexer *list);
-int		ft_char_counter(char *str, char ch);
+void	free_tab(char **tab);
 
 void	remove_quote(char **word);
 void	check_option(char *word, e_token *token);
 void	check_term(char **word, e_token *token);
 char	*split_redirection(t_lexer **list, char *word);
 e_token	ft_tokenize(char **word);
-
 int 	start_execution(t_lexer *list);
+
+// Get_next_line 
+
+char	*ft_strdup(char *s1);
+char	*get_next_line(int fd);
+void	write_in_file(int fd);
+
+// char		*cmd_valid(char *cmd);
+
 
 /* Buitlins Functions */
 

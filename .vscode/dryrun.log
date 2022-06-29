@@ -1,0 +1,15 @@
+make --dry-run --keep-going --print-directory
+make: brew: Command not found
+
+make: Entering directory `/Users/mmoumni/Desktop/Minishell'
+make: brew: Command not found
+
+gcc -Wall -Wextra -Werror -I/include -c main.c -o main.o
+gcc -Wall -Wextra -Werror -I/include -c execution/execute_utils.c -o execution/execute_utils.o
+gcc -Wall -Wextra -Werror -I/include -c execution/execute.c -o execution/execute.o
+gcc -Wall -Wextra -Werror builtins/builtins_utils.o builtins/builtins.o builtins/export.o lexer/lexer.o lexer/operator.o lexer/quote.o lexer/tokenize.o utils/extra_utils.o utils/ft_split.o utils/tools.o utils/ft_last.o utils/ft_strlcpy.o utils/utils.o main.o execution/execute_utils.o execution/execute.o -o minishell -lreadline -L/lib
+make: Leaving directory `/Users/mmoumni/Desktop/Minishell'
+ 
+make: brew: Command not found
+make: brew: Command not found
+

@@ -6,11 +6,16 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:21:22 by yait-iaz          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/29 13:50:12 by yait-iaz         ###   ########.fr       */
+=======
+/*   Updated: 2022/06/28 09:34:15 by mmoumni          ###   ########.fr       */
+>>>>>>> ae6494b8bbc3b4769c02b9b3dadf98c078cbbb29
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 static int	ft_strchri(char *s, char c)
 {

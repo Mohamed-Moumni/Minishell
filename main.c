@@ -6,11 +6,12 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 15:58:44 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:16:58 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./headers/minishell.h"
+#include "./headers/builtins.h"
 
 void	replace_content(t_lexer *node)
 {
@@ -46,7 +47,7 @@ void	adjust_heredoc(t_lexer *list)
 	}
 }
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	t_lexer	*list;
 
@@ -68,5 +69,13 @@ int	main(void)
 	// 	add_history(read_line);
 	// }
 	// printf("%s\n", read_line);
+	// char *cmd;
+
+	// cmd = cmd_valid("wc");
+	// execve(cmd, NULL, NULL);
+	t_envp *envp;
+	
+	envp = envp_to_list(env);
+	ft_export(envp);
 	return (0);
 }

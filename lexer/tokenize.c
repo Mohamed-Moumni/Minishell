@@ -6,11 +6,12 @@
 /*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:52 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 12:34:20 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:19:00 by yait-iaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 int	ft_char_counter(char *str, char ch)
 {

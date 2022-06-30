@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/29 20:16:55 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:23:25 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
@@ -87,7 +88,7 @@ void	print_char(t_char *ch)
 	tmp = ch;
 	while (tmp)
 	{
-		printf("arg: %s\n", tmp->argv);
+		printf("arg: \n%s\n", tmp->argv);
 		tmp = tmp->next;
 	}
 }
@@ -117,7 +118,7 @@ t_cmds	*cmd_last_node(t_cmds *cmd)
 	return (tmp);
 }
 
-int	treat_word(t_cmds **cmds, t_lexer *node, e_token token)
+int	treat_word(t_cmds **cmds, t_lexer *node, t_envp *env, e_token token)
 {
 	char	*start;
 	char	*end;
@@ -125,38 +126,69 @@ int	treat_word(t_cmds **cmds, t_lexer *node, e_token token)
 
 	if (!add_node_cmd(cmds, token))
 		return (0);
-	if (node->prev && node->prev->token == HEREDOC) 
+	if (node->prev && node->prev->token == HEREDOC)
+	{
+		ft_expand_heredoc(&(node->content), env);
 		return (add_char_node(&cmd_last_node(*cmds)->argv, ft_strdupi(node->content, ft_strlen(node->content))));
+	}
 	node->content = ft_strtrim(node->content, " ");
 	start = node->content;
-	end = start + 1;
-	while (start[0] || end[0])
+	end = start;
+	while (start[0] && end[0])
 	{
+		end++;
 		if ((end[0] == ' ' && between_quote(start, end, '"') \
-			&& between_quote(start, end, '\'') ) || !end[0])
+			&& between_quote(start, end, '\'')) || !end[0])
 		{
-			word = hundle_quote(ft_substr(start, 0, advanced_strlen(start, end)));
-			if (!word)
-				return (0);
-			if (!add_char_node(&cmd_last_node(*cmds)->argv, word))
-				return (0);
+			printf("start: |%s| -> |%s|\n", start, end);
+			if (start[0] != ' ')
+			{	
+				word = hundle_quote(ft_substr(start, 0, \
+					advanced_strlen(start, end)), env);
+				if (!word)
+					return (0);
+				if (!add_char_node(&cmd_last_node(*cmds)->argv, word))
+					return (0);
+			}
 			start = end + 1;
 		}
-		end++;
 	}
 	return (1);
 }
 
-int	treat_redir(t_cmds **cmds, t_lexer *node)
+t_char	*char_last_node(t_char *node)
 {
-	// t_cmds	*tmp;
+	t_char *ch;
 
-	if (!treat_word(cmds, node->next, node->token))
+	ch = node;
+	while (ch->next)
+		ch = ch->next;
+	return (ch);
+}
+
+int	adjust_filename(t_cmds *cmd)
+{
+	t_char	*tmp;
+	t_cmds	*prev_cmd;
+
+	tmp = cmd->argv->next;
+	cmd->argv->next = NULL;
+	prev_cmd = cmd->prev;
+	char_last_node(prev_cmd->argv)->next = tmp;
+	return (1);
+}
+
+int	treat_redir(t_cmds **cmds, t_envp *env, t_lexer *node)
+{
+	t_cmds	*tmp;
+
+	if (!treat_word(cmds, node->next, env, node->token))
 		return (0);
-	// tmp = cmds;
-	// while (tmp->next)
-	// 	tmp = tmp->next;
-	// if (element_count(tmp->argv) > 1)
+	tmp = *cmds;
+	while (tmp->next)
+		tmp = tmp->next;
+	if (element_count(tmp->argv) > 1)
+		adjust_filename(cmd_last_node(*cmds));
 	return (1);
 }
 
@@ -172,7 +204,7 @@ void	print_cmd(t_cmds *cmd)
 	}
 }
 
-int start_execution(t_lexer *list)
+int start_execution(t_lexer *list, t_envp *env)
 {
 	t_cmds	*cmds;
 	t_lexer	*tmp;
@@ -183,12 +215,12 @@ int start_execution(t_lexer *list)
 	{
 		if (tmp->token == WORD)
 		{
-			if (!treat_word(&cmds, tmp, WORD))
+			if (!treat_word(&cmds, tmp, env, WORD))
 				return (0);
 		}
 		else
 		{
-			if (!treat_redir(&cmds, tmp))
+			if (!treat_redir(&cmds, env, tmp))
 				return (0);
 			tmp = tmp->next;
 		}
@@ -198,110 +230,110 @@ int start_execution(t_lexer *list)
 	return (1);
 }
 
-void	run_pipe(t_cmds *cmds)
-{
-	char	**tab;
-	char	**env;
-	int		pid;
+// void	run_pipe(t_cmds *cmds)
+// {
+// 	char	**tab;
+// 	char	**env;
+// 	int		pid;
 	
-	if (pipe(cmds->fd) == -1)
-		return ;
-	if (cmds->prev == NULL)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-				close (cmds->fd[0]);
-				dup2 (cmds->fd[1], 1);
-				close (cmds->fd[1]);
-				expande(cmds->argv);
-				tab = t_char_to_argv();
-				env = env_list_to_tab();
-				execve(tab[0], tab, env);
-		}
-	}
-	else
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			close(cmds->prev->fd[1]);
-			dupe2(cmds->prev->fd[0], 0);
-			close(cmds->prev->fd[0]);
-			close(cmds->fd[0]);
-			dupe2(cmds->fd[1], 1);
-			close(cmds->fd[1]);
-			expande(cmds->argv);
-			tab = t_char_to_argv();
-			env = env_list_to_tab();
-			execve(tab[0], tab, env);
-		}
-	}
-	waitpid(pid, NULL, 0);
-}
+// 	if (pipe(cmds->fd) == -1)
+// 		return ;
+// 	if (cmds->prev == NULL)
+// 	{
+// 		pid = fork();
+// 		if (pid == 0)
+// 		{
+// 				close (cmds->fd[0]);
+// 				dup2 (cmds->fd[1], 1);
+// 				close (cmds->fd[1]);
+// 				expande(cmds->argv);
+// 				tab = t_char_to_argv();
+// 				env = env_list_to_tab();
+// 				execve(tab[0], tab, env);
+// 		}
+// 	}
+// 	else
+// 	{
+// 		pid = fork();
+// 		if (pid == 0)
+// 		{
+// 			close(cmds->prev->fd[1]);
+// 			dupe2(cmds->prev->fd[0], 0);
+// 			close(cmds->prev->fd[0]);
+// 			close(cmds->fd[0]);
+// 			dupe2(cmds->fd[1], 1);
+// 			close(cmds->fd[1]);
+// 			expande(cmds->argv);
+// 			tab = t_char_to_argv();
+// 			env = env_list_to_tab();
+// 			execve(tab[0], tab, env);
+// 		}
+// 	}
+// 	waitpid(pid, NULL, 0);
+// }
 
-void	run_redirection(t_cmds *cmds)
-{
-	char	**tab;
-	char	**env;
-	int		pid;
-	char	*buff;
-	int		fd_file;
+// void	run_redirection(t_cmds *cmds)
+// {
+// 	char	**tab;
+// 	char	**env;
+// 	int		pid;
+// 	char	*buff;
+// 	int		fd_file;
 
-	if (cmds->prev == NULL)
-	{
-		expande(cmds->argv);
-		tab = t_char_to_argv();
-		env = env_list_to_tab();
-		if (cmds->type == RIGHT_REDIR)
-		{
-			fd_file = open(tab[0], (O_CREAT |  O_WRONLY | O_TRUNC), 0644);
-			if (fd_file == -1)
-				return ;
-			if (read (STDIN_FILENO, buff, 0) == -1)
-				return ;
-			if (write(fd_file, buff, 0) == -1)
-				return ;
-		}
-		else if (cmds->type == DOUBLE_RIGHT_REDIR)
-		{
-			fd_file = open(tab[0], (O_CREAT &  O_WRONLY & O_APPEND), 0644);
-			if (fd_file == -1)
-				return ;
-			if (read (STDIN_FILENO, buff, 0) == -1)
-				return ;
-			if (write(fd_file, buff, 0) == -1)
-				return ;
-		}
-	}
-	else
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (cmds->type == RIGHT_REDIR)
-			{
-				fd_file = open(tab[0], (O_CREAT &  O_WRONLY & O_TRUNC), 0644);
-				if (fd_file == -1)
-					return ;		
-				close (cmds->prev->fd[1]);
-				if (read(cmds->prev->fd[0], buff, 0) == -1)
-					return ;
-				if (write(fd_file, buff, 0) == -1)
-					return ;
-			}
-			else if (cmds->type == DOUBLE_RIGHT_REDIR)
-			{
-				fd_file = open(tab[0], (O_CREAT &  O_WRONLY & O_APPEND), 0644);
-				if (fd_file == -1)
-					return ;
-				close (cmds->prev->fd[1]);
-				if (read (cmds->prev->fd[0], buff, 0) == -1)
-					return ;
-				if (write(fd_file, buff, 0) == -1)
-					return ;
-			}
-		}
-		waitpid (pid, NULL, 0);
-	}
-}
+// 	if (cmds->prev == NULL)
+// 	{
+// 		expande(cmds->argv);
+// 		tab = t_char_to_argv();
+// 		env = env_list_to_tab();
+// 		if (cmds->type == RIGHT_REDIR)
+// 		{
+// 			fd_file = open(tab[0], (O_CREAT |  O_WRONLY | O_TRUNC), 0644);
+// 			if (fd_file == -1)
+// 				return ;
+// 			if (read (STDIN_FILENO, buff, 0) == -1)
+// 				return ;
+// 			if (write(fd_file, buff, 0) == -1)
+// 				return ;
+// 		}
+// 		else if (cmds->type == DOUBLE_RIGHT_REDIR)
+// 		{
+// 			fd_file = open(tab[0], (O_CREAT &  O_WRONLY & O_APPEND), 0644);
+// 			if (fd_file == -1)
+// 				return ;
+// 			if (read (STDIN_FILENO, buff, 0) == -1)
+// 				return ;
+// 			if (write(fd_file, buff, 0) == -1)
+// 				return ;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		pid = fork();
+// 		if (pid == 0)
+// 		{
+// 			if (cmds->type == RIGHT_REDIR)
+// 			{
+// 				fd_file = open(tab[0], (O_CREAT &  O_WRONLY & O_TRUNC), 0644);
+// 				if (fd_file == -1)
+// 					return ;		
+// 				close (cmds->prev->fd[1]);
+// 				if (read(cmds->prev->fd[0], buff, 0) == -1)
+// 					return ;
+// 				if (write(fd_file, buff, 0) == -1)
+// 					return ;
+// 			}
+// 			else if (cmds->type == DOUBLE_RIGHT_REDIR)
+// 			{
+// 				fd_file = open(tab[0], (O_CREAT &  O_WRONLY & O_APPEND), 0644);
+// 				if (fd_file == -1)
+// 					return ;
+// 				close (cmds->prev->fd[1]);
+// 				if (read (cmds->prev->fd[0], buff, 0) == -1)
+// 					return ;
+// 				if (write(fd_file, buff, 0) == -1)
+// 					return ;
+// 			}
+// 		}
+// 		waitpid (pid, NULL, 0);
+// 	}
+// }

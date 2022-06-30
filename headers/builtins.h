@@ -3,46 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/28 16:06:52 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:44:18 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 #define BUILTINS_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <paths.h>
-
-# define EXPORT_KEY "declare -x "
-
-typedef struct s_envp
-{
-	char			*key;
-	char			*value;
-	struct s_envp	*next;
-}t_envp;
-
-typedef struct s_export
-{
-	char	*key;
-	char	*value;
-	struct s_export *next;
-}t_export;
-
-typedef struct s_history
-{
-	char				*hist;
-	struct s_history	*next;
-}t_hist;
+#include "../headers/struct.h"
 
 void		echo(char ** str);
 void		ft_pwd(t_envp *envp_list);
@@ -67,4 +38,5 @@ char		**std_paths(char *str);
 int			check_absolut_path(char *cmd);
 t_envp		*ft_list_last(t_envp *env_list);
 void		ft_export(t_envp *envp_list);
+
 #endif

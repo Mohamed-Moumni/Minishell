@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 20:18:02 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:05:51 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,57 +14,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <paths.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-
-# define BUFFER_SIZE 1
-
-typedef enum e_token
-{
-	WORD,				//			0
-	OPTION,				// -		1
-	SINGLE_QUOTE,		// '		2
-	DOUBLE_QUOTE,		// "		3
-	PIPE,				// |		4
-	RIGHT_REDIR,		//			5
-	DOUBLE_RIGHT_REDIR,	//			6
-	LEFT_REDIR,			//			7
-	HEREDOC,			//			8
-	UNCHECKED,			//			9
-	FILENAME			//			10
-}			e_token;
-
-typedef struct s_lexer
-{
-	char			*content;
-	e_token			token;
-	struct s_lexer	*prev;
-	struct s_lexer	*next;
-}			t_lexer;
-
-
-typedef struct s_char
-{
-	char 			*argv;
-	struct s_char	*next;
-}				t_char;
-
-typedef struct s_cmds
-{
-	e_token			type;
-	t_char			*argv;
-	int				fd[2];
-	struct s_cmds	*next;
-	struct s_cmds	*prev;
-}			t_cmds;
+# include "../headers/struct.h"
 
 int		ft_strlen(char *str);
 char	*ft_strchr(char *s, int c);
@@ -76,10 +26,10 @@ char	*ft_strdupi(const char *s1, int l);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strrchr(char *s, int c);
 char	*ft_strtrim(char *s1, char *set);
+size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
+char	*ft_strncpy(char *dest, char *src, unsigned int n);
 
-// int		double_quote(char **word);
-// int		single_quote(char **word);
-char	*hundle_quote(char	*word);
+char	*hundle_quote(char	*word, t_envp *env);
 char	*add_before_quote(char *quote, char *line);
 char	*quote_handle(char **word, char *line, char *start);
 int		between_quote(char *line, char *operator, char quote);
@@ -101,7 +51,9 @@ void	check_option(char *word, e_token *token);
 void	check_term(char **word, e_token *token);
 char	*split_redirection(t_lexer **list, char *word);
 e_token	ft_tokenize(char **word);
-int 	start_execution(t_lexer *list);
+int 	start_execution(t_lexer *list, t_envp *env);
+
+int		ft_expand(char	**word, t_envp *env, e_token token);
 
 // Get_next_line 
 
@@ -123,7 +75,7 @@ char	**ft_split(char const *s, char c);
 // void	envp_add_back(t_envp **envp_list, t_envp *node);
 // t_envp	*envp_to_list(char **envp);
 // t_envp	*creat_node(char *str);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 // t_envp	*search_key(t_envp *envp_list, char *key);
 // void	redirection(t_ast **tree, t_lexer **lex);
 

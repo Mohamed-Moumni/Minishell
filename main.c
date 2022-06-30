@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 20:16:58 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/30 18:37:08 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "./headers/struct.h"
 #include "./headers/minishell.h"
 #include "./headers/builtins.h"
 
@@ -24,10 +25,8 @@ void	replace_content(t_lexer *node)
 	new_content = ft_strdupi("", 0);
 	while (ft_strcmp(line, node->content))
 	{
-		printf("line: |%s|\n", line);
 		line = ft_strjoin(line, "\n");
 		new_content = ft_strjoin(new_content, line);
-		printf("new content:\n%s", new_content);
 		line = readline("> ");
 	}
 	free(node->content);
@@ -50,32 +49,19 @@ void	adjust_heredoc(t_lexer *list)
 int	main(int ac, char **av, char **env)
 {
 	t_lexer	*list;
+	t_envp	*env_list;
 
+	env_list = envp_to_list(env);
+	if (ac > 1)
+		return (0);
+	(void)av;
 	while (1)
 	{
 		list = get_lexer(readline("@minishell >> "));
 		adjust_heredoc(list);
-		printf("---------------------------------\n");
 		if (list)
 			print_lexer(list);
-		printf("---------------------------------\n");
-		start_execution(list);
+		start_execution(list, env_list);
 	}
-	// char *line;
-	// line = NULL;
-	// char *read_line;
-	// while ((read_line = readline(">>")))
-	// {
-	// 	add_history(read_line);
-	// }
-	// printf("%s\n", read_line);
-	// char *cmd;
-
-	// cmd = cmd_valid("wc");
-	// execve(cmd, NULL, NULL);
-	t_envp *envp;
-	
-	envp = envp_to_list(env);
-	ft_export(envp);
 	return (0);
 }

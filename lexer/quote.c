@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:34:00 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 20:18:57 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:23:52 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-char	*hundle_quote(char	*word)
+char	*hundle_quote(char	*word, t_envp *env)
 {
 	int i;
     char s;
@@ -24,6 +25,7 @@ char	*hundle_quote(char	*word)
 	if (!word)
 		return (NULL);
 	new_word = ft_strdupi("", 1);
+	ft_expand(&word, env);
     while(word[i])
     {
         if (s == 0 && (word[i] == '\'' || word[i] == '"'))

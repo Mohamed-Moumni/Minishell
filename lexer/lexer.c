@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:03 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 20:18:51 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/30 18:44:46 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
+#include "../headers/struct.h"
 
 void	node_init(t_lexer **list, char *word, e_token token)
 {
@@ -51,7 +52,7 @@ int	between_quote(char *line, char *operator, char quote)
 	if (first_quote[0])
 	{
 		second_quote = ft_strchr(first_quote + 1, quote);
-		if (second_quote == first_quote)
+		if (!second_quote[0])
 		{
 			printf("error! unmatched quote\n");
 			return (-1);

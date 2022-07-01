@@ -6,10 +6,11 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/30 20:45:31 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/01 11:36:32 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
@@ -31,12 +32,22 @@ void	echo(char ** str)
 }
 
 
-void	ft_pwd(t_envp *envp_list)
+void	ft_pwd(t_char *argv)
 {
-	t_envp	*pwd;
+	char	cwd[PASS_MAX];
+	char	*path;
+	t_char	*temp;
 
-	pwd = search_key(envp_list,"PWD");
-	printf("%s\n", pwd->value);
+	temp = argv->next;
+	if (temp != NULL)
+		printf("pwd: too many arguments\n");
+	else
+	{
+		path = getcwd(cwd, PASS_MAX);
+		if (!path)
+			return ;
+		printf("%s\n", path);
+	}
 }
 
 char	*ft_cd_home(char *path)
@@ -58,10 +69,11 @@ int	ft_cd(t_envp *env, char *path)
 {
 	int		home;
 	char	*pwd;
+	char	cwd[PATH_MAX];
 	t_envp	*pwd_env;
 
 	home = 0;
-	pwd = getcwd(NULL, 1000);
+	pwd = getcwd(cwd, PATH_MAX);
 	pwd_env = search_key(env, "PWD");
 	search_key(env, "OLDPWD")->value = pwd_env->value;
 	if (path[0] == '~' || !path[0])

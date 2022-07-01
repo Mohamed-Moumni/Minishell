@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 20:13:34 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/28 16:28:27 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:44:03 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 
 char	*ft_strdup(char *s1)

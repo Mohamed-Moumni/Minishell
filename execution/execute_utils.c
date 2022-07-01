@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:31:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/29 20:18:18 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:09:04 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
@@ -59,7 +60,8 @@ char	**std_paths(char *str)
 
 int	check_absolut_path(char *cmd)
 {
-	if (cmd[0] == '/')
+	if (cmd[0] == '/' || (ft_strlen(cmd) >= 2 && (cmd[0] == '.' && cmd[1] == '/'))||
+		(ft_strlen(cmd) >= 3 && (cmd[0] == '.' || cmd[1] == '.' || cmd[2] == '/')))
 		return (1);
 	return (0);
 }

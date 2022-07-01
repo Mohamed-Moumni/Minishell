@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:53:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/28 09:35:22 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/30 14:19:39 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
@@ -104,6 +105,8 @@ t_envp	*search_key(t_envp *envp_list, char *key)
 	t_envp	*tmp_envp;
 
 	tmp_envp = envp_list;
+	if (!key)
+		return (NULL);
 	while (tmp_envp)
 	{
 		if (ft_strcmp(tmp_envp->key, key) == 0)

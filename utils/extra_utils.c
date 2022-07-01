@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   extra_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:06:59 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/28 09:33:56 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:45:05 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 

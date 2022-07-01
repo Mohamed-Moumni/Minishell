@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 17:20:07 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/26 17:28:16 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:44:29 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/struct.h"
 
 void	history_command()

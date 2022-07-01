@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:52 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 20:19:00 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/30 13:44:54 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 

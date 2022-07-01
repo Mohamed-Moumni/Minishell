@@ -6,46 +6,17 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/30 20:45:52 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/01 11:04:56 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 #define BUILTINS_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <paths.h>
-
-# define EXPORT_KEY "declare -x "
-
-typedef struct s_envp
-{
-	char			*key;
-	char			*value;
-	struct s_envp	*next;
-}t_envp;
-
-typedef struct s_export
-{
-	char	*key;
-	char	*value;
-	struct s_export *next;
-}t_export;
-
-typedef struct s_history
-{
-	char				*hist;
-	struct s_history	*next;
-}t_hist;
+#include "../headers/struct.h"
 
 void		echo(char ** str);
-void		ft_pwd(t_envp *envp_list);
+void		ft_pwd(t_char *argv);
 int			ft_unset(t_envp *env, char *key);
 char		*ft_cd_home(char *path);
 int			ft_cd(t_envp *env, char *path);
@@ -67,7 +38,6 @@ char		**std_paths(char *str);
 int			check_absolut_path(char *cmd);
 t_envp		*ft_list_last(t_envp *env_list);
 void		ft_export(t_envp *envp_list);
-int			check_number(char **num);
-t_envp		*without_env(void);
-void		ft_env(char **env);
+t_envp      *without_env(void);
+void        ft_env(char **env);
 #endif

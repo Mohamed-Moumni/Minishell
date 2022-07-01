@@ -6,14 +6,15 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:34:00 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 20:54:43 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/01 16:11:14 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-char	*hundle_quote(char	*word)
+char	*hundle_quote(char	*word, t_envp *env)
 {
 	int i;
     char s;
@@ -24,7 +25,7 @@ char	*hundle_quote(char	*word)
 	if (!word)
 		return (NULL);
 	new_word = ft_strdupi("", 1);
-	
+	ft_expand(&word, env);
     while(word[i])
     {
         if (s == 0 && (word[i] == '\'' || word[i] == '"'))

@@ -6,10 +6,11 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:21:22 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/30 20:18:30 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/01 07:32:15 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 

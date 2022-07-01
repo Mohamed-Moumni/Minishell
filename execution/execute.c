@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/30 21:23:25 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/01 16:21:15 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int	treat_redir(t_cmds **cmds, t_envp *env, t_lexer *node)
 	tmp = *cmds;
 	while (tmp->next)
 		tmp = tmp->next;
-	if (element_count(tmp->argv) > 1)
+	if (element_count(tmp->argv) > 1 && node->token != PIPE)
 		adjust_filename(cmd_last_node(*cmds));
 	return (1);
 }

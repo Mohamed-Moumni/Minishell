@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/28 09:35:25 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/30 20:45:31 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,53 +103,39 @@ int		ft_unset(t_envp *env, char *key)
 	free(tmp2);
 	return (1);
 }
-// void	ft_cd(t_envp *envp, const char *str)
-// {
-// 	const char *pathname;
 
-// 	if (ft_strcmp((char *)str, "") == 0)
-// 	{
-// 		pathname = (const char *)envp->value[1];
-// 		chdir(pathname);
-// 	}
-// 	else
-// 	{
-		
-// 	}
-// }
+t_envp *without_env(void)
+{
+	t_envp *env;
+	char	cwd[PATH_MAX];
+	char	*pwd;
 
-// int main(int ac, char **av, char **env)
-// {
-// 	t_envp	*envp;
-// 	// char 	*dic;
-// 	// t_envp	*tmp;
-	
-// 	envp = envp_to_list(env);
-// 	// // ft_pwd(envp);
-// 	// // tmp = envp;
-// 	// // while (envp)
-// 	// // {
-// 	// // 	printf("%s=",envp->key);
-// 	// // 	printf("%s\n",envp->value);
-// 	// // 	envp = envp->next;
-// 	// // }
-// 	// t_envp *ret;
+	env = NULL;
+	pwd = NULL;
+	pwd = ft_strjoin("", "PWD=");
+	pwd = ft_strjoin(pwd, getcwd(cwd, PATH_MAX));
+	envp_add_back(&env, creat_node(pwd));
+	envp_add_back(&env, creat_node(SHLVL));
+	envp_add_back(&env, creat_node(USRBINENV));
+	return (env);
+}
 
-// 	// // ret = search_key(envp, av[1]);
-// 	// ft_unset(envp, av[1]);
-// 	// tmp = envp;
-// 	// while (envp)
-// 	// {
-// 	// 	printf("%s=",envp->key);
-// 	// 	printf("%s\n",envp->value);
-// 	// 	envp = envp->next;
-// 	// }
-// 	char *read_line;
-	
-// 	while ((read_line = readline("minishell>>")))
-// 	{
-// 		printf("%s\n", read_line);
-// 		ft_cd(envp, read_line);
-// 		ft_pwd(envp);
-// 	}
-// }
+void	ft_env(char **env)
+{
+	t_envp	*env_list;
+	t_envp	*temp;
+
+	if (!(*env))
+	{
+		env_list = without_env();	
+	}
+	else{	
+		env_list = envp_to_list(env);
+	}
+	temp = env_list;
+	while (temp)
+	{
+		printf("%s=%s\n",temp->key,temp->value);
+		temp = temp->next;
+	}
+}

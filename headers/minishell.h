@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 20:18:02 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/30 20:28:08 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,22 @@
 # include <paths.h>
 # include <sys/types.h>
 # include <sys/uio.h>
+# include <limits.h>
 
 # define BUFFER_SIZE 1
+
+# define MIN "0"
+# define MAX "255"
+# define MINISHELL "minishell"
+# define SHLVL "SHLVL=1"
+# define USRBINENV "_=./minishell"
+
+typedef struct	s_minishell
+{
+	unsigned char exi_status;	
+}t_mshell;
+
+t_mshell g_mshell;
 
 typedef enum e_token
 {

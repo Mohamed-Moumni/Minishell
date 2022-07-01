@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 20:16:58 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/30 20:47:21 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ void	adjust_heredoc(t_lexer *list)
 
 int	main(int ac, char **av, char **env)
 {
-	t_lexer	*list;
+	// t_lexer	*list;
 
-	while (1)
-	{
-		list = get_lexer(readline("@minishell >> "));
-		adjust_heredoc(list);
-		printf("---------------------------------\n");
-		if (list)
-			print_lexer(list);
-		printf("---------------------------------\n");
-		start_execution(list);
-	}
+	// while (1)
+	// {
+	// 	list = get_lexer(readline("@minishell >> "));
+	// 	adjust_heredoc(list);
+	// 	printf("---------------------------------\n");
+	// 	if (list)
+	// 		print_lexer(list);
+	// 	printf("---------------------------------\n");
+	// 	start_execution(list);
+	// }
 	// char *line;
 	// line = NULL;
 	// char *read_line;
@@ -73,9 +73,9 @@ int	main(int ac, char **av, char **env)
 
 	// cmd = cmd_valid("wc");
 	// execve(cmd, NULL, NULL);
-	t_envp *envp;
-	
-	envp = envp_to_list(env);
-	ft_export(envp);
+	(void)av;
+	(void)ac;
+	// printf("%s\n",env[0]);
+	ft_env(env);
 	return (0);
 }

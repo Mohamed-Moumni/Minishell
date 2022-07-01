@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yait-iaz <yait-iaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:34:00 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/29 20:18:57 by yait-iaz         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:54:43 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*hundle_quote(char	*word)
 	if (!word)
 		return (NULL);
 	new_word = ft_strdupi("", 1);
+	
     while(word[i])
     {
         if (s == 0 && (word[i] == '\'' || word[i] == '"'))

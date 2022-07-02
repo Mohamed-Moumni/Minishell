@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/01 16:11:10 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/02 18:55:37 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,19 @@ int		ft_expand(char	**word, t_envp *env);
 
 // Get_next_line 
 
-char	*ft_strdup(char *s1);
-char	*get_next_line(int fd);
-void	write_in_file(int fd);
+char            *ft_strdup(char *s1);
+char            *get_next_line(int fd);
+void            write_in_file(int fd);
+char            **conv_t_char_to_tab(t_char *tchar_list);
+unsigned int	t_char_size(t_char *tchar_list);
+char            **list_to_envp(t_envp *env_list);
+unsigned int	t_envp_size(t_envp *env_list);
+unsigned int	how_many_pipes(t_cmds *cmds);
+void            index_cmds(t_cmds **cmds);
 
-// char		*cmd_valid(char *cmd);
-
-
-/* Buitlins Functions */
-
-// int		is_nl_valid(char *str);
-// void	ft_print(char **str, int condition);
-// void	echo(char ** str);
-// int		is_nl_valid(char *str);
-// void	ft_print(char **str, int condition);
 char	**ft_split(char const *s, char c);
-// void	envp_add_back(t_envp **envp_list, t_envp *node);
-// t_envp	*envp_to_list(char **envp);
-// t_envp	*creat_node(char *str);
+
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
-// t_envp	*search_key(t_envp *envp_list, char *key);
-// void	redirection(t_ast **tree, t_lexer **lex);
+char	*ft_strjoin_leak(char *s1, char *s2, int cond);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:53:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/30 14:19:39 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/02 15:01:07 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,18 +116,39 @@ t_envp	*search_key(t_envp *envp_list, char *key)
 	return (NULL);
 }
 
-// int main(int ac, char **av, char **env)
-// {
-// 	t_envp *list;
+unsigned int	t_envp_size(t_envp *env_list)
+{
+	unsigned int	size;
+	t_envp			*temp;
 
-// 	list = envp_to_list(env);
-// 	// list = creat_node(env[0]);
-// 	while (list)
-// 	{
-// 		// printf("hell\n");
-// 		printf("%s=",list->key);
-// 		printf("%s\n",list->value);
-// 		list = list->next;
-// 	}
-// 	return (0);
-// }
+	temp = env_list;
+	size = 0;
+	while (temp)
+	{
+		size++;
+		temp = temp->next;
+	}
+	return (size);
+}
+
+char	**list_to_envp(t_envp *env_list)
+{
+	char **env_tab;
+	t_envp *temp;
+	unsigned int i;
+
+	temp = env_list;
+	i = 0;
+	env_tab = (char **)malloc(sizeof(char *) * (t_envp_size(env_list) + 1));
+	if (!env_tab)
+		return (NULL);
+	while (temp)
+	{
+		env_tab[i] = ft_strjoin(temp->key, "=");
+		env_tab[i] = ft_strjoin(env_tab[i], temp->value);
+		i++;
+		temp = temp->next;
+	}
+	env_tab[i] = NULL;
+	return (env_tab);
+}

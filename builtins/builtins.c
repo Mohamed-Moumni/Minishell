@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/01 11:36:32 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/02 15:25:03 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-void	echo(char ** str)
+void	ft_echo(char ** str)
 {
 	int	i;
 	
@@ -25,22 +25,19 @@ void	echo(char ** str)
 			break ;
 		i++;
 	}
-	if (is_nl_valid(str[i - 1]) == 0)
-		ft_print(&str[i], 1);
-	else
+	if (i > 0 && is_nl_valid(str[i - 1]) == 0)
 		ft_print(&str[i], 0);
+	else
+		ft_print(&str[i], 1);
 }
 
-
-void	ft_pwd(t_char *argv)
+void	ft_pwd(char **argv)
 {
-	char	cwd[PASS_MAX];
+	char	cwd[PATH_MAX];
 	char	*path;
-	t_char	*temp;
 
-	temp = argv->next;
-	if (temp != NULL)
-		printf("pwd: too many arguments\n");
+	if (argv[1] != NULL)
+		write(2, "pwd: too many arguments\n", 25);
 	else
 	{
 		path = getcwd(cwd, PASS_MAX);
@@ -132,11 +129,16 @@ t_envp *without_env(void)
 	return (env);
 }
 
-void	ft_env(char **env)
+void	ft_env(char **argv, char **env)
 {
 	t_envp	*env_list;
 	t_envp	*temp;
 
+	if (argv[1])
+	{
+		write(2, "Error invalid option\n", 22);
+		return ;	
+	}
 	if (!(*env))
 	{
 		env_list = without_env();	

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/01 12:02:19 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/02 20:21:06 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ t_export	*env_to_expo_list(char **env)
 	t_export	*export;
 	int			i;
 	char		**splited;
+	int			opwd_check;
+
+	opwd_check = 0;
 	i = 0;
 	export = NULL;
 	while (env[i])
 	{
 		splited = ft_split(env[i], '=');
-		export_add_back(&export, export_node(ft_append_exp_key(splited[0]), ft_append_dqoute(splited[1])));
+		export_add_back(&export, export_node(ft_append_exp_key(splited[0], &opwd_check), ft_append_dqoute(splited[1], &opwd_check)));
+		opwd_check = 0;
 		free(splited[0]);
 		free(splited[1]);
 		free(splited);
@@ -46,19 +50,27 @@ t_export	*env_to_expo_list(char **env)
 	return (export);
 }
 
-char	*ft_append_dqoute(char *str)
+char	*ft_append_dqoute(char *str, int *opwd_check)
 {
 	char *appended;
 
+	if (*opwd_check == 1)
+	{
+		appended = (char *)malloc(sizeof(char));
+		appended = "";
+		return (appended);
+	}
 	appended = ft_strjoin("\"", str);
 	appended = ft_strjoin(appended, "\"");
 	return (appended);	
 }
 
-char	*ft_append_exp_key(char *str)
+char	*ft_append_exp_key(char *str, int *opwd_check)
 {
 	char *appended;
 
+	if (ft_strcmp(str, "OLDPWD") == 0)
+		*opwd_check = 1;		
 	appended = ft_strjoin(EXPORT_KEY, str);
 	return (appended);
 }
@@ -88,10 +100,10 @@ t_export	*last_expo(t_export *export)
 	return (temp);
 }
 
-void	ft_env_sort(t_envp *list)
+void	ft_export_sort(t_export *list)
 {
-	t_envp	*temp1;
-	t_envp	*temp2;
+	t_export	*temp1;
+	t_export	*temp2;
 
 	temp1 = list;
 	while (temp1)
@@ -107,7 +119,7 @@ void	ft_env_sort(t_envp *list)
 	}
 }
 
-void	ft_swap(t_envp *a, t_envp *b)
+void	ft_swap(t_export *a, t_export *b)
 {
 	char	*temp_key;
 	char	*temp_value;
@@ -122,29 +134,48 @@ void	ft_swap(t_envp *a, t_envp *b)
 
 void	env_with_ex_key(char *key, char *value)
 {
-	printf("%s ",EXPORT_KEY);
-	printf("%s=\"%s\"\n",key, value);	
+	printf("%s=%s\n",key, value);	
 }
 
-void	ft_export(t_envp *envp_list)
+void	ft_export(t_export *export, t_char *args)
 {
-	t_envp	*temp;
+	t_export	*temp;
+	t_char		*temp_arg;
 
-	temp = envp_list;
-	ft_env_sort(envp_list);
-	while (temp)
+	temp = export;
+	temp_arg = args;
+	if (args->next == NULL)
 	{
-		env_with_ex_key(temp->key, temp->value);
-		temp = temp->next;
+		while (temp)
+		{
+			env_with_ex_key(temp->key, temp->value);
+			temp = temp->next;
+		}
+	}
+	else
+	{
+		while(temp_arg)
+		{
+			export_add_back(&export, export_node(temp_arg->argv, temp_arg->next->next->argv));
+			ft_export_sort(export);
+			temp_arg = temp_arg->next->next;
+		}
 	}
 }
 
-// int	main(int ac, char **av, char **env)
-// {
-// 	t_envp	*temp;
 
-// 	temp = envp_to_list(env);
-// 	ft_env_sort(temp);
-// 	ft_export(temp);
-// 	return (0);
+// t_export	*search_exportkey(t_export *export, char *key)
+// {
+// 	t_export *tmp_export;
+
+// 	tmp_export = export;
+// 	if (!key)
+// 		return (NULL);
+// 	while (tmp_export)
+// 	{
+// 		if (ft_strcmp(tmp_export->key, key) == 0)
+// 			return (tmp_export);
+// 		tmp_export = tmp_export->next;
+// 	}
+// 	return (NULL);
 // }

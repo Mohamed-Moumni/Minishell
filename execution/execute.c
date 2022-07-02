@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/01 16:02:59 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/02 20:18:41 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int	treat_redir(t_cmds **cmds, t_envp *env, t_lexer *node)
 	tmp = *cmds;
 	while (tmp->next)
 		tmp = tmp->next;
-	if (element_count(tmp->argv) > 1)
+	if (element_count(tmp->argv) > 1 && node->token != PIPE)
 		adjust_filename(cmd_last_node(*cmds));
 	return (1);
 }
@@ -226,10 +226,96 @@ int start_execution(t_lexer *list, t_envp *env)
 		}
 		tmp = tmp->next;
 	}
+	// run_execution(cmds, env);
 	print_cmd(cmds);
+	// ft_env(conv_t_char_to_tab(cmds->argv), list_to_envp(env));
+	// ft_echo(conv_t_char_to_tab(cmds->argv));
+	// ft_pwd(conv_t_char_to_tab(cmds->argv));
+	// ft_export(list_to_envp(env));
 	return (1);
 }
 
+// int	open_files(t_cmds *cmds)
+// {
+// 	t_cmds	*temp;
+
+// 	temp = cmds;
+// 	while (temp)
+// 	{
+// 		if (temp->type == RIGHT_REDIR)
+// 		{
+			
+// 		}
+// 	}
+// }
+// int	**open_pipes(int n)
+// {
+// 	int i;
+// 	int	*fds[2];
+
+// }
+
+// void	run_execution(t_cmds *cmds, t_envp *env)
+// {
+// 	unsigned int	pipe_n;
+// 	int				**fds;
+// 	t_cmds			*temp;
+// 	int				i;
+
+// 	temp = cmds;
+// 	pipe_n = how_many_pipes(cmds);
+// 	if (pipe_n == 0)
+// 	{
+// 		run_command(cmds, env, NULL, NULL);
+// 	}
+// 	else
+// 	{
+// 		i = 0;
+// 		while (temp)
+// 		{
+// 			if (temp->next->type == PIPE)
+// 			{
+// 				run_command(cmds, env, NULL, fds[i]);
+// 			}
+// 		}
+// 	}
+// }
+
+// void	run_command(t_cmds *cmds, t_envp *env, int *read_pipe, int *write_pipe)
+// {
+// 	char	**argv;
+// 	char	**envp;
+// 	int		pid;
+// 	int		status;
+
+// 	argv = conv_t_char_to_tab(cmds->argv);
+// 	envp = list_to_envp(env);
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		if (read_pipe == NULL && write_pipe == NULL)
+// 		{
+// 			argv[0] = cmd_valid(argv[0]);
+// 			if (argv[0] == NULL)
+// 				perror("command not found");
+// 			execve (cmd_valid(argv[0]), argv, envp);
+// 		}
+// 		else if(read_pipe == NULL)
+// 		{
+// 			close(write_pipe[0]);
+// 			dup2(write_pipe[1], 1);
+// 			close(write_pipe[1]);
+// 			if (argv[0] == NULL)
+// 				perror("command not found");
+// 			execve(cmd_valid(argv[0]), argv, envp);	
+// 		}
+// 		else if (write_pipe == NULL)
+// 		{
+// 			close(read_pipe[1])
+// 		}
+// 	}
+// 	waitpid(pid, &status, 0);
+// }
 // void	run_pipe(t_cmds *cmds)
 // {
 // 	char	**tab;
@@ -337,3 +423,5 @@ int start_execution(t_lexer *list, t_envp *env)
 // 		waitpid (pid, NULL, 0);
 // 	}
 // }
+
+

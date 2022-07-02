@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/01 16:02:45 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/02 20:19:12 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,14 @@ void	adjust_heredoc(t_lexer *list)
 
 int	main(int ac, char **av, char **env)
 {
-	t_lexer	*list;
-	t_envp	*env_list;
+	t_lexer		*list;
+	t_envp		*env_list;
+	// t_export	*export_list;
 
-	env_list = envp_to_list(env);
-	// if (ac > 1)
-	// 	return (0);
-	(void)ac;
 	(void)av;
+	(void)ac;
 	// (void)env;
+	env_list = envp_to_list(env);
 	while (1)
 	{
 		list = get_lexer(readline("@minishell >> "));
@@ -65,5 +64,6 @@ int	main(int ac, char **av, char **env)
 			print_lexer(list);
 		start_execution(list, env_list);
 	}
+	// ft_export(env);
 	return (0);
 }

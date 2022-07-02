@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:28:27 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/01 07:47:09 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/02 18:41:30 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,22 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <limits.h>
+# include <errno.h>
 
 # define BUFFER_SIZE 1
 # define SHLVL "SHLVL=1"
 # define USRBINENV  "_=./minishell"
 # define EXPORT_KEY "declare -x "
+
+
+typedef struct	s_update
+{
+	unsigned int	exit_status;
+	int				sh_level;
+	int				old_pwd;
+}t_upd;
+
+t_upd	g_minishell;
 
 typedef enum e_token
 {
@@ -63,8 +74,8 @@ typedef struct s_char
 typedef struct s_cmds
 {
 	e_token			type;
+	unsigned int	index;
 	t_char			*argv;
-	int				fd[2];
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }			t_cmds;
@@ -82,11 +93,4 @@ typedef struct s_export
 	char	*value;
 	struct s_export *next;
 }t_export;
-
-typedef struct s_history
-{
-	char				*hist;
-	struct s_history	*next;
-}t_hist;
-
 #endif

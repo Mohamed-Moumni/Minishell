@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/01 16:21:15 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/03 21:28:42 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,9 @@ int	treat_word(t_cmds **cmds, t_lexer *node, t_envp *env, e_token token)
 
 	if (!add_node_cmd(cmds, token))
 		return (0);
-	if (node->prev && node->prev->token == HEREDOC)
+	if (node->prev && node->prev->token == HEREDOC && node->token != SINGLE_QUOTE)
 	{
-		ft_expand_heredoc(&(node->content), env);
+		ft_expand(&(node->content), env, node);
 		return (add_char_node(&cmd_last_node(*cmds)->argv, ft_strdupi(node->content, ft_strlen(node->content))));
 	}
 	node->content = ft_strtrim(node->content, " ");
@@ -144,7 +144,7 @@ int	treat_word(t_cmds **cmds, t_lexer *node, t_envp *env, e_token token)
 			if (start[0] != ' ')
 			{	
 				word = hundle_quote(ft_substr(start, 0, \
-					advanced_strlen(start, end)), env);
+					advanced_strlen(start, end)), env, node);
 				if (!word)
 					return (0);
 				if (!add_char_node(&cmd_last_node(*cmds)->argv, word))
@@ -174,6 +174,12 @@ int	adjust_filename(t_cmds *cmd)
 	tmp = cmd->argv->next;
 	cmd->argv->next = NULL;
 	prev_cmd = cmd->prev;
+	printf("type: %d\n", prev_cmd->type);
+	while (prev_cmd->type != WORD && prev_cmd->next)
+	{
+		prev_cmd = prev_cmd->prev;
+		printf("type: %d\n", prev_cmd->type);
+	}
 	char_last_node(prev_cmd->argv)->next = tmp;
 	return (1);
 }

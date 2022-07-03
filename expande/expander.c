@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:41:10 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/30 21:24:22 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/02 15:28:05 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*extract_var(char *start)
 	return (var_name);
 }
 
-int	ft_expand(char	**word, t_envp *env)
+int	ft_expand(char	**word, t_envp *env, t_lexer *node)
 {
 	t_envp	*var;
 	char	*new_word;
@@ -54,14 +54,14 @@ int	ft_expand(char	**word, t_envp *env)
 	new_word = ft_strdup("");
 	while (dollar_sign[0])
 	{
-		if (between_quote(*word, dollar_sign, '\''))
+		if (node->token != SINGLE_QUOTE && between_quote(*word, dollar_sign, '\''))
 		{
 			var_name = extract_var(dollar_sign + 1);
 			var = search_key(env, var_name);
 			new_word = ft_strjoin(new_word, ft_strdupi(start, advanced_strlen(start, dollar_sign)));
 			if (var)
 				new_word = ft_strjoin(new_word, var->value);
-			start += ft_strlen(var_name) + 1;
+			start = dollar_sign + ft_strlen(var_name) + 1;
 		}
 		dollar_sign = ft_strchr(dollar_sign + 1, '$');
 	}
@@ -72,8 +72,10 @@ int	ft_expand(char	**word, t_envp *env)
 	return (1);
 }
 
-int	ft_expand_heredoc(char **word, t_envp *env)
-{}
+// int	ft_expand_heredoc(char **word, t_envp *env)
+// {
+	
+// }
 
 // int	replace_null_var(char **word, char *dollar)
 // {

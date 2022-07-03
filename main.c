@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/30 18:37:08 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/02 15:47:41 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,18 @@
 void	replace_content(t_lexer *node)
 {
 	char	*line;
+	char	*double_quote;
+	char	*single_quote;
 	char	*new_content;
 
 	if (!node)
 		return ;
+	double_quote = ft_strchr(node->content, '"');
+	single_quote = ft_strchr(node->content, '\'');
+	if (double_quote[0] || single_quote[0])
+		node->token = SINGLE_QUOTE;
 	line = readline("> ");
+	node->content = hundle_quote(node->content, NULL, node);
 	new_content = ft_strdupi("", 0);
 	while (ft_strcmp(line, node->content))
 	{
@@ -58,10 +65,11 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		list = get_lexer(readline("@minishell >> "));
-		adjust_heredoc(list);
 		if (list)
-			print_lexer(list);
-		start_execution(list, env_list);
+		{
+			adjust_heredoc(list);
+			start_execution(list, env_list);
+		}
 	}
 	return (0);
 }

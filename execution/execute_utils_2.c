@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:34:05 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/01 17:19:30 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/03 17:08:47 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ void	index_cmds(t_cmds **cmds)
 	t_cmds			*temp;
 	unsigned int	i;
 
-	i = 0;
+	i = 1;
 	temp = *cmds;
 	while (temp)
 	{
-		temp->index = i;
+		if (temp->type == WORD)
+			temp->index = i;
+		i++;
 		temp = temp->next;
 	}
 }

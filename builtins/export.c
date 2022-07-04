@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/02 20:21:06 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/03 14:16:00 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,38 @@ t_export	*env_to_expo_list(char **env)
 	t_export	*export;
 	int			i;
 	char		**splited;
-	int			opwd_check;
+	int			check;
 
-	opwd_check = 0;
+	check = 0;
 	i = 0;
 	export = NULL;
 	while (env[i])
 	{
 		splited = ft_split(env[i], '=');
-		export_add_back(&export, export_node(ft_append_exp_key(splited[0], &opwd_check), ft_append_dqoute(splited[1], &opwd_check)));
-		opwd_check = 0;
-		free(splited[0]);
-		free(splited[1]);
-		free(splited);
+		export_add_back(&export, export_node(ft_append_exp_key(splited[0], &check), ft_append_dqoute(splited[1], &check)));
+		free_tab(splited);
 		i++;
 	}
 	return (export);
 }
 
-char	*ft_append_dqoute(char *str, int *opwd_check)
+char	*ft_append_dqoute(char *str, int *check)
 {
 	char *appended;
 
-	if (*opwd_check == 1)
+	if (*check == 1)
 	{
 		appended = (char *)malloc(sizeof(char));
-		appended = "";
+		appended = "\0";
+		*check = 0;
+		return (appended);
+	}
+	else if (*check == 2)
+	{
+		appended = ft_itoa(g_minishell.sh_level);
+		appended = ft_strjoin("\"", appended);
+		appended = ft_strjoin(appended, "\"");
+		*check = 0;
 		return (appended);
 	}
 	appended = ft_strjoin("\"", str);
@@ -65,12 +71,14 @@ char	*ft_append_dqoute(char *str, int *opwd_check)
 	return (appended);	
 }
 
-char	*ft_append_exp_key(char *str, int *opwd_check)
+char	*ft_append_exp_key(char *str, int *check)
 {
 	char *appended;
 
 	if (ft_strcmp(str, "OLDPWD") == 0)
-		*opwd_check = 1;		
+		*check = 1;
+	else if (ft_strcmp(str, "SHLVL") == 0)
+		*check = 2;
 	appended = ft_strjoin(EXPORT_KEY, str);
 	return (appended);
 }
@@ -134,48 +142,59 @@ void	ft_swap(t_export *a, t_export *b)
 
 void	env_with_ex_key(char *key, char *value)
 {
-	printf("%s=%s\n",key, value);	
+	if (ft_strcmp(value, "") == 0)
+	{
+		printf("%s%s\n",key, value);
+		return ;
+	}
+	printf("%s=%s\n",key, value);
+}
+
+t_export	*without_export(void)
+{
+	t_export	*export;
+	char	cwd[PATH_MAX];
+	char	*pwd;
+	char	**splited;
+	int		check;
+
+	export = NULL;
+	pwd = NULL;
+	check = 0;
+	pwd = ft_strjoin("", "PWD=");
+	pwd = ft_strjoin(pwd, getcwd(cwd, PATH_MAX));
+	splited = ft_split(pwd, '=');
+	export_add_back(&export, export_node(ft_append_exp_key(splited[0], &check), ft_append_dqoute(splited[1], &check)));
+	export_add_back(&export, export_node(ft_append_exp_key(OLDPWD, &check), ft_append_dqoute("", &check)));
+	export_add_back(&export, export_node(ft_append_exp_key("SHLVL", &check), ft_append_dqoute("", &check)));
+	ft_export_sort(export);
+	free_tab(splited);
+	return (export);
 }
 
 void	ft_export(t_export *export, t_char *args)
 {
 	t_export	*temp;
-	t_char		*temp_arg;
-
 	temp = export;
-	temp_arg = args;
-	if (args->next == NULL)
-	{
+	(void)args;
+	// t_char		*temp_arg;
+
 		while (temp)
 		{
 			env_with_ex_key(temp->key, temp->value);
 			temp = temp->next;
 		}
-	}
-	else
-	{
-		while(temp_arg)
-		{
-			export_add_back(&export, export_node(temp_arg->argv, temp_arg->next->next->argv));
-			ft_export_sort(export);
-			temp_arg = temp_arg->next->next;
-		}
-	}
+	// temp_arg = args;
+	// if (args->next == NULL)
+	// {
+	// }
+	// else
+	// {
+	// 	while(temp_arg)
+	// 	{
+	// 		export_add_back(&export, export_node(temp_arg->argv, temp_arg->next->next->argv));
+	// 		ft_export_sort(export);
+	// 		temp_arg = temp_arg->next->next;
+	// 	}
+	// }
 }
-
-
-// t_export	*search_exportkey(t_export *export, char *key)
-// {
-// 	t_export *tmp_export;
-
-// 	tmp_export = export;
-// 	if (!key)
-// 		return (NULL);
-// 	while (tmp_export)
-// 	{
-// 		if (ft_strcmp(tmp_export->key, key) == 0)
-// 			return (tmp_export);
-// 		tmp_export = tmp_export->next;
-// 	}
-// 	return (NULL);
-// }

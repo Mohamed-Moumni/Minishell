@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/02 18:55:37 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/03 13:19:01 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ e_token	ft_tokenize(char **word);
 int 	start_execution(t_lexer *list, t_envp *env);
 
 int		ft_expand(char	**word, t_envp *env);
+char	*ft_itoa(int n);
 
 // Get_next_line 
 

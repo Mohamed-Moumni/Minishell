@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/02 20:20:12 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/03 13:40:58 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ char		*cmd_valid(char *cmd);
 char		**std_paths(char *str);
 int			check_absolut_path(char *cmd);
 t_envp		*ft_list_last(t_envp *env_list);
-void	ft_export(t_export *export, t_char *args);
+void        ft_export(t_export *export, t_char *args);
 t_envp      *without_env(void);
-void        ft_env(char **envp, char **env);
+void        ft_env(t_char *argv, t_envp *env_list);
 t_export	*search_exportkey(t_export *export, char *key);
 char        *ft_strstr(char *str, char *to_find);
+t_export	*without_export(void);
+void        init_minishell_data(void);
 #endif

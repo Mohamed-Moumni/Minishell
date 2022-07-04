@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/02 15:25:03 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/03 14:31:46 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,23 +129,15 @@ t_envp *without_env(void)
 	return (env);
 }
 
-void	ft_env(char **argv, char **env)
+void	ft_env(t_char *argv, t_envp *env_list)
 {
-	t_envp	*env_list;
 	t_envp	*temp;
-
-	if (argv[1])
-	{
-		write(2, "Error invalid option\n", 22);
-		return ;	
-	}
-	if (!(*env))
-	{
-		env_list = without_env();	
-	}
-	else{	
-		env_list = envp_to_list(env);
-	}
+	(void)argv;
+	// if (argv->next)
+	// {
+	// 	write(2, "Error invalid option\n", 22);
+	// 	return ;	
+	// }
 	temp = env_list;
 	while (temp)
 	{

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/02 20:18:41 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/03 17:33:13 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,12 +226,8 @@ int start_execution(t_lexer *list, t_envp *env)
 		}
 		tmp = tmp->next;
 	}
-	// run_execution(cmds, env);
+	
 	print_cmd(cmds);
-	// ft_env(conv_t_char_to_tab(cmds->argv), list_to_envp(env));
-	// ft_echo(conv_t_char_to_tab(cmds->argv));
-	// ft_pwd(conv_t_char_to_tab(cmds->argv));
-	// ft_export(list_to_envp(env));
 	return (1);
 }
 
@@ -255,31 +251,58 @@ int start_execution(t_lexer *list, t_envp *env)
 
 // }
 
-// void	run_execution(t_cmds *cmds, t_envp *env)
-// {
-// 	unsigned int	pipe_n;
-// 	int				**fds;
-// 	t_cmds			*temp;
-// 	int				i;
+int	**two_dim_arr(int a)
+{
+	int i;
+	int	**tab;
 
-// 	temp = cmds;
-// 	pipe_n = how_many_pipes(cmds);
-// 	if (pipe_n == 0)
-// 	{
-// 		run_command(cmds, env, NULL, NULL);
-// 	}
-// 	else
-// 	{
-// 		i = 0;
-// 		while (temp)
-// 		{
-// 			if (temp->next->type == PIPE)
-// 			{
-// 				run_command(cmds, env, NULL, fds[i]);
-// 			}
-// 		}
-// 	}
-// }
+	tab = (int **)malloc(sizeof(int *) * a);
+	i = 0;
+	while (i < a)
+	{
+		tab[i] = (int *)malloc(sizeof(int) * 2);
+		i++;
+	}
+	return (tab);
+}
+void	run_execution(t_cmds *cmds, t_envp *env)
+{
+	t_cmds	*tmp_cmd;
+	int		pipes;
+	char	**av;
+	int		pid;
+	int		**fds;
+	int		i;
+
+	tmp_cmd = cmds;
+	pipes = how_many_pipes(cmds);
+	i = 0;
+	if (pipes == 0)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			av = conv_t_char_to_tab(cmds->argv);
+			execve(av[0], av, list_to_envp(env));
+		}
+	}
+	else
+	{
+		fds = two_dim_arr(pipes);
+		while (i < pipes)
+		{
+			pipe(fds[i]);
+			i++;
+		}
+		while (tmp_cmd)
+		{
+			if (tmp_cmd->prev == NULL)
+			{
+				close()
+			}
+		}
+	}
+}
 
 // void	run_command(t_cmds *cmds, t_envp *env, int *read_pipe, int *write_pipe)
 // {

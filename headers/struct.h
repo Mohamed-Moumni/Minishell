@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:28:27 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/02 18:41:30 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/03 18:30:16 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define SHLVL "SHLVL=1"
 # define USRBINENV  "_=./minishell"
 # define EXPORT_KEY "declare -x "
+# define OLDPWD "OLDPWD"
 
 
 typedef struct	s_update
@@ -74,11 +75,18 @@ typedef struct s_char
 typedef struct s_cmds
 {
 	e_token			type;
-	unsigned int	index;
 	t_char			*argv;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }			t_cmds;
+
+typedef struct s_execu
+{
+	e_token			type;
+	bool			piped;
+	struct s_execu *next;
+	t_char			*argv;
+}t_exec;
 
 typedef struct s_envp
 {

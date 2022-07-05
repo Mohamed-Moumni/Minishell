@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:50:36 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/30 18:33:23 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/02 15:53:33 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ int	create_node_lex(t_lexer **list, char *line, int *i, int *j)
 	word = ft_strtrim(ft_strdupi(&line[*j], *i - *j), " ");
 	if (!ft_strlen(word))
 		return (0);
-	add_node(list, word, WORD);
+	if (!add_node(list, word, WORD))
+		return (-1);
 	*j = (*i)++;
-	while (line[*i] == '>' || line[*i] == '<')
+	while (line[*i] == '>' || line[*i] == '<' || line[*i] == '|')
 		(*i)++;
 	word = ft_strdupi(&line[*j], *i - *j);
 	if (!ft_strlen(word))
 		return (0);
-	add_node(list, word, UNCHECKED);
+	if (!add_node(list, word, UNCHECKED))
+		return (-1);
 	*j = (*i)++;
 	return (1);
 }
@@ -94,7 +96,7 @@ int	split_operator(t_lexer **list, char *line)
 	return (1);
 }
 
-void	specify_operator(char *word, e_token *token)
+int	specify_operator(char *word, e_token *token)
 {
 	if (!ft_strcmp(word, ">>"))
 		*token = DOUBLE_RIGHT_REDIR;
@@ -104,6 +106,12 @@ void	specify_operator(char *word, e_token *token)
 		*token = HEREDOC;
 	else if (!ft_strcmp(word, "<"))
 		*token = LEFT_REDIR;
-	else if (!ft_strcmp(word, "|"))
+	else if (!ft_strcmp(word, "|") && ft_strlen(word) == 1)
 		*token = PIPE;
+	else
+	{
+		printf("syntax error!\n");
+		return (0);
+	}
+	return (1);
 }

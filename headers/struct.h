@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:28:27 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/03 18:30:16 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/05 16:22:54 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ typedef struct s_cmds
 typedef struct s_execu
 {
 	e_token			type;
-	bool			piped;
-	struct s_execu *next;
 	t_char			*argv;
+	int				infile;
+	int				outfile;
+	struct s_execu *next;
 }t_exec;
 
 typedef struct s_envp

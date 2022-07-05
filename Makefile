@@ -6,7 +6,7 @@
 #    By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 11:20:52 by yait-iaz          #+#    #+#              #
-#    Updated: 2022/07/03 13:42:11 by mmoumni          ###   ########.fr        #
+#    Updated: 2022/07/04 21:53:49 by mmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC = builtins/builtins_utils.c builtins/builtins.c builtins/export.c \
 		utils/ft_strlcpy.c utils/utils.c main.c execution/execute.c \
 		execution/execute_utils.c utils/ft_strtrim.c expande/expander.c \
 		Get_next_line/get_next_line.c Get_next_line/get_next_line_utils.c \
-		execution/execute_utils_2.c utils/ft_itoa.c builtins/builtins_utils2.c
+		execution/execute_utils_2.c utils/ft_itoa.c builtins/builtins_utils2.c \
+		execution/execute_command.c
 		
 
 OBJ = $(SRC:.c=.o)

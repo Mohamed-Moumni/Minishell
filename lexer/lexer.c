@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:03 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/30 18:44:46 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/02 15:45:27 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,41 @@
 #include "../headers/builtins.h"
 #include "../headers/struct.h"
 
-void	node_init(t_lexer **list, char *word, e_token token)
+int	node_init(t_lexer **list, char *word, e_token token)
 {
+	int	state;
+
+	state = 1;
 	*list = malloc(sizeof(t_lexer));
 	(*list)->next = NULL;
 	(*list)->prev = NULL;
 	if (token == UNCHECKED)
-		specify_operator(word, &token);
+		state = specify_operator(word, &token);
+	if (!state)
+		return (0);
 	(*list)->token = token;
 	(*list)->content = word;
+	return (state);
 }
 
-void	add_node(t_lexer **list, char *word, e_token token)
+int	add_node(t_lexer **list, char *word, e_token token)
 {
+	int		state;
 	t_lexer	*tmp;
 	t_lexer	*new_node;
 
 	if (!(*list))
-		node_init(list, word, token);
+		state = node_init(list, word, token);
 	else
 	{	
 		tmp = *list;
-		node_init(&new_node, word, token);
+		state = node_init(&new_node, word, token);
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_node;
 		new_node->prev = tmp;
 	}
+	return (state);
 }
 
 int	between_quote(char *line, char *operator, char quote)

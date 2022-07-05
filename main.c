@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/03 14:31:18 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/04 11:06:37 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,18 @@
 void	replace_content(t_lexer *node)
 {
 	char	*line;
+	char	*double_quote;
+	char	*single_quote;
 	char	*new_content;
 
 	if (!node)
 		return ;
+	double_quote = ft_strchr(node->content, '"');
+	single_quote = ft_strchr(node->content, '\'');
+	if (double_quote[0] || single_quote[0])
+		node->token = SINGLE_QUOTE;
 	line = readline("> ");
+	node->content = hundle_quote(node->content, NULL, node);
 	new_content = ft_strdupi("", 0);
 	while (ft_strcmp(line, node->content))
 	{
@@ -64,26 +71,21 @@ void	create_env_export(t_envp **envp, t_export **export, char **env)
 }
 int	main(int ac, char **av, char **env)
 {
-	// t_lexer		*list;
+	t_lexer		*list;
 	t_envp		*env_list;
-	t_export	*export_list;
+	// t_export	*export_list;
 
 	(void)av;
 	(void)ac;
-	(void)env;
-	// init_minishell_data();
-	create_env_export(&env_list, &export_list, env);
-	ft_env(NULL, env_list);
-	// ft_export(export_list, NULL);
-	// create_env(env);
-	// while (1)
-	// {
-	// 	list = get_lexer(readline("@minishell >> "));
-	// // // 	adjust_heredoc(list);
-	// 	if (list)
-	// 		print_lexer(list);
-	// 	start_execution(list, env_list);
-	// }
-	// ft_export(env);
+	env_list = envp_to_list(env);
+	while (1)
+	{
+		list = get_lexer(readline("@minishell >> "));
+		if (list)
+		{
+			adjust_heredoc(list);
+			start_execution(list, env_list);
+		}
+	}
 	return (0);
 }

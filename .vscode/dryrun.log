@@ -1,15 +1,50 @@
-make --dry-run --keep-going --print-directory
-make: brew: Command not found
-
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/mmoumni/Desktop/Minishell'
-make: brew: Command not found
-
-gcc -Wall -Wextra -Werror -I/include -c main.c -o main.o
-gcc -Wall -Wextra -Werror -I/include -c execution/execute_utils.c -o execution/execute_utils.o
-gcc -Wall -Wextra -Werror -I/include -c execution/execute.c -o execution/execute.o
-gcc -Wall -Wextra -Werror builtins/builtins_utils.o builtins/builtins.o builtins/export.o lexer/lexer.o lexer/operator.o lexer/quote.o lexer/tokenize.o utils/extra_utils.o utils/ft_split.o utils/tools.o utils/ft_last.o utils/ft_strlcpy.o utils/utils.o main.o execution/execute_utils.o execution/execute.o -o minishell -lreadline -L/lib
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c builtins/builtins_utils.c -o builtins/builtins_utils.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c builtins/builtins.c -o builtins/builtins.o
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c builtins/export.c -o builtins/export.o
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c lexer/lexer.c -o lexer/lexer.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c lexer/operator.c -o lexer/operator.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c lexer/quote.c -o lexer/quote.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c lexer/tokenize.c -o lexer/tokenize.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c utils/extra_utils.c -o utils/extra_utils.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c utils/ft_split.c -o utils/ft_split.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c utils/tools.c -o utils/tools.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c utils/ft_last.c -o utils/ft_last.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c utils/ft_strlcpy.c -o utils/ft_strlcpy.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c utils/utils.c -o utils/utils.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c main.c -o main.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c execution/execute.c -o execution/execute.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c execution/execute_utils.c -o execution/execute_utils.o
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c utils/ft_strtrim.c -o utils/ft_strtrim.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c expande/expander.c -o expande/expander.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c Get_next_line/get_next_line.c -o Get_next_line/get_next_line.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c Get_next_line/get_next_line_utils.c -o Get_next_line/get_next_line_utils.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c execution/execute_utils_2.c -o execution/execute_utils_2.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c utils/ft_itoa.c -o utils/ft_itoa.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c builtins/builtins_utils2.c -o builtins/builtins_utils2.o
+ 
+gcc -Wall -Wextra -Werror -I/goinfre/mmoumni/homebrew/opt/readline/include -c execution/execute_command.c -o execution/execute_command.o
+ 
+gcc -Wall -Wextra -Werror builtins/builtins_utils.o builtins/builtins.o builtins/export.o lexer/lexer.o lexer/operator.o lexer/quote.o lexer/tokenize.o utils/extra_utils.o utils/ft_split.o utils/tools.o utils/ft_last.o utils/ft_strlcpy.o utils/utils.o main.o execution/execute.o execution/execute_utils.o utils/ft_strtrim.o expande/expander.o Get_next_line/get_next_line.o Get_next_line/get_next_line_utils.o execution/execute_utils_2.o utils/ft_itoa.o builtins/builtins_utils2.o execution/execute_command.o -o minishell -lreadline -L/goinfre/mmoumni/homebrew/opt/readline/lib
 make: Leaving directory `/Users/mmoumni/Desktop/Minishell'
  
-make: brew: Command not found
-make: brew: Command not found
-

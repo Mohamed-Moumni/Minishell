@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:34:00 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/01 16:11:14 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/04 11:05:02 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-char	*hundle_quote(char	*word, t_envp *env)
+char	*hundle_quote(char	*word, t_envp *env, t_lexer *node)
 {
 	int i;
     char s;
@@ -25,7 +25,8 @@ char	*hundle_quote(char	*word, t_envp *env)
 	if (!word)
 		return (NULL);
 	new_word = ft_strdupi("", 1);
-	ft_expand(&word, env);
+	if (env)
+		ft_expand(&word, env, node);
     while(word[i])
     {
         if (s == 0 && (word[i] == '\'' || word[i] == '"'))
@@ -45,6 +46,7 @@ char	*hundle_quote(char	*word, t_envp *env)
 		printf("unmatched quote\n");
 		return (NULL);
 	}
+	free(word);
 	return (new_word);
 }
 

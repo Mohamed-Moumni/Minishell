@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/03 17:33:13 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/05 16:15:53 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,11 @@ int	treat_word(t_cmds **cmds, t_lexer *node, t_envp *env, e_token token)
 
 	if (!add_node_cmd(cmds, token))
 		return (0);
-	// if (node->prev && node->prev->token == HEREDOC)
-	// {
-	// 	ft_expand_heredoc(&(node->content), env);
-	// 	return (add_char_node(&cmd_last_node(*cmds)->argv, ft_strdupi(node->content, ft_strlen(node->content))));
-	// }
+	if (node->prev && node->prev->token == HEREDOC && node->token != SINGLE_QUOTE)
+	{
+		ft_expand(&(node->content), env, node);
+		return (add_char_node(&cmd_last_node(*cmds)->argv, ft_strdupi(node->content, ft_strlen(node->content))));
+	}
 	node->content = ft_strtrim(node->content, " ");
 	start = node->content;
 	end = start;
@@ -144,7 +144,7 @@ int	treat_word(t_cmds **cmds, t_lexer *node, t_envp *env, e_token token)
 			if (start[0] != ' ')
 			{	
 				word = hundle_quote(ft_substr(start, 0, \
-					advanced_strlen(start, end)), env);
+					advanced_strlen(start, end)), env, node);
 				if (!word)
 					return (0);
 				if (!add_char_node(&cmd_last_node(*cmds)->argv, word))
@@ -174,6 +174,12 @@ int	adjust_filename(t_cmds *cmd)
 	tmp = cmd->argv->next;
 	cmd->argv->next = NULL;
 	prev_cmd = cmd->prev;
+	printf("type: %d\n", prev_cmd->type);
+	while (prev_cmd->type != WORD && prev_cmd->next)
+	{
+		prev_cmd = prev_cmd->prev;
+		printf("type: %d\n", prev_cmd->type);
+	}
 	char_last_node(prev_cmd->argv)->next = tmp;
 	return (1);
 }
@@ -208,6 +214,7 @@ int start_execution(t_lexer *list, t_envp *env)
 {
 	t_cmds	*cmds;
 	t_lexer	*tmp;
+	t_exec  *exec;
 
 	tmp = list;
 	cmds = NULL;
@@ -226,8 +233,9 @@ int start_execution(t_lexer *list, t_envp *env)
 		}
 		tmp = tmp->next;
 	}
-	
-	print_cmd(cmds);
+	exec = cmds_to_exec(cmds);
+	print_exec(exec);
+	// print_cmd(cmds);
 	return (1);
 }
 
@@ -265,44 +273,44 @@ int	**two_dim_arr(int a)
 	}
 	return (tab);
 }
-void	run_execution(t_cmds *cmds, t_envp *env)
-{
-	t_cmds	*tmp_cmd;
-	int		pipes;
-	char	**av;
-	int		pid;
-	int		**fds;
-	int		i;
+// void	run_execution(t_cmds *cmds, t_envp *env)
+// {
+// 	t_cmds	*tmp_cmd;
+// 	int		pipes;
+// 	char	**av;
+// 	int		pid;
+// 	int		**fds;
+// 	int		i;
 
-	tmp_cmd = cmds;
-	pipes = how_many_pipes(cmds);
-	i = 0;
-	if (pipes == 0)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			av = conv_t_char_to_tab(cmds->argv);
-			execve(av[0], av, list_to_envp(env));
-		}
-	}
-	else
-	{
-		fds = two_dim_arr(pipes);
-		while (i < pipes)
-		{
-			pipe(fds[i]);
-			i++;
-		}
-		while (tmp_cmd)
-		{
-			if (tmp_cmd->prev == NULL)
-			{
-				close()
-			}
-		}
-	}
-}
+// 	tmp_cmd = cmds;
+// 	pipes = how_many_pipes(cmds);
+// 	i = 0;
+// 	if (pipes == 0)
+// 	{
+// 		pid = fork();
+// 		if (pid == 0)
+// 		{
+// 			av = conv_t_char_to_tab(cmds->argv);
+// 			execve(av[0], av, list_to_envp(env));
+// 		}
+// 	}
+// 	else
+// 	{
+// 		fds = two_dim_arr(pipes);
+// 		while (i < pipes)
+// 		{
+// 			pipe(fds[i]);
+// 			i++;
+// 		}
+// 		while (tmp_cmd)
+// 		{
+// 			if (tmp_cmd->prev == NULL)
+// 			{
+// 				close()
+// 			}
+// 		}
+// 	}
+// }
 
 // void	run_command(t_cmds *cmds, t_envp *env, int *read_pipe, int *write_pipe)
 // {

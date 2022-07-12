@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/05 14:53:38 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/12 19:07:06 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,16 @@ char	**ft_split(char const *s, char c);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 char	*ft_strjoin_leak(char *s1, char *s2, int cond);
 
-t_exec	*execute_node(t_cmds *cmd, t_cmds *file, int inf, int outf);
-t_exec	*last_exec(t_exec *exec);
-void	exec_add_back(t_exec **exec, t_exec *new);
-void	add_command(t_exec **exec, t_cmds *cmd, t_cmds *file);
 int     open_file(char *path, e_token token);
 int     file_exist(char *path);
-t_cmds  *check_redirection(t_exec **exec, t_cmds *cmd, int **pipe, int i);
 int     **pipes_allocat(int n);
 void    run_pipes(int **pipes, int n);
-t_exec  *cmds_to_exec(t_cmds *cmds);
-void	print_exec(t_exec *exec);
+int     **two_dim_arr(int a);
+t_cmds	*next_cmd(t_cmds *cmds);
+void    begin_execution(t_cmds *cmds, t_envp *env);
+void	run_command(t_cmds *cmds, t_envp *env, int i, int **pipes);
+void	trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile);
+void	execute_cmd(t_cmds *cmd, t_envp *env);
+void	run_pipe(int **pipes);
+void	close_fds(int **fds, int n);
 #endif

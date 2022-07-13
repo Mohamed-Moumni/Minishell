@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/12 19:07:06 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/13 14:24:22 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void	run_command(t_cmds *cmds, t_envp *env, int i, int **pipes);
 void	trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile);
 void	execute_cmd(t_cmds *cmd, t_envp *env);
 void	run_pipe(int **pipes);
-void	close_fds(int **fds, int n);
+void	close_all_pipes(int **pipes);
+void read_write_herdoc(int *fds, char *str);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:19:26 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 16:18:56 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/15 20:54:30 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	ft_unset(t_envp *env, t_char *args)
             printf("minishell: unset: `args->argv': not a valid identifier");
 		else
 		{
+			if (!ft_strcmp(args->argv, "PATH"))
+				g_minishell.unset_path = 1;
 			delete_node(&env, args);
 		}
 		temp = temp->next;

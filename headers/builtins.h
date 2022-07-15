@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 18:20:48 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/15 20:10:21 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ void            ft_unset(t_envp *env, t_char *args);
 void			delete_node(t_envp **env, t_char *arg);
 int				valid_unset(char *str);
 char            **list_to_envp(t_envp *env_list);
+void            is_builtin(t_cmds *cmd, t_envp *env, int *res);
 
 #endif

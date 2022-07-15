@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 21:19:04 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 19:00:41 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:07:25 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,23 @@ void    begin_execution(t_cmds *cmds, t_envp *env)
 			temp = next_cmd(temp);
 		}
 		close_all_pipes(pipes);
-		waitpid(pid, &g_minishell.exit_status, 0);
+		// waitpid(pid, &g_minishell.exit_status, 0);
+		waitpid(pid, NULL, 0);
 		waitpid(-1, NULL, 0);
 	}
 }
 
 void	is_builtin(t_cmds *cmd, t_envp *env, int *res)
 {
-	if (!ft_strcmp(cmd->argv, "PWD") || !ft_strcmp(cmd->argv, "pwd"))
-		ft_pwd(cmd->argv->argv);
-	else if (!ft_strcmp(cmd->argv, "ECHO") || !ft_strcmp(cmd->argv, "echo"))
-		ft_echo(cmd->argv->argv);
-	else if (!ft_strcmp(cmd->argv, "export") || !ft_strcmp(cmd->argv, "export"))
+	if (!ft_strcmp(cmd->argv->argv, "PWD") || !ft_strcmp(cmd->argv->argv, "pwd"))
+		ft_pwd(conv_t_char_to_tab(cmd->argv));
+	else if (!ft_strcmp(cmd->argv->argv, "ECHO") || !ft_strcmp(cmd->argv->argv, "echo"))
+		ft_echo(conv_t_char_to_tab(cmd->argv));
+	else if (!ft_strcmp(cmd->argv->argv, "export") || !ft_strcmp(cmd->argv->argv, "export"))
 		ft_export(env, cmd->argv->next);
-	else if (!ft_strcmp(cmd->argv, "UNSET") || !ft_strcmp(cmd->argv, "unset"))
+	else if (!ft_strcmp(cmd->argv->argv, "UNSET") || !ft_strcmp(cmd->argv->argv, "unset"))
 		ft_unset(env, cmd->argv->next);
-	else if (!ft_strcmp(cmd->argv, "ENV") || !ft_strcmp(cmd->argv, "env"))
+	else if (!ft_strcmp(cmd->argv->argv, "ENV") || !ft_strcmp(cmd->argv->argv, "env"))
 		ft_env(env, cmd->argv->next);
 	else
 		*res = 1;
@@ -165,21 +166,29 @@ void	execute_cmd(t_cmds *cmd, t_envp *env)
 	char	**args;
 	char	**envp;
 	int		res;
+	char	*command;
 
 	res = 0;
+	// printf("==%s==\n",cmd->argv->argv);
 	if (cmd->type == WORD || cmd->type == PIPE)
 	{
-		is_builtin(cmd, env, &res);
-		if (!res)
-		{
-			args = conv_t_char_to_tab(cmd->argv);
-			envp = list_to_envp(env);
-			if (cmd_valid(args[0]))
-			{
-				if (execve(cmd->argv->argv, args, envp) == -1)
-					exit (EXIT_FAILURE);
-			}
-		}
+		// is_builtin(cmd, env, &res);
+		// if (!res)
+		// {
+				command = cmd_valid(cmd->argv->argv);
+				if (command)
+				{
+					args = conv_t_char_to_tab(cmd->argv);
+					envp = list_to_envp(env);
+					args[0] = command;
+					if (execve(args[0], args, envp) == -1)
+						exit (EXIT_FAILURE);
+					
+				}
+			// if (cmd_valid(args[0]))
+			// {
+			// }
+		// }
 	}
 }
 

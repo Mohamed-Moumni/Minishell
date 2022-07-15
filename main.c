@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/15 18:30:32 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/15 20:57:45 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,13 @@ void	adjust_heredoc(t_lexer *list)
 // 	}
 // }
 
+void	set_gminishell(void)
+{
+	g_minishell.exit_status = 0;
+	g_minishell.unset_path = 0;
+	g_minishell.sh_level = 2;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_lexer		*list;
@@ -77,6 +84,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
+	set_gminishell();
 	envp = envp_to_list(env);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:28:27 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/12 15:13:43 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/15 18:15:53 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@
 # define USRBINENV  "_=./minishell"
 # define EXPORT_KEY "declare -x "
 # define OLDPWD "OLDPWD"
+# define MAX "2147483647"
+# define MIN "2147483648"
 
 
 typedef struct	s_update
 {
-	unsigned int	exit_status;
+	int				exit_status;
 	int				sh_level;
 	int				old_pwd;
+	int				unset_path;
 }t_upd;
 
 t_upd	g_minishell;
@@ -65,7 +68,6 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }			t_lexer;
 
-
 typedef struct s_char
 {
 	char 			*argv;
@@ -87,10 +89,4 @@ typedef struct s_envp
 	struct s_envp	*next;
 }			t_envp;
 
-typedef struct s_export
-{
-	char	*key;
-	char	*value;
-	struct s_export *next;
-}t_export;
 #endif

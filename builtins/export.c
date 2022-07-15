@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/03 14:16:00 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/15 18:09:48 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,187 +14,140 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-t_export	*export_node(char *key, char *value)
+void	ft_export(t_envp *env, t_char *args)
 {
-	t_export	*node;
-
-	node = (t_export *)malloc(sizeof(t_export));
-	if (!node)
-		return (NULL);
-	node->key = key;
-	node->value = value;
-	node->next = NULL;
-	return (node);
-}
-
-t_export	*env_to_expo_list(char **env)
-{
-	t_export	*export;
-	int			i;
-	char		**splited;
-	int			check;
-
-	check = 0;
-	i = 0;
-	export = NULL;
-	while (env[i])
+	t_char	*temp;
+	t_envp	*tem_env;
+	
+	temp = args;
+	if (args->next)
 	{
-		splited = ft_split(env[i], '=');
-		export_add_back(&export, export_node(ft_append_exp_key(splited[0], &check), ft_append_dqoute(splited[1], &check)));
-		free_tab(splited);
-		i++;
+		add_export_vars(&env, args);
 	}
-	return (export);
-}
-
-char	*ft_append_dqoute(char *str, int *check)
-{
-	char *appended;
-
-	if (*check == 1)
-	{
-		appended = (char *)malloc(sizeof(char));
-		appended = "\0";
-		*check = 0;
-		return (appended);
-	}
-	else if (*check == 2)
-	{
-		appended = ft_itoa(g_minishell.sh_level);
-		appended = ft_strjoin("\"", appended);
-		appended = ft_strjoin(appended, "\"");
-		*check = 0;
-		return (appended);
-	}
-	appended = ft_strjoin("\"", str);
-	appended = ft_strjoin(appended, "\"");
-	return (appended);	
-}
-
-char	*ft_append_exp_key(char *str, int *check)
-{
-	char *appended;
-
-	if (ft_strcmp(str, "OLDPWD") == 0)
-		*check = 1;
-	else if (ft_strcmp(str, "SHLVL") == 0)
-		*check = 2;
-	appended = ft_strjoin(EXPORT_KEY, str);
-	return (appended);
-}
-
-void	export_add_back(t_export **export, t_export *new)
-{
-	t_export *temp;
-
-	if (*export == NULL)
-		(*export) = new;
 	else
 	{
-		temp = last_expo(*export);
-		temp->next = new;
+		tem_env = env;
+		while (tem_env)
+		{
+			if (!tem_env->value)
+				printf("%s%s\n",EXPORT_KEY, tem_env->key);
+			else
+				if (ft_strcmp(tem_env->key, USRBINENV))
+					printf("%s%s=\"%s\"\n",EXPORT_KEY ,tem_env->key ,tem_env->value);
+			tem_env = tem_env->next;
+		}	
 	}
 }
 
-t_export	*last_expo(t_export *export)
+void	add_export_vars(t_envp **env, t_char *args)
 {
-	t_export *temp;
+	t_char	*temp;
 
-	temp = export;
-	while (temp->next)
+	temp = args->next;
+	while (temp)
 	{
+		trait_arg(env, temp);
 		temp = temp->next;
 	}
-	return (temp);
 }
 
-void	ft_export_sort(t_export *list)
+void	trait_arg(t_envp **env, t_char *arg)
 {
-	t_export	*temp1;
-	t_export	*temp2;
+	t_envp	*node;
 
-	temp1 = list;
-	while (temp1)
+	if (!valid_arg(arg->argv))
+		printf("minishell: export: `%s': not a valid identifier\n", arg->argv);
+	if (ft_strchr(arg->argv, '+'))
 	{
-		temp2 = list;
-		while (temp2)
-		{
-			if (ft_strcmp(temp1->key, temp2->key) <= 0)
-				ft_swap(temp1, temp2);
-			temp2 = temp2->next;	
-		}
-		temp1 = temp1->next;
+		node = (t_envp *)malloc(sizeof(t_envp));
+		get_key_value(arg->argv, &node->key, &node->value, 0);
+		node->next = NULL;
+		(*env)->next = node;
+	}
+	else if (ft_strchr(arg->argv, '='))
+	{
+		node = (t_envp *)malloc(sizeof(t_envp));
+		get_key_value(arg->argv, &node->key, &node->value, 1);
+		node->next = NULL;
+		(*env)->next = node;
+	}
+	else
+	{
+		node = (t_envp *)malloc(sizeof(t_envp));
+		get_key_value(arg->argv, &node->key, &node->value, 2);
+		node->next = NULL;
+		(*env)->next = node;
 	}
 }
 
-void	ft_swap(t_export *a, t_export *b)
+void	get_key_value(char *str, char **key, char **value, int cond)
 {
-	char	*temp_key;
-	char	*temp_value;
+	int	i;
+	int	size;
 
-	temp_key = a->key;
-	temp_value = a->value;
-	a->key = b->key;
-	a->value = b->value;
-	b->key = temp_key;
-	b->value = temp_value;
-}
-
-void	env_with_ex_key(char *key, char *value)
-{
-	if (ft_strcmp(value, "") == 0)
+	i = 0;
+	if (cond == 0)
 	{
-		printf("%s%s\n",key, value);
-		return ;
-	}
-	printf("%s=%s\n",key, value);
-}
-
-t_export	*without_export(void)
-{
-	t_export	*export;
-	char	cwd[PATH_MAX];
-	char	*pwd;
-	char	**splited;
-	int		check;
-
-	export = NULL;
-	pwd = NULL;
-	check = 0;
-	pwd = ft_strjoin("", "PWD=");
-	pwd = ft_strjoin(pwd, getcwd(cwd, PATH_MAX));
-	splited = ft_split(pwd, '=');
-	export_add_back(&export, export_node(ft_append_exp_key(splited[0], &check), ft_append_dqoute(splited[1], &check)));
-	export_add_back(&export, export_node(ft_append_exp_key(OLDPWD, &check), ft_append_dqoute("", &check)));
-	export_add_back(&export, export_node(ft_append_exp_key("SHLVL", &check), ft_append_dqoute("", &check)));
-	ft_export_sort(export);
-	free_tab(splited);
-	return (export);
-}
-
-void	ft_export(t_export *export, t_char *args)
-{
-	t_export	*temp;
-	temp = export;
-	(void)args;
-	// t_char		*temp_arg;
-
-		while (temp)
+		size = (int)(str - ft_strchr(str, '+'));
+		*key = (char *)malloc(sizeof(char) * (size + 1));
+		while (str[i] != '+')
 		{
-			env_with_ex_key(temp->key, temp->value);
-			temp = temp->next;
+			*key[i] = str[i];
+			i++;
 		}
-	// temp_arg = args;
-	// if (args->next == NULL)
-	// {
-	// }
-	// else
-	// {
-	// 	while(temp_arg)
-	// 	{
-	// 		export_add_back(&export, export_node(temp_arg->argv, temp_arg->next->next->argv));
-	// 		ft_export_sort(export);
-	// 		temp_arg = temp_arg->next->next;
-	// 	}
-	// }
+		i = i + 2;
+		*value = (char *)malloc(sizeof(char) * (ft_strlen(str) - size + 2) + 1);
+		while (str[i])
+		{
+			*value[i] = str[i];
+			i++;
+		}
+	}
+	else if (cond == 1)
+	{
+		size = (int)(str - ft_strchr(str, '='));
+		*key = (char *)malloc(sizeof(char) * (size + 1));
+		while (str[i] != '=')
+		{
+			*key[i] = str[i];
+			i++;
+		}
+		i = i + 1;
+		*value = (char *)malloc(sizeof(char) * (ft_strlen(str) - size + 1) + 1);
+		while (str[i])
+		{
+			*value[i] = str[i];
+			i++;
+		}
+	}
+	else
+	{
+		*key = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+		while (str[i])
+		{
+			*key[i] = str[i];
+			i++;
+		}
+		*value = (char *)malloc(sizeof(char));
+		*value[0] = '\0';
+	}
+}
+
+int	valid_arg(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isalpha(str[i]) || ft_isdigit(str[i])
+		|| str[i] == '_' || str[i] == '=' || str[i] == '+')
+	{
+		if (str[i] == '+' && str[i + 1] == '=')
+			return (1);
+		else
+			return (0);
+		i++;
+	}
+	if (str[i] != '\0')
+		return (0);
+	return (1);
 }

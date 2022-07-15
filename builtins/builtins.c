@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/03 14:31:46 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/15 17:56:09 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,11 @@ void	ft_pwd(char **argv)
 	char	cwd[PATH_MAX];
 	char	*path;
 
-	if (argv[1] != NULL)
-		write(2, "pwd: too many arguments\n", 25);
-	else
-	{
-		path = getcwd(cwd, PASS_MAX);
-		if (!path)
-			return ;
-		printf("%s\n", path);
-	}
+	(void)argv;
+	path = getcwd(cwd, PATH_MAX);
+	if (!path)
+		return ;
+	printf("%s\n", path);
 }
 
 char	*ft_cd_home(char *path)
@@ -97,22 +93,6 @@ int	ft_cd(t_envp *env, char *path)
 	return (1);
 }
 
-int		ft_unset(t_envp *env, char *key)
-{
-	t_envp	*tmp1;
-	t_envp	*tmp2;
-
-	tmp1 = env;
-	tmp2 = search_key(env, key);
-	if (!key[0] || !tmp2)
-		return (1);
-	while (tmp1->next != tmp2)
-		tmp1 = tmp1->next;
-	tmp1->next = tmp2->next;
-	free(tmp2);
-	return (1);
-}
-
 t_envp *without_env(void)
 {
 	t_envp *env;
@@ -127,21 +107,4 @@ t_envp *without_env(void)
 	envp_add_back(&env, creat_node(SHLVL));
 	envp_add_back(&env, creat_node(USRBINENV));
 	return (env);
-}
-
-void	ft_env(t_char *argv, t_envp *env_list)
-{
-	t_envp	*temp;
-	(void)argv;
-	// if (argv->next)
-	// {
-	// 	write(2, "Error invalid option\n", 22);
-	// 	return ;	
-	// }
-	temp = env_list;
-	while (temp)
-	{
-		printf("%s=%s\n",temp->key,temp->value);
-		temp = temp->next;
-	}
 }

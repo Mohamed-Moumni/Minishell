@@ -4,6 +4,8 @@
 		"stdio.h": "c",
 		"paths.h": "c",
 		"limits.h": "c",
-		"errno.h": "c"
+		"errno.h": "c",
+		"struct.h": "c",
+		"builtins.h": "c"
 	}
 }

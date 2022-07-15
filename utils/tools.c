@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:58:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/30 13:45:21 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/13 20:20:38 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,4 @@ void	free_tab(char **tab)
 		i++;
 	}
 	free(tab);
-}
-
-void	write_in_file(int fd)
-{
-	char *temp;
-
-	temp = get_next_line(fd);
-	while (temp)
-	{
-		write (fd, temp, ft_strlen(temp));
-		free(temp);
-		temp = get_next_line(fd);	
-	}
-	free (temp);
 }

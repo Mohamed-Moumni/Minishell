@@ -6,11 +6,13 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:24:58 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/29 22:25:12 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/15 17:25:32 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/struct.h"
 #include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
 int	checkcmp(char *num, int plus, int minus)
 {

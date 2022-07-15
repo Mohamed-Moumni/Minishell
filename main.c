@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/13 13:07:36 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/15 18:30:32 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,42 +53,40 @@ void	adjust_heredoc(t_lexer *list)
 	}
 }
 
-
-void	create_env_export(t_envp **envp, t_export **export, char **env)
-{
+// void	create_env_export(t_envp **envp, t_export **export, char **env)
+// {
 	
-	if (!(*env))
-	{
-		g_minishell.sh_level = 1;
-		*envp = without_env();
-		*export = without_export();
-	}
-	else{	
-		g_minishell.sh_level = 2;
-		*envp = envp_to_list(env);
-		*export = env_to_expo_list(env);
-	}
-}
+// 	if (!(*env))
+// 	{
+// 		g_minishell.sh_level = 1;
+// 		*envp = without_env();
+// 		*export = without_export();
+// 	}
+// 	else{	
+// 		g_minishell.sh_level = 2;
+// 		*envp = envp_to_list(env);
+// 		*export = env_to_expo_list(env);
+// 	}
+// }
+
 int	main(int ac, char **av, char **env)
 {
 	t_lexer		*list;
-	t_envp		*env_list;
+	t_envp		*envp;
 	char		*read_line;
-	// t_export	*export_list;
 
 	(void)av;
 	(void)ac;
-	env_list = envp_to_list(env);
+	envp = envp_to_list(env);
 	while (1)
 	{
-		read_line = readline("@minishell >> ");
+		read_line = readline("minishell$");
 		list = get_lexer(read_line);
 		add_history(read_line);
-		// free(list);
 		if (list)
 		{
 			adjust_heredoc(list);
-			start_execution(list, env_list);
+			start_execution(list, envp);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/12 17:22:50 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:00:34 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	treat_word(t_cmds **cmds, t_lexer *node, t_envp *env, e_token token)
 		if ((end[0] == ' ' && between_quote(start, end, '"') \
 			&& between_quote(start, end, '\'')) || !end[0])
 		{
-			printf("start: |%s| -> |%s|\n", start, end);
+			// printf("start: |%s| -> |%s|\n", start, end);
 			if (start[0] != ' ')
 			{	
 				word = hundle_quote(ft_substr(start, 0, \
@@ -174,11 +174,11 @@ int	adjust_filename(t_cmds *cmd)
 	tmp = cmd->argv->next;
 	cmd->argv->next = NULL;
 	prev_cmd = cmd->prev;
-	printf("type: %d\n", prev_cmd->type);
+	// printf("type: %d\n", prev_cmd->type);
 	while (prev_cmd->type != WORD && prev_cmd->next)
 	{
 		prev_cmd = prev_cmd->prev;
-		printf("type: %d\n", prev_cmd->type);
+		// printf("type: %d\n", prev_cmd->type);
 	}
 	char_last_node(prev_cmd->argv)->next = tmp;
 	return (1);

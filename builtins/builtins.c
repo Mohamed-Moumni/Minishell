@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 17:56:09 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 18:59:22 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_cd_home(char *path)
 	return (path + 1);
 }
 
-int	ft_cd(t_envp *env, char *path)
+int	ft_cd(t_envp **env, char *path) // use t_char instead of char
 {
 	int		home;
 	char	*pwd;
@@ -67,11 +67,11 @@ int	ft_cd(t_envp *env, char *path)
 
 	home = 0;
 	pwd = getcwd(cwd, PATH_MAX);
-	pwd_env = search_key(env, "PWD");
-	search_key(env, "OLDPWD")->value = pwd_env->value;
+	pwd_env = search_key(*env, "PWD");
+	search_key(*env, "OLDPWD")->value = pwd_env->value;
 	if (path[0] == '~' || !path[0])
 	{
-		path = ft_cd_home( path);
+		path = ft_cd_home(path);
 		home = 1;
 	}
 	if (path[0] == '/')

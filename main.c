@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/16 11:32:45 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:17:52 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	main(int ac, char **av, char **env)
 		if (list)
 		{
 			adjust_heredoc(list);
-			start_execution(list, envp);
+			start_execution(list, &envp);
 		}
 		free_lexer(&list);
 	}

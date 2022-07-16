@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 21:19:04 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 14:40:32 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:29:00 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_cmds	*next_cmd(t_cmds *cmds)
 }
 
 
-void    begin_execution(t_cmds *cmds, t_envp *env)
+void    begin_execution(t_cmds *cmds, t_envp **env)
 {
     int     i;
     t_cmds  *temp;
@@ -46,10 +46,7 @@ void    begin_execution(t_cmds *cmds, t_envp *env)
 		{
 			pid = fork();
 			if (pid == 0)
-			run_command(temp, env, -1, pipes);
-		}
-		if (res)
-		{
+				run_command(temp, env, -1, pipes);
 			waitpid(pid, NULL, 0);
 			waitpid(-1, NULL, 0);
 		}
@@ -72,7 +69,7 @@ void    begin_execution(t_cmds *cmds, t_envp *env)
 	}
 }
 
-void	is_builtin(t_cmds *cmd, t_envp *env, int *res)
+void	is_builtin(t_cmds *cmd, t_envp **env, int *res)
 {
 	if (!ft_strcmp(cmd->argv->argv, "PWD") || !ft_strcmp(cmd->argv->argv, "pwd"))
 		ft_pwd(conv_t_char_to_tab(cmd->argv));
@@ -83,12 +80,12 @@ void	is_builtin(t_cmds *cmd, t_envp *env, int *res)
 	else if (!ft_strcmp(cmd->argv->argv, "UNSET") || !ft_strcmp(cmd->argv->argv, "unset"))
 		ft_unset(env, cmd->argv->next);
 	else if (!ft_strcmp(cmd->argv->argv, "ENV") || !ft_strcmp(cmd->argv->argv, "env"))
-		ft_env(env, cmd->argv);
+		ft_env(*env, cmd->argv);
 	else
 		*res = 1;
 }
 
-void	run_command(t_cmds *cmds, t_envp *env, int i, int **pipes)
+void	run_command(t_cmds *cmds, t_envp **env, int i, int **pipes)
 {
 	t_cmds	*cmd;
 	int		infile;
@@ -97,7 +94,7 @@ void	run_command(t_cmds *cmds, t_envp *env, int i, int **pipes)
 	infile = 0;
 	outfile = 1;
 	cmd = cmds;
-	trait_redirection(cmd->next, env, &infile, &outfile);
+	trait_redirection(cmd->next, *env, &infile, &outfile);
 	if (infile == 0)
 	{
 		if (i > 0 && i != 0)
@@ -166,7 +163,7 @@ void read_write_herdoc(int *fds, char *str)
 	buff[str_size] = '\0';
 }
 
-void	execute_cmd(t_cmds *cmd, t_envp *env)
+void	execute_cmd(t_cmds *cmd, t_envp **env)
 {
 	char	**args;
 	char	**envp;
@@ -183,7 +180,7 @@ void	execute_cmd(t_cmds *cmd, t_envp *env)
 			if (command)
 			{
 				args = conv_t_char_to_tab(cmd->argv);
-				envp = list_to_envp(env);
+				envp = list_to_envp(*env);
 				args[0] = command;
 				if (execve(args[0], args, envp) == -1)
 					exit (EXIT_FAILURE);

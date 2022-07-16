@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 14:40:40 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:26:34 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-void	ft_export(t_envp *env, t_char *args)
+void	ft_export(t_envp **env, t_char *args)
 {
 	t_char	*temp;
 	t_envp	*tem_env;
@@ -22,11 +22,11 @@ void	ft_export(t_envp *env, t_char *args)
 	temp = args;
 	if (args->next)
 	{
-		add_export_vars(&env, args);
+		// add_export_vars(&env, args->next);
 	}
 	else
 	{
-		tem_env = env;
+		tem_env = *env;
 		while (tem_env)
 		{
 			if (!ft_strcmp(tem_env->value, ""))
@@ -60,17 +60,15 @@ void	trait_arg(t_envp **env, t_char *arg)
 		printf("minishell: export: `%s': not a valid identifier\n", arg->argv);
 		exit (EXIT_FAILURE);
 	}
-	if (arg && ft_strchr(arg->argv, '+'))
+	if (ft_strchr(arg->argv, '+'))
 	{
-		// printf("here1\n");
 		node = (t_envp *)malloc(sizeof(t_envp));
 		get_key_value(arg->argv, &node->key, &node->value, 0);
 		node->next = NULL;
 		(*env)->next = node;
 	}
-	else if (arg && ft_strchr(arg->argv, '='))
+	else if (ft_strchr(arg->argv, '='))
 	{
-		// printf("here2\n");
 		node = (t_envp *)malloc(sizeof(t_envp));
 		get_key_value(arg->argv, &node->key, &node->value, 1);
 		node->next = NULL;
@@ -78,7 +76,6 @@ void	trait_arg(t_envp **env, t_char *arg)
 	}
 	else
 	{
-		// printf("here3\n");
 		node = (t_envp *)malloc(sizeof(t_envp));
 		get_key_value(arg->argv, &node->key, &node->value, 2);
 		node->next = NULL;
@@ -153,7 +150,6 @@ int	valid_arg(char *str)
 		{
 			if (str[i + 1] && str[i + 1] == '=')
 				return (1);
-			return (0);
 		}
 		else if (str[i] == '=')
 			return (1);

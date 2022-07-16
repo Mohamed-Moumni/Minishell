@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 20:10:21 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:27:19 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,16 @@ char			**list_to_envp(t_envp *env_list);
 void			ft_env(t_envp *env, t_char *args);
 void			env_sort(t_envp *env);
 void			ft_swap(t_envp *a, t_envp *b);
-void			ft_export(t_envp *env, t_char *args);
+void			ft_export(t_envp **env, t_char *args);
 void			add_export_vars(t_envp **env, t_char *args);
 void			trait_arg(t_envp **env, t_char *arg);
 void			get_key_value(char *str, char **key, char **value, int cond);
 int				valid_arg(char *str);
-void            ft_unset(t_envp *env, t_char *args);
+void            ft_unset(t_envp **env, t_char *args);
 void			delete_node(t_envp **env, t_char *arg);
 int				valid_unset(char *str);
 char            **list_to_envp(t_envp *env_list);
-void            is_builtin(t_cmds *cmd, t_envp *env, int *res);
+void            is_builtin(t_cmds *cmd, t_envp **env, int *res);
+t_envp          *delete_head(t_envp *head);
 
 #endif

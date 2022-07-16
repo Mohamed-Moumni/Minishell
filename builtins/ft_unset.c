@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:19:26 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 13:19:08 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:26:53 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/minishell.h"
 #include "../headers/struct.h"
 
-void	ft_unset(t_envp *env, t_char *args)
+void	ft_unset(t_envp **env, t_char *args)
 {
     t_char  *temp;
 
@@ -27,15 +27,25 @@ void	ft_unset(t_envp *env, t_char *args)
 		{
 			if (!ft_strcmp(args->argv, "PATH"))
 				g_minishell.unset_path = 1;
-			delete_node(&env, temp);
+			delete_node(env, temp);
+			// printf("%s\n", (env)->key);
 		}
 		temp = temp->next;
     }
 }
 
+t_envp	*delete_head(t_envp *head)
+{
+	t_envp *temp;
+	t_envp	*next;
+	
+	temp = head;
+	next = head->next;
+	free(temp);
+	return (next); 
+}
 
-
-void    delete_node(t_envp **env, t_char *arg)
+void	delete_node(t_envp **env, t_char *arg)
 {
 	t_envp	*next;
 	t_envp	*temp;
@@ -43,7 +53,7 @@ void    delete_node(t_envp **env, t_char *arg)
 	if (!ft_strcmp(arg->argv, (*env)->key))
 	{
 		temp = *env;
-		(*env) = (*env)->next;
+		*env = temp->next;
 		free(temp);
 	}
 	else

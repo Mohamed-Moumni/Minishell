@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 11:52:32 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:25:41 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_cmds	*cmd_last_node(t_cmds *cmd)
 	return (tmp);
 }
 
-int	treat_word(t_cmds **cmds, t_lexer *node, t_envp *env, e_token token)
+int	treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, e_token token)
 {
 	char	*start;
 	char	*end;
@@ -184,7 +184,7 @@ int	adjust_filename(t_cmds *cmd)
 	return (1);
 }
 
-int	treat_redir(t_cmds **cmds, t_envp *env, t_lexer *node)
+int	treat_redir(t_cmds **cmds, t_envp **env, t_lexer *node)
 {
 	t_cmds	*tmp;
 
@@ -210,7 +210,7 @@ void	print_cmd(t_cmds *cmd)
 	}
 }
 
-int start_execution(t_lexer *list, t_envp *env)
+int start_execution(t_lexer *list, t_envp **env)
 {
 	t_cmds	*cmds;
 	t_lexer	*tmp;

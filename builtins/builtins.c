@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 17:56:09 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 20:46:07 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,25 @@ char	*ft_cd_home(char *path)
 	return (path + 1);
 }
 
-int	ft_cd(t_envp *env, char *path)
+int	ft_cd(t_envp **env, t_char *argv)
 {
 	int		home;
+	char	*path;
 	char	*pwd;
 	char	cwd[PATH_MAX];
 	t_envp	*pwd_env;
 
 	home = 0;
+	if (!argv->next)
+		path = ft_strdup("");
+	else
+		path = argv->next->argv;
 	pwd = getcwd(cwd, PATH_MAX);
-	pwd_env = search_key(env, "PWD");
-	search_key(env, "OLDPWD")->value = pwd_env->value;
+	pwd_env = search_key(*env, "PWD");
+	search_key(*env, "OLDPWD")->value = pwd_env->value;
 	if (path[0] == '~' || !path[0])
 	{
-		path = ft_cd_home( path);
+		path = ft_cd_home(path);
 		home = 1;
 	}
 	if (path[0] == '/')

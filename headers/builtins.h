@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 17:27:19 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 20:46:26 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			ft_print(char **str, int condition);
 void			ft_echo(char ** str);
 void			ft_pwd(char **argv);
 char			*ft_cd_home(char *path);
-int				ft_cd(t_envp *env, char *path);
+int				ft_cd(t_envp **env, t_char *path);
 t_envp			*without_env(void);
 t_envp			*creat_node(char *str);
 void			envp_add_back(t_envp **envp_list, t_envp *node);

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:41:10 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 17:24:44 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 21:14:53 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ char	*extract_var(char *start)
 	char	*var_name;
 
 	end = start;
+	if (end[0] == '?')
+	{
+		end++;
+		return (ft_strdupi(start, advanced_strlen(start, end)));
+	}
 	while (end[0] && (ft_isalpha(end[0]) || ft_isdigit(end[0])))
 		end++;
 	var_name = ft_strdupi(start, advanced_strlen(start, end));
@@ -57,10 +62,15 @@ int	ft_expand(char	**word, t_envp **env, t_lexer *node)
 		if (node->token != SINGLE_QUOTE && between_quote(*word, dollar_sign, '\''))
 		{
 			var_name = extract_var(dollar_sign + 1);
-			var = search_key(*env, var_name);
+			if (!ft_strcmp(var_name, "?"))
+				var = NULL;
+			else
+				var = search_key(*env, var_name);
 			new_word = ft_strjoin(new_word, ft_strdupi(start, advanced_strlen(start, dollar_sign)));
 			if (var)
 				new_word = ft_strjoin(new_word, var->value);
+			else if (!ft_strcmp(var_name, "?"))
+				new_word = ft_strjoin(new_word, ft_itoa(g_minishell.exit_status));
 			start = dollar_sign + ft_strlen(var_name) + 1;
 		}
 		dollar_sign = ft_strchr(dollar_sign + 1, '$');

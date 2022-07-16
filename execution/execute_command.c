@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 21:19:04 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 20:22:41 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 20:42:00 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	is_builtin(t_cmds *cmd, t_envp **env, int *res)
 		ft_unset(env, cmd->argv->next);
 	else if (!ft_strcmp(cmd->argv->argv, "ENV") || !ft_strcmp(cmd->argv->argv, "env"))
 		ft_env(*env, cmd->argv);
+	else if (!ft_strcmp(cmd->argv->argv, "CD") || !ft_strcmp(cmd->argv->argv, "cd"))
+		ft_cd(env, cmd->argv);
 	else
 		*res = 1;
 }

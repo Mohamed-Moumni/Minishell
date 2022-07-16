@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 21:19:04 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 17:29:00 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 20:22:41 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void    begin_execution(t_cmds *cmds, t_envp **env)
 			pid = fork();
 			if (pid == 0)
 				run_command(temp, env, -1, pipes);
-			waitpid(pid, NULL, 0);
+			waitpid(pid, &g_minishell.exit_status, 0);
 			waitpid(-1, NULL, 0);
 		}
 	}
@@ -63,8 +63,7 @@ void    begin_execution(t_cmds *cmds, t_envp **env)
 			temp = next_cmd(temp);
 		}
 		close_all_pipes(pipes);
-		// waitpid(pid, &g_minishell.exit_status, 0);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &g_minishell.exit_status, 0);
 		waitpid(-1, NULL, 0);
 	}
 }
@@ -136,8 +135,11 @@ void	trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile)
 			*outfile = open(temp->argv->argv, O_CREAT | O_APPEND | O_RDWR, 0644);
 		else if (temp->type == LEFT_REDIR)
 		{
-			if (!access(temp->argv->argv, (X_OK | F_OK)))
+			if (access(temp->argv->argv, (F_OK)))
+			{
+				printf("minishell: %s: No such file or directory\n", temp->argv->argv);
 				exit (EXIT_FAILURE);
+			}
 			*infile = open(temp->argv->argv, O_RDWR, 0644);
 		}
 		else if (temp->type == HEREDOC)

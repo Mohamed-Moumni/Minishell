@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 18:09:48 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 14:40:40 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_export(t_envp *env, t_char *args)
 		tem_env = env;
 		while (tem_env)
 		{
-			if (!tem_env->value)
+			if (!ft_strcmp(tem_env->value, ""))
 				printf("%s%s\n",EXPORT_KEY, tem_env->key);
 			else
 				if (ft_strcmp(tem_env->key, USRBINENV))
@@ -43,7 +43,7 @@ void	add_export_vars(t_envp **env, t_char *args)
 {
 	t_char	*temp;
 
-	temp = args->next;
+	temp = args;
 	while (temp)
 	{
 		trait_arg(env, temp);
@@ -56,16 +56,21 @@ void	trait_arg(t_envp **env, t_char *arg)
 	t_envp	*node;
 
 	if (!valid_arg(arg->argv))
-		printf("minishell: export: `%s': not a valid identifier\n", arg->argv);
-	if (ft_strchr(arg->argv, '+'))
 	{
+		printf("minishell: export: `%s': not a valid identifier\n", arg->argv);
+		exit (EXIT_FAILURE);
+	}
+	if (arg && ft_strchr(arg->argv, '+'))
+	{
+		// printf("here1\n");
 		node = (t_envp *)malloc(sizeof(t_envp));
 		get_key_value(arg->argv, &node->key, &node->value, 0);
 		node->next = NULL;
 		(*env)->next = node;
 	}
-	else if (ft_strchr(arg->argv, '='))
+	else if (arg && ft_strchr(arg->argv, '='))
 	{
+		// printf("here2\n");
 		node = (t_envp *)malloc(sizeof(t_envp));
 		get_key_value(arg->argv, &node->key, &node->value, 1);
 		node->next = NULL;
@@ -73,6 +78,7 @@ void	trait_arg(t_envp **env, t_char *arg)
 	}
 	else
 	{
+		// printf("here3\n");
 		node = (t_envp *)malloc(sizeof(t_envp));
 		get_key_value(arg->argv, &node->key, &node->value, 2);
 		node->next = NULL;
@@ -138,13 +144,19 @@ int	valid_arg(char *str)
 	int	i;
 
 	i = 0;
-	while (ft_isalpha(str[i]) || ft_isdigit(str[i])
-		|| str[i] == '_' || str[i] == '=' || str[i] == '+')
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (0);
+	while (str[i] && (ft_isalpha(str[i]) || ft_isdigit(str[i])
+		|| str[i] == '_' || str[i] == '=' || str[i] == '+'))
 	{
-		if (str[i] == '+' && str[i + 1] == '=')
-			return (1);
-		else
+		if (str[i] == '+')
+		{
+			if (str[i + 1] && str[i + 1] == '=')
+				return (1);
 			return (0);
+		}
+		else if (str[i] == '=')
+			return (1);
 		i++;
 	}
 	if (str[i] != '\0')

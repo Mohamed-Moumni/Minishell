@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/15 20:57:45 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 11:32:45 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,46 @@ void	adjust_heredoc(t_lexer *list)
 // 	}
 // }
 
+void	free_tchar(t_char **tchar)
+{
+	t_char	*temp;
+	t_char	*next;
+
+	temp = *tchar;
+	while (temp)
+	{
+		next = temp->next;
+		free(temp);
+		temp = next;	
+	}
+}
+
+void	free_cmd_list(t_cmds **cmds)
+{
+	t_cmds	*temp;
+
+	temp = *cmds;
+	while (temp)
+	{
+		free_tchar(&temp->argv);
+		temp = temp->next;
+	}
+}
+
+void	free_lexer(t_lexer **lexer)
+{
+	t_lexer *temp;
+	t_lexer	*next;
+	
+	temp = *lexer;
+	while (temp)
+	{
+		next = temp->next;
+		free(temp->content);
+		temp = next;
+	}	
+}
+
 void	set_gminishell(void)
 {
 	g_minishell.exit_status = 0;
@@ -88,7 +128,7 @@ int	main(int ac, char **av, char **env)
 	envp = envp_to_list(env);
 	while (1)
 	{
-		read_line = readline("minishell$");
+		read_line = readline("minishell$ ");
 		list = get_lexer(read_line);
 		add_history(read_line);
 		if (list)
@@ -96,6 +136,7 @@ int	main(int ac, char **av, char **env)
 			adjust_heredoc(list);
 			start_execution(list, envp);
 		}
+		free_lexer(&list);
 	}
 	return (0);
 }

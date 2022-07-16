@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 20:15:18 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 11:52:32 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,7 @@ int start_execution(t_lexer *list, t_envp *env)
 		tmp = tmp->next;
 	}
 	begin_execution(cmds, env);
+	// free_cmd_list(&cmds);
 	// print_cmd(cmds);
 	return (1);
 }

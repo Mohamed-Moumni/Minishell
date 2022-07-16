@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:53:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/14 08:47:53 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 10:38:57 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,17 @@ void	ft_print(char **str, int condition)
 		i++;		
 	}
 	if (condition == 0)
-		printf("%s", str[i]);
+	{
+		if (!str[i])
+			printf("");
+		else
+			printf("%s", str[i]);
+	}
 	else
-		printf("%s\n", str[i]);
+	{
+		if (!str[i])
+			printf("");
+		else
+			printf("%s\n", str[i]);
+	}
 }

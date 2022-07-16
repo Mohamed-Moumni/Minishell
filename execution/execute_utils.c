@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:31:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 21:03:53 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 11:35:21 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ char    *cmd_valid(char *cmd)
 	int		i;
 	char	*temp;
 
+	if (g_minishell.unset_path == 1)
+	{
+		printf("minishell: %s: No such file or directory\n", cmd);
+		return (NULL);
+	}
 	if (check_absolut_path(cmd))
 	{
 		if (!access(cmd, (X_OK & F_OK)))
 			return (cmd);
-		printf("minishell: %s: No such file or directory", cmd);
+		printf("minishell: %s: No such file or directory\n", cmd);
 		return (NULL);
 	}
 	i = 0;
-	if (g_minishell.unset_path == 1)
-	{
-		printf("minishell: %s: No such file or directory", cmd);
-		return (NULL);
-	}
 	paths = std_paths(_PATH_STDPATH);
 	while (paths[i])
 	{
@@ -43,7 +43,7 @@ char    *cmd_valid(char *cmd)
 		i++;
 	}
 	free (paths);
-	printf("minishell: %s: command not found", cmd);
+	printf("minishell: %s: command not found\n", cmd);
 	return (NULL);
 }
 

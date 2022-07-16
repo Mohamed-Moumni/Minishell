@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 08:47:21 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 16:20:27 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 10:45:52 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ void	ft_env(t_envp *env, t_char *args)
 	}
 	else
 	{
-		if (temp->value)
-			printf("%s=\"%s\"\n",temp->key,temp->value);
-		temp = temp->next;
+		while (temp)
+		{
+			if (ft_strcmp(temp->value, ""))
+				printf("%s=\"%s\"\n",temp->key,temp->value);
+			temp = temp->next;
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:19:26 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 20:54:30 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/16 13:19:08 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,28 @@ void	ft_unset(t_envp *env, t_char *args)
     while (temp)
     {
         if (!valid_unset(args->argv))
-            printf("minishell: unset: `args->argv': not a valid identifier");
+            printf("minishell: unset: `%s': not a valid identifier\n",args->argv);
 		else
 		{
 			if (!ft_strcmp(args->argv, "PATH"))
 				g_minishell.unset_path = 1;
-			delete_node(&env, args);
+			delete_node(&env, temp);
 		}
 		temp = temp->next;
     }
 }
 
+
+
 void    delete_node(t_envp **env, t_char *arg)
 {
-	t_envp	*prev;
 	t_envp	*next;
 	t_envp	*temp;
-	
+
 	if (!ft_strcmp(arg->argv, (*env)->key))
 	{
 		temp = *env;
-		*env = (*env)->next;
+		(*env) = (*env)->next;
 		free(temp);
 	}
 	else
@@ -52,10 +53,9 @@ void    delete_node(t_envp **env, t_char *arg)
 		{
 			if (temp->next && !ft_strcmp(temp->next->key, arg->argv))
 			{
-				prev = temp;
-				next = temp->next->next;
-				free (temp);
-				prev->next = next;
+				next = temp->next;
+				temp->next = next->next;
+				free(next);
 			}
 			temp = temp->next;
 		}

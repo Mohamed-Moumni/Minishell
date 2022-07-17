@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:50:36 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/16 20:29:58 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:52:46 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	create_node_lex(t_lexer **list, char *line, int *i, int *j)
 	if (!add_node(list, word, WORD))
 		return (-1);
 	*j = (*i)++;
-	while (line[*i] == '>' || line[*i] == '<' || line[*i] == '|')
+	while (line[*i] && (line[*i] == '>' || line[*i] == '<' || line[*i] == '|'))
 		(*i)++;
 	word = ft_strdupi(&line[*j], *i - *j);
 	if (!ft_strlen(word))
@@ -52,9 +52,9 @@ int	check_last_node(t_lexer *list)
 	tmp = list;
 	while (tmp->next)
 		tmp = tmp->next;
-	if ((tmp->token >= 4 && tmp->token <= 8) || 
-		((ft_strcmp(tmp->content, ">") || ft_strcmp(tmp->content, "<") 
-		|| ft_strcmp(tmp->content, "|")) && ft_strlen(tmp->content) == 1))
+	if ((tmp->token >= 4 && tmp->token <= 8) 
+		|| ((!ft_strcmp(tmp->content, ">") || !ft_strcmp(tmp->content, "<")
+		|| !ft_strcmp(tmp->content, "|"))))
 		return (0);
 	return (1);
 }
@@ -94,7 +94,7 @@ int	skip_first_operator(t_lexer **list, char *line, int *i, int *j)
 		return (0);
 	if (!add_node(list, word, UNCHECKED))
 		return (-1);
-	*j = (*i)++;
+	*j = (*i);
 	return (1);
 }
 

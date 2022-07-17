@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/16 17:28:28 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 11:47:58 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ char            **ft_split(char const *s, char c);
 char            *ft_strdup(char *s1);
 void            free_cmd_list(t_cmds **cmds);
 void            free_lexer(t_lexer **lexer);
-void            free_tchar(t_char **tchar);
+void			free_tchar(t_char **tchar);
+int				ft_isspace(char c);
 
 #endif
 

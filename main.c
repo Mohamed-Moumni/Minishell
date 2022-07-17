@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/16 20:25:18 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 11:52:35 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,17 @@ void	set_gminishell(void)
 	g_minishell.sh_level = 2;
 }
 
+int	readline_valid(char *read_line)
+{
+	int	i;
+
+	i = 0;
+	while (read_line[i] && ft_isspace(read_line[i]))
+		i++;
+	if (!read_line[i])
+		return (1);
+	return (0);
+}
 int	main(int ac, char **av, char **env)
 {
 	t_lexer		*list;
@@ -129,14 +140,17 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		read_line = readline("minishell$ ");
-		list = get_lexer(read_line);
 		add_history(read_line);
-		if (list)
+		if (!readline_valid(read_line))
 		{
-			adjust_heredoc(list);
-			start_execution(list, &envp);
+			list = get_lexer(read_line);
+			if (list)
+			{
+				adjust_heredoc(list);
+				start_execution(list, &envp);
+			}
+			free_lexer(&list);
 		}
-		free_lexer(&list);
 	}
 	return (0);
 }

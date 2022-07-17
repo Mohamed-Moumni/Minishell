@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 21:19:04 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 20:42:00 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 11:42:38 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	run_command(t_cmds *cmds, t_envp **env, int i, int **pipes)
 	infile = 0;
 	outfile = 1;
 	cmd = cmds;
-	trait_redirection(cmd->next, *env, &infile, &outfile);
+	trait_redirection(cmd, *env, &infile, &outfile);
 	if (infile == 0)
 	{
 		if (i > 0 && i != 0)
@@ -117,7 +117,13 @@ void	run_command(t_cmds *cmds, t_envp **env, int i, int **pipes)
 		}
 	}
 	else
+	{
+		printf("hello2\n");
 		dup2(outfile, 1);
+		// close(1);
+		// dup(outfile);
+		printf("hello\n");
+	}
 	close_all_pipes(pipes);
 	execute_cmd(cmd, env);
 }
@@ -129,6 +135,8 @@ void	trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile)
 	(void)env;
 
 	temp = cmds;
+	if (temp->type == PIPE || temp->type == WORD)
+		temp = temp->next;
 	while (temp && temp->type != PIPE)
 	{
 		if (temp->type == RIGHT_REDIR)

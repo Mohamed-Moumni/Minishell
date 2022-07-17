@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:41:10 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/17 11:25:51 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 11:26:43 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,30 +81,3 @@ int	ft_expand(char	**word, t_envp **env, t_lexer *node)
 	*word = new_word;
 	return (1);
 }
-
-// int	ft_expand_heredoc(char **word, t_envp *env)
-// {
-	
-// }
-
-// int	replace_null_var(char **word, char *dollar)
-// {
-// 	return (1);
-// }
-
-// int	replace_var(char **word, t_envp *env, char *dollar)
-// {
-// 	int		new_word_len;
-// 	char	*new_word;
-
-// 	// if (!env)
-// 	// 	return (replace_null_var(word, dollar));
-// 	new_word_len = ft_strlen(*word) - ft_strlen(env->key) + ft_strlen(env->value);
-// 	new_word = (char *)malloc(sizeof(char) * new_word_len);
-// 	if (!new_word)
-// 		return (0);
-// 	ft_strncpy(new_word, *word, advanced_strlen(*word, dollar));
-// 	ft_strlcat(new_word, env->value, new_word_len);
-// 	ft_strlcat(new_word, dollar + ft_strlen(env->key) + 1, new_word_len);
-// 	return (1);
-// }

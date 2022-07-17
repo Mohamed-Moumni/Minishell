@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:58:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/13 20:20:38 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 11:46:40 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,12 @@ void	free_tab(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == '\v' || c == '\n' || c == '\t'
+		|| c == '\r' || c == '\f' || c == ' ')
+		return (1);
+	return (0);
 }

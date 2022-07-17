@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 08:47:21 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 10:45:52 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:09:07 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	ft_env(t_envp *env, t_char *args)
 
 	temp = env;
 	if (args->next)
-	{
 		printf("Invalid Syntax\n");
-	}
 	else
 	{
 		while (temp)

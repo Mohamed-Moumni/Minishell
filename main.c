@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/17 11:52:35 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:39:41 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,6 @@ void	adjust_heredoc(t_lexer *list)
 		node = node->next;
 	}
 }
-
-// void	create_env_export(t_envp **envp, t_export **export, char **env)
-// {
-	
-// 	if (!(*env))
-// 	{
-// 		g_minishell.sh_level = 1;
-// 		*envp = without_env();
-// 		*export = without_export();
-// 	}
-// 	else{	
-// 		g_minishell.sh_level = 2;
-// 		*envp = envp_to_list(env);
-// 		*export = env_to_expo_list(env);
-// 	}
-// }
 
 void	free_tchar(t_char **tchar)
 {
@@ -151,6 +135,7 @@ int	main(int ac, char **av, char **env)
 			}
 			free_lexer(&list);
 		}
+		free(read_line);
 	}
 	return (0);
 }

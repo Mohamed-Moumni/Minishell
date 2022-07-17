@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 18:59:02 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 11:22:17 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,65 +52,51 @@ void	add_export_vars(t_envp **env, t_char *args)
 	}
 }
 
+void	ft_split_key_val(char *str, char c, char **key, char **value)
+{
+	int		i;
+	int		j;
+	
+	i = 0;
+	j = 0;
+	while (str[i] != c)
+		i++;
+	*key = ft_strdupi(str, i);
+	*value = ft_strdup((str + i + 1));
+}
 void	trait_arg(t_envp **env, t_char *arg)
 {
 	t_envp	*node;
-
+	t_envp	*s_key;
+	
 	if (!valid_arg(arg->argv))
 	{
 		printf("minishell: export: `%s': not a valid identifier\n", arg->argv);
 		exit (EXIT_FAILURE);
 	}
-	if (ft_strchr(arg->argv, '='))
+	if (ft_strchr(arg->argv, '=')[0])
 	{
 		node = (t_envp *)malloc(sizeof(t_envp));
-		get_key_value(arg->argv, &node->key, &node->value, 1);
+		ft_split_key_val(arg->argv, '=', &node->key, &node->value);
 		node->next = NULL;
-		(*env)->next = node;
+		s_key = search_key(*env, node->key);
+		if (s_key && !ft_strcmp(s_key->key, node->key))
+		{
+			free(s_key->value);
+			s_key->value = node->value;
+			free(node->key);
+			free(node);
+		}
+		else
+			envp_add_back(env, node);
 	}
 	else
 	{
 		node = (t_envp *)malloc(sizeof(t_envp));
-		get_key_value(arg->argv, &node->key, &node->value, 2);
+		node->key = ft_strdup(arg->argv);
+		node->value = ft_strdup("");
 		node->next = NULL;
-		(*env)->next = node;
-	}
-}
-
-void	get_key_value(char *str, char **key, char **value, int cond)
-{
-	int	i;
-	int	size;
-
-	i = 0;
-	if (cond == 1)
-	{
-		size = (int)(ft_strchr(str, '=') - str);
-		// printf("%d\n",size);
-		*key = (char *)malloc(sizeof(char) * (size + 1));
-		while (str[i] != '=')
-		{
-			*key[i] = str[i];
-			i++;
-		}
-		i = i + 1;
-		*value = (char *)malloc(sizeof(char) * (ft_strlen(str) - size + 1) + 1);
-		while (str[i])
-		{
-			*value[i] = str[i];
-			i++;
-		}
-	}
-	else
-	{
-		*key = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
-		while (str[i])
-		{
-			*key[i] = str[i];
-			i++;
-		}
-		*value = (char *)malloc(sizeof(char));
-		*value[0] = '\0';
+		envp_add_back(env, node);
 	}
 }
 

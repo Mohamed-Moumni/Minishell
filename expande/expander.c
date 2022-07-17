@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:41:10 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 21:14:53 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 11:25:51 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*extract_var(char *start)
 		end++;
 		return (ft_strdupi(start, advanced_strlen(start, end)));
 	}
-	while (end[0] && (ft_isalpha(end[0]) || ft_isdigit(end[0])))
+	while (end[0] && (ft_isalpha(end[0]) || ft_isdigit(end[0]) || end[0] == '_'))
 		end++;
 	var_name = ft_strdupi(start, advanced_strlen(start, end));
 	return (var_name);

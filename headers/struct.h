@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:28:27 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/15 18:15:53 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 20:22:49 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/uio.h>
 # include <limits.h>
 # include <errno.h>
+#include <dirent.h>
 
 # define BUFFER_SIZE 1
 # define SHLVL "SHLVL=1"
@@ -41,6 +42,7 @@ typedef struct	s_update
 	int				sh_level;
 	int				old_pwd;
 	int				unset_path;
+	int				herdoc;
 }t_upd;
 
 t_upd	g_minishell;

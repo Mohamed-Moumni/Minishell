@@ -6,38 +6,41 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 21:41:53 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/29 22:39:10 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 18:07:59 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
+#include "../headers/struct.h"
 
-void	ft_exit(t_char *args, int condition)
+void	ft_exit(t_char *args)
 {
 	t_char			*temp;
-	unsigned char	exit_status;
-	int				ret;
-
+	
 	temp = args->next;
 	if (temp == NULL)
 	{
+		printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		if (temp->next)
+		if (check_number(temp->argv))
 		{
-			printf ("%s: exit: too many arguments", MINISHELL);
-			// update the golabal struct
-			exit (EXIT_FAILURE);
+			printf("exit\nmininshell: exit: %s: numeric argument required\n",temp->argv);
+			g_minishell.exit_status = 255;
+			exit (g_minishell.exit_status);
 		}
-		if (check_number(args->argv))
+		else if (check_number(temp->argv) || temp->next)
 		{
-			ret = ft_atoi(args->argv);
-			exit_status = (unsigned char)ret;
-			// upadte the golobal struct
-			exit (EXIT_SUCCESS);
+			printf ("exit\nminishell: exit: too many arguments\n");
+			g_minishell.exit_status = 1;
+		}
+		else
+		{
+			g_minishell.exit_status = ft_atoi(args->next->argv);
+			exit (g_minishell.exit_status);
 		}
 	}
 }

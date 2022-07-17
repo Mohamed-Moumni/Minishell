@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_utils.c                                   :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 17:53:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/17 14:31:49 by mmoumni          ###   ########.fr       */
+/*   Created: 2022/07/17 16:34:48 by mmoumni           #+#    #+#             */
+/*   Updated: 2022/07/17 16:39:33 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,27 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-int	is_nl_valid(char *str)
+int	ft_atoi(const char *str)
 {
-	int i;
-
-	i = 1;
-	if (str[0] == '-')
-	{
-		while (str[i] == 'n')
-			i++;
-		if (str[i] != '\0')
-			return (1);
-		return (0);
-	}
-	return (1);
-}
-
-void	ft_print(char **str, int condition)
-{
-	int i;
+	int			i;
+	int			sign;
+	int			result;
 
 	i = 0;
-	while (str[i] && str[i + 1] != NULL)
+	result = 0;
+	sign = 1;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		printf("%s ", str[i]);
-		i++;		
+		if (str[i] == '-')
+			sign = -1;
+		i++;
 	}
-	if (condition == 0)
+	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
-		if (!str[i])
-			printf("");
-		else
-			printf("%s", str[i]);
+		result = result * 10 + str[i] - '0';
+		i++;
 	}
-	else
-	{
-		if (!str[i])
-			printf("\n");
-		else
-			printf("%s\n", str[i]);
-	}
+	return ((sign * result));
 }

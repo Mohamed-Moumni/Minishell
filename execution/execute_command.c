@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 21:19:04 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/17 14:25:44 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 20:18:53 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,24 @@ void    begin_execution(t_cmds *cmds, t_envp **env)
 	res = 0;
 	if (!how_many_pipes(cmds))
 	{
+		int status;
 		is_builtin(temp,&res);
 		if (res)
 		{
 			pid = fork();
 			if (pid == 0)
 				run_command(temp, env, -1, pipes);
-			waitpid(pid, &g_minishell.exit_status, 0);
+			waitpid(pid, &status, 0);
+			if (WIFEXITED(status))
+			{
+				g_minishell.exit_status = WEXITSTATUS(status);
+			}
+			if (WIFSIGNALED(status))
+			{
+				g_minishell.exit_status = WTERMSIG(status) + 128;
+			}
+			if (g_minishell.exit_status == 131)
+				write(1,"Quit: 3\n",9);
 			waitpid(-1, NULL, 0);
 		}
 		else
@@ -85,6 +96,8 @@ void	is_builtin(t_cmds *cmd, int *res)
 		*res = 0;
 	else if (!ft_strcmp(cmd->argv->argv, "CD") || !ft_strcmp(cmd->argv->argv, "cd"))
 		*res = 0;
+	else if (!ft_strcmp(cmd->argv->argv, "EXIT") || !ft_strcmp(cmd->argv->argv, "exit"))
+		*res = 0;
 	else
 		*res = 1;
 }
@@ -104,6 +117,8 @@ void	run_builtin(t_cmds *cmd, t_envp **env)
 		ft_env(*env, cmd->argv);
 	else if (!ft_strcmp(cmd->argv->argv, "CD") || !ft_strcmp(cmd->argv->argv, "cd"))
 		ft_cd(env, cmd->argv);
+	else if (!ft_strcmp(cmd->argv->argv, "EXIT") || !ft_strcmp(cmd->argv->argv, "exit"))
+		ft_exit(cmd->argv);
 }
 
 void	run_command(t_cmds *cmds, t_envp **env, int i, int **pipes)
@@ -116,6 +131,8 @@ void	run_command(t_cmds *cmds, t_envp **env, int i, int **pipes)
 
 	in = dup(STDIN_FILENO);
 	out = dup(STDOUT_FILENO);
+	infile = 0;
+	outfile = 1;
 	cmd = cmds;
 	trait_redirection(cmd, *env, &infile, &outfile);
 	if (infile == 0)
@@ -128,7 +145,9 @@ void	run_command(t_cmds *cmds, t_envp **env, int i, int **pipes)
 		}
 	}
 	else
+	{
 		dup2(infile, STDIN_FILENO);
+	}
 	if (outfile == 1)
 	{
 		if (i > 0 && pipes[i] != NULL)
@@ -216,7 +235,7 @@ void	execute_cmd(t_cmds *cmd, t_envp **env)
 					exit (EXIT_FAILURE);
 			}
 			else
-				exit(EXIT_FAILURE);
+				exit (127);
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:19:26 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 17:26:53 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 16:58:20 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ void	ft_unset(t_envp **env, t_char *args)
     while (temp)
     {
         if (!valid_unset(args->argv))
+		{
             printf("minishell: unset: `%s': not a valid identifier\n",args->argv);
+			g_minishell.exit_status = 1;
+		}
 		else
 		{
 			if (!ft_strcmp(args->argv, "PATH"))
 				g_minishell.unset_path = 1;
 			delete_node(env, temp);
-			// printf("%s\n", (env)->key);
 		}
 		temp = temp->next;
     }

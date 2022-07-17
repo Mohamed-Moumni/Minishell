@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/17 12:21:23 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 18:19:59 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				ft_char_counter(char *str, char ch);
 int				checkcmp(char *num, int plus, int minus);
 int				is_integer(char *num);
 int				is_number(char *num);
-int				check_number(char **num);
+int				check_number(char *num);
 char			*ft_strrchr(char *s, int c);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strdupi(const char *s1, int l);
@@ -90,6 +90,7 @@ void            free_lexer(t_lexer **lexer);
 void			free_tchar(t_char **tchar);
 int				ft_isspace(char c);
 void            check_start(t_cmds *cmd, int *infile, int *outfile);
+void            sig_handler(int signal);
 
 #endif
 

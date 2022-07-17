@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/17 11:22:17 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 16:59:22 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	trait_arg(t_envp **env, t_char *arg)
 	if (!valid_arg(arg->argv))
 	{
 		printf("minishell: export: `%s': not a valid identifier\n", arg->argv);
-		exit (EXIT_FAILURE);
+		g_minishell.exit_status = 1;
 	}
-	if (ft_strchr(arg->argv, '=')[0])
+	else if (ft_strchr(arg->argv, '=')[0])
 	{
 		node = (t_envp *)malloc(sizeof(t_envp));
 		ft_split_key_val(arg->argv, '=', &node->key, &node->value);

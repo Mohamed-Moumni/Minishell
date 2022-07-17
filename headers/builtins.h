@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/17 12:31:07 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 16:36:56 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,6 @@ void            run_builtin(t_cmds *cmd, t_envp **env);
 void            is_builtin(t_cmds *cmd, int *res);
 t_envp          *delete_head(t_envp *head);
 void            ft_split_key_val(char *str, char c, char **key, char **value);
+void            ft_exit(t_char *args);
+int             ft_atoi(const char *str);
 #endif

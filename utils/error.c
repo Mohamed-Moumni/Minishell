@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:24:58 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 17:25:32 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 18:05:07 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,11 @@ int	is_number(char *num)
 	return (0);
 }
 
-int	check_number(char **num)
+int	check_number(char *num)
 {
-	int	i;
-
-	i = 0;
-	while (num[i])
-	{
-		if (is_number(num[i]))
-			return (1);
-		if (is_integer(num[i]))
-			return (1);
-		i++;
-	}
+	if (is_number(num))
+		return (1);
+	if (is_integer(num))
+		return (1);
 	return (0);
 }

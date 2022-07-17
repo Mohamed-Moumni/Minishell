@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/16 20:46:07 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/17 17:01:42 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*ft_cd_home(char *path)
 	if (!home)
 	{
 		printf("HOME not set!\n");
+		g_minishell.exit_status = 1;
 		return (0);
 	}
 	if (chdir(home) < 0)
@@ -91,6 +92,7 @@ int	ft_cd(t_envp **env, t_char *argv)
 		{
 			chdir(pwd);
 			printf("%s no such file or directory!\n", path);
+			g_minishell.exit_status = 1;
 			return (0);
 		}
 	}

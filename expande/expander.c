@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:41:10 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/17 17:50:54 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/18 20:59:33 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_expand(char	**word, t_envp **env, t_lexer *node)
 	start = *word;
 	dollar_sign = ft_strchr(*word, '$');
 	new_word = ft_strdup("");
-	while (dollar_sign[0])
+	while (dollar_sign[0] && dollar_sign[1])
 	{
 		if (node->token != SINGLE_QUOTE && between_quote(*word, dollar_sign, '\''))
 		{

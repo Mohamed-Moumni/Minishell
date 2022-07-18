@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/17 20:30:01 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/18 21:04:04 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,21 +165,36 @@ t_char	*char_last_node(t_char *node)
 	return (ch);
 }
 
-int	adjust_filename(t_cmds *cmd)
+void	add_front_node_cmd(t_cmds **cmd, t_char *tmp, e_token token)
+{
+	t_cmds *new_node;
+	t_cmds *old_head;
+
+	old_head = *cmd;
+	new_node = NULL;
+	add_node_cmd(&new_node, token);
+	new_node->argv = tmp;
+	old_head->prev = new_node;
+	new_node->next = old_head;
+	*cmd = new_node;
+}
+
+int	adjust_filename(t_cmds **cmd)
 {
 	t_char	*tmp;
+	t_cmds	*node;
 	t_cmds	*prev_cmd;
 
-	tmp = cmd->argv->next;
-	cmd->argv->next = NULL;
-	prev_cmd = cmd->prev;
-	// printf("type: %d\n", prev_cmd->type);
-	while (prev_cmd->type != WORD && prev_cmd->next)
-	{
+	node = cmd_last_node(*cmd);
+	tmp = node->argv->next;
+	node->argv->next = NULL;
+	prev_cmd = node->prev;
+	while (prev_cmd && prev_cmd->type != WORD)
 		prev_cmd = prev_cmd->prev;
-		// printf("type: %d\n", prev_cmd->type);
-	}
-	char_last_node(prev_cmd->argv)->next = tmp;
+	if (!prev_cmd)
+		add_front_node_cmd(cmd, tmp, WORD);
+	else
+		char_last_node(prev_cmd->argv)->next = tmp;
 	return (1);
 }
 
@@ -193,7 +208,7 @@ int	treat_redir(t_cmds **cmds, t_envp **env, t_lexer *node)
 	while (tmp->next)
 		tmp = tmp->next;
 	if (element_count(tmp->argv) > 1 && node->token != PIPE)
-		adjust_filename(cmd_last_node(*cmds));
+		adjust_filename(cmds);
 	return (1);
 }
 
@@ -231,6 +246,7 @@ int start_execution(t_lexer *list, t_envp **env)
 		}
 		tmp = tmp->next;
 	}
+	// print_cmd(cmds);
 	begin_execution(cmds, env);
 	return (1);
 }

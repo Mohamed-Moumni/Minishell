@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/17 18:19:59 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/18 20:41:32 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int				element_count(t_char *list);
 t_cmds			*cmd_last_node(t_cmds *cmd);
 int				treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, e_token token);
 t_char			*char_last_node(t_char *node);
-int				adjust_filename(t_cmds *cmd);
+int				adjust_filename(t_cmds **cmd);
 int				treat_redir(t_cmds **cmds, t_envp **env, t_lexer *node);
 void			print_cmd(t_cmds *cmd);
 int				start_execution(t_lexer *list, t_envp **env);
@@ -91,6 +91,8 @@ void			free_tchar(t_char **tchar);
 int				ft_isspace(char c);
 void            check_start(t_cmds *cmd, int *infile, int *outfile);
 void            sig_handler(int signal);
-
+char			*get_next_line(int fd);
+char			*ft_strjoin_gn(char *s1, char *s2);
+char			*ft_strchr_gn(char *s, int c);
 #endif
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:28:27 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/17 20:22:49 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/19 21:40:46 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 typedef struct	s_update
 {
 	int				exit_status;
-	int				sh_level;
 	int				old_pwd;
 	int				unset_path;
 	int				herdoc;

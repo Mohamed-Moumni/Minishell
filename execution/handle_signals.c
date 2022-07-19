@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:12:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/18 19:43:35 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/19 21:31:00 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@ void	sig_handler(int signal)
 	{
 		kill(g_minishell.herdoc, SIGKILL);
 		g_minishell.herdoc = 0;
-		// printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		// rl_redisplay();
 	}
-	else if (signal == SIGINT)
+	else if (signal == SIGINT && !g_minishell.herdoc)
 	{
 		printf("\n");
 		rl_on_new_line();

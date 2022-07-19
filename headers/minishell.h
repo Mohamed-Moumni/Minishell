@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/18 20:41:32 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/19 22:01:03 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ void            sig_handler(int signal);
 char			*get_next_line(int fd);
 char			*ft_strjoin_gn(char *s1, char *s2);
 char			*ft_strchr_gn(char *s, int c);
+void    run_one_cmd(t_cmds *cmds, t_envp **env);
 #endif
 

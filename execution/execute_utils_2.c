@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:34:05 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:24:29 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 11:07:43 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ unsigned int	t_char_size(t_char *tchar_list)
 	return (size);
 }
 
-char **conv_t_char_to_tab(t_char *tchar_list)
+char	**conv_t_char_to_tab(t_char *tchar_list)
 {
-	t_char	*temp;
-	char	**tab;
-	unsigned int i;
+	t_char			*temp;
+	char			**tab;
+	unsigned int	i;
 
 	i = 0;
 	temp = tchar_list;

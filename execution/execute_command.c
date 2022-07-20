@@ -6,23 +6,13 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 21:19:04 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:44:40 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 11:20:06 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/builtins.h"
 #include "../headers/minishell.h"
 #include "../headers/struct.h"
-
-void	get_exit_status(int status)
-{
-	if (WIFEXITED(status))
-		g_minishell.exit_status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-		g_minishell.exit_status = WTERMSIG(status) + 128;
-	if (g_minishell.exit_status == 131)
-		write(1, "Quit: 3\n", 9);
-}
 
 void	begin_execution(t_cmds *cmds, t_envp **env)
 {
@@ -36,27 +26,6 @@ void	begin_execution(t_cmds *cmds, t_envp **env)
 	else
 		mutliple_cmds(cmds, env, pipes);
 	free_tab((void *)pipes);
-}
-
-void	run_builtin(t_cmds *cmd, t_envp **env)
-{
-	char	*temp;
-
-	temp = cmd->argv->argv;
-	if (!ft_strcmp(temp, "PWD") || !ft_strcmp(temp, "pwd"))
-		ft_pwd(conv_t_char_to_tab(cmd->argv));
-	else if (!ft_strcmp(temp, "ECHO") || !ft_strcmp(temp, "echo"))
-		ft_echo(&conv_t_char_to_tab(cmd->argv)[1]);
-	else if (!ft_strcmp(temp, "EXPORT") || !ft_strcmp(temp, "export"))
-		ft_export(env, cmd->argv);
-	else if (!ft_strcmp(temp, "UNSET") || !ft_strcmp(temp, "unset"))
-		ft_unset(env, cmd->argv->next);
-	else if (!ft_strcmp(temp, "ENV") || !ft_strcmp(temp, "env"))
-		ft_env(*env, cmd->argv);
-	else if (!ft_strcmp(temp, "CD") || !ft_strcmp(temp, "cd"))
-		ft_cd(env, cmd->argv);
-	else if (!ft_strcmp(temp, "EXIT") || !ft_strcmp(temp, "exit"))
-		ft_exit(cmd->argv);
 }
 
 void	run_one_cmd(t_cmds *cmds, t_envp **env)
@@ -124,9 +93,10 @@ void	trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile)
 		if (temp->type == RIGHT_REDIR)
 			*outfile = open(temp->argv->argv, O_CREAT | O_TRUNC | O_RDWR, 0644);
 		else if (temp->type == DOUBLE_RIGHT_REDIR)
-			*outfile = open(temp->argv->argv, O_CREAT | O_APPEND | O_RDWR, 0644);
+			*outfile = open(temp->argv->argv, O_CREAT | O_APPEND | \
+			O_RDWR, 0644);
 		else if (temp->type == LEFT_REDIR)
-			*infile = open_left_redir(cmds);
+			*infile = open_left_redir(temp);
 		else if (temp->type == HEREDOC)
 		{
 			pipe(fds);
@@ -140,29 +110,14 @@ void	trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile)
 
 void	execute_cmd(t_cmds *cmd, t_envp **env)
 {
-	char	**args;
-	char	**envp;
 	int		res;
-	char	*command;
 
 	res = 0;
 	if (cmd->type == WORD || cmd->type == PIPE)
 	{
 		is_builtin(cmd, &res);
 		if (res)
-		{
-			command = cmd_valid(cmd->argv->argv);
-			if (command)
-			{
-				args = conv_t_char_to_tab(cmd->argv);
-				envp = list_to_envp(*env);
-				args[0] = command;
-				if (execve(args[0], args, envp) == -1)
-					exit (EXIT_FAILURE);
-			}
-			else
-				exit (g_minishell.exit_status);
-		}
+			exceve_cmd(cmd, env);
 		else
 			run_builtin(cmd, env);
 	}

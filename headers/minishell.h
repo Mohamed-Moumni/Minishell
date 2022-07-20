@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/20 09:17:55 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 11:18:56 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,18 @@ char			*ft_strchr_gn(char *s, int c);
 void            run_one_cmd(t_cmds *cmds, t_envp **env);
 void            free_tab(void **tab);
 int             open_left_redir(t_cmds *cmds);
+void            one_cmd(t_cmds *cmds, t_envp **env);
+void            run_command(t_cmds *cmds, t_envp **env, int i, int **pipes);
+void	trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile);
+void	execute_cmd(t_cmds *cmd, t_envp **env);
+void	run_builtin(t_cmds *cmd, t_envp **env);
+void	begin_execution(t_cmds *cmds, t_envp **env);
+void	get_exit_status(int status);
+void	mutliple_cmds(t_cmds *cmds, t_envp **env, int **pipes);
+int	open_left_redir(t_cmds *cmds);
+void	is_builtin(t_cmds *cmd, int *res);
+t_cmds	*next_cmd(t_cmds *cmds);
+char	*check_path(char *path, int *cond);
+void	exceve_cmd(t_cmds *cmd, t_envp **env);
 #endif
 

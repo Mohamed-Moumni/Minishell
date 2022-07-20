@@ -6,7 +6,7 @@
 #    By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 11:20:52 by yait-iaz          #+#    #+#              #
-#    Updated: 2022/07/20 08:31:08 by mmoumni          ###   ########.fr        #
+#    Updated: 2022/07/20 09:46:09 by mmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,10 @@ SRC = builtins/builtins_utils.c builtins/builtins.c builtins/env.c  builtins/env
 	builtins/export.c builtins/ft_unset.c execution/execute_command.c execution/execute_utils_2.c \
 	execution/execute_utils.c execution/execute.c expande/expander.c lexer/lexer.c lexer/operator.c \
 	lexer/quote.c lexer/tokenize.c utils/error.c utils/extra_utils.c utils/ft_itoa.c \
-	utils/ft_last.c utils/ft_split.c utils/ft_strdup.c utils/ft_strlcpy.c utils/ft_strstr.c \
+	utils/ft_last.c utils/ft_split.c utils/ft_strdup.c utils/ft_strlcpy.c \
 	utils/ft_strtrim.c utils/tools.c utils/utils.c builtins/exit.c utils/ft_atoi.c execution/handle_signals.c main.c \
-	rigor_gnl/get_next_line.c rigor_gnl/get_next_line_utils.c
+	rigor_gnl/get_next_line.c rigor_gnl/get_next_line_utils.c execution/execute_command_utils.c utils/free_funcs.c \
+	execution/execute_utils_3.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -46,4 +47,4 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+re: fclean allsdf

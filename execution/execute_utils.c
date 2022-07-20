@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:31:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 10:15:22 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 11:01:17 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*cmd_valid(char *cmd)
 	i = 0;
 	cond = 0;
 	path = check_path(cmd, &cond);
-	if (cond)
+	if (!cond)
 		return (path);
 	paths = std_paths(_PATH_STDPATH);
 	while (paths[i])
@@ -64,9 +64,9 @@ char	*check_path(char *path, int *cond)
 			g_minishell.exit_status = 126;
 			return (NULL);
 		}
-		*cond = 1;
 		return (path);
 	}
+	*cond = 1;
 	return (NULL);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 08:47:21 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/19 20:46:52 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/20 10:35:51 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_env(t_envp *env, t_char *args)
 		while (temp)
 		{
 			if (ft_strcmp(temp->value, ""))
-				printf("%s=\"%s\"\n",temp->key,temp->value);
+				printf("%s=%s\n",temp->key,temp->value);
 			temp = temp->next;
 		}
 	}

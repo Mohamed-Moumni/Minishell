@@ -3,16 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/19 21:40:37 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/20 09:34:52 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./headers/struct.h"
 #include "./headers/minishell.h"
 #include "./headers/builtins.h"
+
+void	set_gminishell(void)
+{
+	g_minishell.exit_status = 0;
+	g_minishell.unset_path = 0;
+	g_minishell.herdoc = 0;
+}
+
+int	readline_valid(char *read_line)
+{
+	int	i;
+
+	i = 0;
+	while (read_line[i] && ft_isspace(read_line[i]))
+		i++;
+	if (!read_line[i])
+		return (1);
+	return (0);
+}
 
 void	replace_content(t_lexer *node, int *fd)
 {
@@ -81,65 +100,6 @@ int	adjust_heredoc(t_lexer *list)
 		node = node->next;
 	}
 	return (1);
-}
-
-void	free_tchar(t_char **tchar)
-{
-	t_char	*temp;
-	t_char	*next;
-
-	temp = *tchar;
-	while (temp)
-	{
-		next = temp->next;
-		free(temp);
-		temp = next;	
-	}
-}
-
-void	free_cmd_list(t_cmds **cmds)
-{
-	t_cmds	*temp;
-
-	temp = *cmds;
-	while (temp)
-	{
-		free_tchar(&temp->argv);
-		temp = temp->next;
-	}
-}
-
-void	free_lexer(t_lexer **lexer)
-{
-	t_lexer *temp;
-	t_lexer	*next;
-	
-	temp = *lexer;
-	while (temp)
-	{
-		next = temp->next;
-		free(temp->content);
-		temp = next;
-	}	
-}
-
-void	set_gminishell(void)
-{
-	g_minishell.exit_status = 0;
-	g_minishell.unset_path = 0;
-	g_minishell.herdoc = 0;
-}
-
-int	readline_valid(char *read_line)
-{
-	int	i;
-
-	i = 0;
-	while (read_line[i] && ft_isspace(read_line[i]))
-		i++;
-	if (!read_line[i])
-		return (1);
-	return (0);
 }
 
 int	main(int ac, char **av, char **env)

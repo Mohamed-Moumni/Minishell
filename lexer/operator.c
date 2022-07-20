@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:50:36 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/17 12:52:46 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/20 13:18:16 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	split_operator(t_lexer **list, char *line)
 	return (1);
 }
 
-int	specify_operator(char *word, e_token *token)
+int	specify_operator(char *word, t_token *token)
 {
 	if (!ft_strcmp(word, ">>"))
 		*token = DOUBLE_RIGHT_REDIR;

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:41:52 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 13:17:56 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-int	node_init_cmd(t_cmds **list, e_token token)
+int	node_init_cmd(t_cmds **list, t_token token)
 {
 	*list = malloc(sizeof(t_cmds));
 	if (!(*list))
@@ -26,7 +26,7 @@ int	node_init_cmd(t_cmds **list, e_token token)
 	return (1);
 }
 
-int	add_node_cmd(t_cmds **cmds, e_token token)
+int	add_node_cmd(t_cmds **cmds, t_token token)
 {
 	t_cmds	*tmp;
 	t_cmds	*new_node;
@@ -106,7 +106,7 @@ t_cmds	*cmd_last_node(t_cmds *cmd)
 	return (tmp);
 }
 
-int	treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, e_token token)
+int	treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, t_token token)
 {
 	char	*start;
 	char	*end;
@@ -153,7 +153,7 @@ t_char	*char_last_node(t_char *node)
 	return (ch);
 }
 
-void	add_front_node_cmd(t_cmds **cmd, t_char *tmp, e_token token)
+void	add_front_node_cmd(t_cmds **cmd, t_char *tmp, t_token token)
 {
 	t_cmds *new_node;
 	t_cmds *old_head;

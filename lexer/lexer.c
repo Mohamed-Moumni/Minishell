@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:03 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/16 18:33:44 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/20 13:18:08 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/builtins.h"
 #include "../headers/struct.h"
 
-int	node_init(t_lexer **list, char *word, e_token token)
+int	node_init(t_lexer **list, char *word, t_token token)
 {
 	int	state;
 
@@ -31,7 +31,7 @@ int	node_init(t_lexer **list, char *word, e_token token)
 	return (state);
 }
 
-int	add_node(t_lexer **list, char *word, e_token token)
+int	add_node(t_lexer **list, char *word, t_token token)
 {
 	int		state;
 	t_lexer	*tmp;

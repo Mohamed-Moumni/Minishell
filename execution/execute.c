@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 08:41:01 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 09:41:52 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,6 @@ int	add_char_node(t_char **arg, char *word)
 		tmp->next = new_node;
 	}
 	return (1);
-}
-
-void	print_char(t_char *ch)
-{
-	t_char *tmp;
-
-	tmp = ch;
-	while (tmp)
-	{
-		printf("arg: \n%s\n", tmp->argv);
-		tmp = tmp->next;
-	}
 }
 
 int	element_count(t_char *list)
@@ -212,19 +200,7 @@ int	treat_redir(t_cmds **cmds, t_envp **env, t_lexer *node)
 	return (1);
 }
 
-void	print_cmd(t_cmds *cmd)
-{
-	while (cmd)
-	{
-		printf("----------------------------\n");
-		print_char(cmd->argv);
-		printf("token: %d\n", cmd->type);
-		printf("-----------------------\n");
-		cmd = cmd->next;
-	}
-}
-
-int start_execution(t_lexer *list, t_envp **env)
+int	start_execution(t_lexer *list, t_envp **env)
 {
 	t_cmds	*cmds;
 	t_lexer	*tmp;
@@ -249,20 +225,3 @@ int start_execution(t_lexer *list, t_envp **env)
 	begin_execution(cmds, env);
 	return (1);
 }
-
-int	**two_dim_arr(int a)
-{
-	int i;
-	int	**tab;
-
-	tab = (int **)malloc(sizeof(int *) * (a + 1));
-	i = 0;
-	while (i < a)
-	{
-		tab[i] = (int *)malloc(sizeof(int) * 2);
-		i++;
-	}
-	tab[i] = NULL;
-	return (tab);
-}
-

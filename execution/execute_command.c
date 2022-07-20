@@ -6,25 +6,13 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 21:19:04 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:17:48 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 09:44:40 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/builtins.h"
 #include "../headers/minishell.h"
 #include "../headers/struct.h"
-
-t_cmds	*next_cmd(t_cmds *cmds)
-{
-	t_cmds	*temp;
-
-	temp = cmds;
-	if (temp->type == WORD || temp->type == PIPE)
-		temp = temp->next;
-	while (temp && (temp->type != WORD && temp->type != PIPE))
-		temp = temp->next;
-	return (temp);
-}
 
 void	get_exit_status(int status)
 {
@@ -34,57 +22,6 @@ void	get_exit_status(int status)
 		g_minishell.exit_status = WTERMSIG(status) + 128;
 	if (g_minishell.exit_status == 131)
 		write(1, "Quit: 3\n", 9);
-}
-
-void	one_cmd(t_cmds *cmds, t_envp **env)
-{
-	int		res;
-	t_cmds	*temp;
-	int		pid;
-
-	res = 0;
-	temp = cmds;
-	is_builtin(temp, &res);
-	if (res)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			run_one_cmd(temp, env);
-			exit(EXIT_SUCCESS);
-		}
-		waitpid(pid, &g_minishell.exit_status, 0);
-		get_exit_status(g_minishell.exit_status);
-	}
-	else
-		run_one_cmd(temp, env);
-}
-
-void	mutliple_cmds(t_cmds *cmds, t_envp **env, int **pipes)
-{
-	t_cmds	*temp;
-	int		pid;
-	int		i;
-
-	i = 0;
-	temp = cmds;
-	run_pipe(pipes);
-	while (temp != NULL)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			run_command(temp, env, i, pipes);
-			exit(EXIT_SUCCESS);
-		}
-		i++;
-		temp = next_cmd(temp);
-	}
-	close_all_pipes(pipes);
-	waitpid(pid, &g_minishell.exit_status, 0);
-	while (waitpid(-1, NULL, 0) > 0)
-		;
-	get_exit_status(g_minishell.exit_status);
 }
 
 void	begin_execution(t_cmds *cmds, t_envp **env)
@@ -99,29 +36,6 @@ void	begin_execution(t_cmds *cmds, t_envp **env)
 	else
 		mutliple_cmds(cmds, env, pipes);
 	free_tab((void *)pipes);
-}
-
-void	is_builtin(t_cmds *cmd, int *res)
-{
-	char	*temp;
-
-	temp = cmd->argv->argv;
-	if (!ft_strcmp(temp, "PWD") || !ft_strcmp(temp, "pwd"))
-		return ;
-	if (!ft_strcmp(temp, "ECHO") || !ft_strcmp(temp, "echo"))
-		return ;
-	if (!ft_strcmp(temp, "EXPORT") || !ft_strcmp(temp, "export"))
-		return ;
-	if (!ft_strcmp(temp, "UNSET") || !ft_strcmp(temp, "unset"))
-		return ;
-	if (!ft_strcmp(temp, "ENV") || !ft_strcmp(temp, "env"))
-		return ;
-	if (!ft_strcmp(temp, "CD") || !ft_strcmp(temp, "cd"))
-		return ;
-	if (!ft_strcmp(temp, "EXIT") || !ft_strcmp(temp, "exit"))
-		return ;
-	else
-		*res = 1;
 }
 
 void	run_builtin(t_cmds *cmd, t_envp **env)
@@ -224,21 +138,6 @@ void	trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile)
 	}
 }
 
-int	open_left_redir(t_cmds *cmds)
-{
-	t_cmds	*temp;
-	int		fd;
-
-	temp = cmds;
-	if (access(temp->argv->argv, (F_OK)))
-	{
-		printf("minishell: %s: No such file or directory\n", temp->argv->argv);
-		exit (EXIT_FAILURE);
-	}
-	fd = open(temp->argv->argv, O_RDWR, 0644);
-	return (fd);
-}
-
 void	execute_cmd(t_cmds *cmd, t_envp **env)
 {
 	char	**args;
@@ -266,30 +165,5 @@ void	execute_cmd(t_cmds *cmd, t_envp **env)
 		}
 		else
 			run_builtin(cmd, env);
-	}
-}
-
-void	run_pipe(int **pipes)
-{
-	int	i;
-
-	i = 0;
-	while (pipes[i])
-	{
-		pipe(pipes[i]);
-		i++;
-	}
-}
-
-void	close_all_pipes(int **pipes)
-{
-	int	i;
-
-	i = 0;
-	while (pipes[i])
-	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
-		i++;
 	}
 }

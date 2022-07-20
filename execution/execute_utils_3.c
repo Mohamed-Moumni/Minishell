@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_signals.c                                   :+:      :+:    :+:   */
+/*   execute_utils_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 18:12:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:38:19 by mmoumni          ###   ########.fr       */
+/*   Created: 2022/07/20 09:40:38 by mmoumni           #+#    #+#             */
+/*   Updated: 2022/07/20 09:41:19 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/builtins.h"
-#include "../headers/minishell.h"
 #include "../headers/struct.h"
+#include "../headers/minishell.h"
+#include "../headers/builtins.h"
 
-void	sig_handler(int signal)
+int	**two_dim_arr(int a)
 {
-	if (signal == SIGINT && g_minishell.herdoc)
+	int	i;
+	int	**tab;
+
+	tab = (int **)malloc(sizeof(int *) * (a + 1));
+	i = 0;
+	while (i < a)
 	{
-		kill(g_minishell.herdoc, SIGKILL);
-		g_minishell.herdoc = 0;
+		tab[i] = (int *)malloc(sizeof(int) * 2);
+		i++;
 	}
-	else if (signal == SIGINT && !g_minishell.herdoc)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+	tab[i] = NULL;
+	return (tab);
 }

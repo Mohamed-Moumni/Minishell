@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:34:05 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 08:39:32 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 09:24:29 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,29 @@ unsigned int	how_many_pipes(t_cmds *cmds)
 		temp = temp->next;
 	}
 	return (i);
+}
+
+void	run_pipe(int **pipes)
+{
+	int	i;
+
+	i = 0;
+	while (pipes[i])
+	{
+		pipe(pipes[i]);
+		i++;
+	}
+}
+
+void	close_all_pipes(int **pipes)
+{
+	int	i;
+
+	i = 0;
+	while (pipes[i])
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:31:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 08:40:49 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 10:15:22 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,19 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-char    *cmd_valid(char *cmd)
+char	*cmd_valid(char *cmd)
 {
 	char	**paths;
 	int		i;
 	char	*temp;
+	int		cond;
+	char	*path;
 
-	if (g_minishell.unset_path == 1)
-	{
-		printf("minishell: %s: No such file or directory\n", cmd);
-		g_minishell.exit_status = 1;
-		return (NULL);
-	}
-	if (check_absolut_path(cmd))
-	{
-		if (!access(cmd, (X_OK & F_OK)))
-			return (cmd);
-		printf("minishell: %s: No such file or directory\n", cmd);
-		g_minishell.exit_status = 1;
-		return (NULL);
-	}
 	i = 0;
+	cond = 0;
+	path = check_path(cmd, &cond);
+	if (cond)
+		return (path);
 	paths = std_paths(_PATH_STDPATH);
 	while (paths[i])
 	{
@@ -47,6 +39,34 @@ char    *cmd_valid(char *cmd)
 	free (paths);
 	printf("minishell: %s: command not found\n", cmd);
 	g_minishell.exit_status = 127;
+	return (NULL);
+}
+
+char	*check_path(char *path, int *cond)
+{
+	if (g_minishell.unset_path == 1)
+	{
+		printf("minishell: %s: No such file or directory\n", path);
+		g_minishell.exit_status = 1;
+		return (NULL);
+	}
+	if (check_absolut_path(path))
+	{
+		if (access(path, (F_OK)))
+		{
+			printf("minishell: %s: No such file or directory\n", path);
+			g_minishell.exit_status = 1;
+			return (NULL);
+		}
+		else if (access(path, (X_OK)))
+		{
+			printf("minishell: %s: Permission denied\n", path);
+			g_minishell.exit_status = 126;
+			return (NULL);
+		}
+		*cond = 1;
+		return (path);
+	}
 	return (NULL);
 }
 
@@ -70,8 +90,12 @@ char	**std_paths(char *str)
 
 int	check_absolut_path(char *cmd)
 {
-	if (cmd[0] == '/' || (ft_strlen(cmd) >= 2 && (cmd[0] == '.' && cmd[1] == '/'))||
-		(ft_strlen(cmd) >= 3 && (cmd[0] == '.' || cmd[1] == '.' || cmd[2] == '/')))
+	if (cmd[0] == '/')
+		return (1);
+	if ((ft_strlen(cmd) >= 2 && (cmd[0] == '.' && cmd[1] == '/')))
+		return (1);
+	if ((ft_strlen(cmd) >= 3 && (cmd[0] == '.' || cmd[1] == '.' || \
+		cmd[2] == '/')))
 		return (1);
 	return (0);
 }

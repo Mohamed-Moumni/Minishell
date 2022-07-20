@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 13:13:30 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 13:27:37 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ void			ft_split_key_val(char *str, char c, char **key, char **value);
 void			ft_exit(t_char *args);
 int				ft_atoi(const char *str);
 void			add_arg_trait(t_envp **env, t_char *arg);
+void			free_envp_list(t_envp **envp);
 #endif

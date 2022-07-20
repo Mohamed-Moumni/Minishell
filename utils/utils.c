@@ -3,36 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:09:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/06/30 13:45:24 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/20 09:30:26 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/struct.h"
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-int	advanced_strlen(char *start, char *end)
-{
-	int	i;
-
-	i = 0;
-	while (start[i] && &start[i] != &end[0])
-		i++;
-	return (i);
-}
 
 int	ft_strcmp(char *s1, char *s2)
 {

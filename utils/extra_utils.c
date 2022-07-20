@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:06:59 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/02 20:16:42 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 09:27:20 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,5 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	str[i] = '\0';
-	// free((void *)s1);
 	return (str);
 }
-

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:31:42 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 11:01:17 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 14:54:07 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*cmd_valid(char *cmd)
 		free (temp);
 		i++;
 	}
-	free (paths);
+	free_tab((void *)paths);
 	printf("minishell: %s: command not found\n", cmd);
 	g_minishell.exit_status = 127;
 	return (NULL);

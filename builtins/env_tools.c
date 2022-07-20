@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 08:45:50 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 12:03:23 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 15:44:31 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_envp	*creat_node(char *str)
 	}
 	else
 		node->value = splited[1];
+	free(splited);
 	node->next = NULL;
 	return (node);
 }
@@ -58,6 +59,7 @@ t_envp	*envp_to_list(char **envp)
 	int		i;
 	t_envp	*envp_list;
 	char	*pwd;
+	char	*shlvl;
 
 	i = 0;
 	envp_list = NULL;
@@ -67,14 +69,18 @@ t_envp	*envp_to_list(char **envp)
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "SHLVL", 5))
+		{
+			shlvl = ft_strjoin_ad("SHLVL=", \
+			ft_itoa(ft_atoi(&envp[i][6]) + 1), 2);
 			envp_add_back(&envp_list, \
-			creat_node(ft_strjoin("SHLVL=", \
-			ft_itoa(ft_atoi(&envp[i][6]) + 1))));
+			creat_node(shlvl));
+			// free (shlvl);
+		}
 		else
 			envp_add_back(&envp_list, creat_node(envp[i]));
 		i++;
 	}
-	return (envp_list);
+	return (free(shlvl),envp_list);
 }
 
 char	**list_to_envp(t_envp *env_list)

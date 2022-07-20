@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:41:10 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:36:57 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 15:28:15 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_expand(char	**word, t_envp **env, t_lexer *node)
 	var_name = NULL;
 	start = *word;
 	dollar_sign = ft_strchr(*word, '$');
-	new_word = ft_strdup("");
+	new_word = NULL;
 	while (dollar_sign[0] && dollar_sign[1])
 	{
 		if (node->token != SINGLE_QUOTE && between_quote(*word, dollar_sign, '\''))
@@ -52,18 +52,18 @@ int	ft_expand(char	**word, t_envp **env, t_lexer *node)
 				var = NULL;
 			else
 				var = search_key(*env, var_name);
-			new_word = ft_strjoin(new_word, ft_strdupi(start, advanced_strlen(start, dollar_sign)));
+			new_word = ft_strjoin_ad(new_word, ft_strdupi(start, advanced_strlen(start, dollar_sign)), 3);
 			if (var)
-				new_word = ft_strjoin(new_word, var->value);
+				new_word = ft_strjoin_ad(new_word, var->value, 1);
 			else if (!ft_strcmp(var_name, "?"))
-				new_word = ft_strjoin(new_word, ft_itoa(g_minishell.exit_status));
+				new_word = ft_strjoin_ad(new_word, ft_itoa(g_minishell.exit_status), 3);
 			start = dollar_sign + ft_strlen(var_name) + 1;
 		}
 		dollar_sign = ft_strchr(dollar_sign + 1, '$');
 	}
 	if (start[0])
-		new_word = ft_strjoin(new_word, start);
+		new_word = ft_strjoin_ad(new_word, start, 1);
 	free(*word);
 	*word = new_word;
-	return (1);
+	return (free(var_name), 1);
 }

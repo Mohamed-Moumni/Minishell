@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+         #
+#    By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 11:20:52 by yait-iaz          #+#    #+#              #
-#    Updated: 2022/07/19 20:26:26 by Ma3ert           ###   ########.fr        #
+#    Updated: 2022/07/20 08:31:08 by mmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ NAME = minishell
 
 HEADERS = ./headers/minishell.h ./headers/builtins.h
 
-INCLUDES= -I/goinfre/yait-iaz/homebrew/opt/readline/include
-READLINE=-lreadline -L/goinfre/yait-iaz/homebrew/opt/readline/lib
+INCLUDES= -I/goinfre/mmoumni/homebrew/opt/readline/include
+READLINE=-lreadline -L/goinfre/mmoumni/homebrew/opt/readline/lib
 
 CC = gcc
 

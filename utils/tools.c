@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:58:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/17 11:46:40 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 08:48:44 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ void	free_list(t_lexer *list)
 	}
 }
 
-void	print_lexer(t_lexer *list)
-{
-	while (list)
-	{
-		printf("content: %s ---> token: %d\n", list->content, \
-			list->token);
-		list = list->next;
-	}
-}
+// void	print_lexer(t_lexer *list)
+// {
+// 	while (list)
+// 	{
+// 		printf("content: %s ---> token: %d\n", list->content, \
+// 			list->token);
+// 		list = list->next;
+// 	}
+// }
 
-void	free_tab(char **tab)
+void	free_tab(void **tab)
 {
 	int	i;
 

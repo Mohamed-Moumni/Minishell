@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/19 22:01:03 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/20 09:17:55 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ char			*ft_strstr(char *str, char *to_find);
 char			*ft_strtrim(char *s1, char *set);
 void			free_list(t_lexer *list);
 void			print_lexer(t_lexer *list);
-void			free_tab(char **tab);
 int				ft_strlen(char *str);
 int				advanced_strlen(char *start, char *end);
 int				ft_strcmp(char *s1, char *s2);
@@ -94,6 +93,8 @@ void            sig_handler(int signal);
 char			*get_next_line(int fd);
 char			*ft_strjoin_gn(char *s1, char *s2);
 char			*ft_strchr_gn(char *s, int c);
-void    run_one_cmd(t_cmds *cmds, t_envp **env);
+void            run_one_cmd(t_cmds *cmds, t_envp **env);
+void            free_tab(void **tab);
+int             open_left_redir(t_cmds *cmds);
 #endif
 

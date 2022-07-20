@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:34:05 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/13 20:05:21 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 08:39:32 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,27 +65,3 @@ unsigned int	how_many_pipes(t_cmds *cmds)
 	}
 	return (i);
 }
-
-// void	is_builtin(t_cmds *cmd)
-// {
-// 	if (!ft_strcmp(cmd->argv->argv, "pwd") || !ft_strcmp(cmd->argv->argv, "PWD"))
-// 		ft_pwd(conv_t_char_to_tab(cmd->argv));
-// 	else if (!ft_strcmp(cmd->argv->argv, "echo") || !ft_strcmp(cmd->argv->argv, "ECHO"))
-// 		ft_echo(conv_t_char_to_tab(cmd->argv));
-// 	// else if (!ft_strcmp(cmd->argv->argv, "echo") || !ft_strcmp(cmd->argv->argv, "ECHO"))
-		
-// 	// else if (!ft_strcmp(cmd->argv->argv, "echo") || !ft_strcmp(cmd->argv->argv, "ECHO"))
-
-// 	// else if (!ft_strcmp(cmd->argv->argv, "echo") || !ft_strcmp(cmd->argv->argv, "ECHO"))
-		
-// 	// else if (!ft_strcmp(cmd->argv->argv, "echo") || !ft_strcmp(cmd->argv->argv, "ECHO"))
-	
-// }
-
-// void	normal_command(t_cmds *cmd)
-// {
-// 	if (cmd_valid(cmd->argv->argv) == NULL)
-// 		return ;
-// 	else
-// 		run	
-// }

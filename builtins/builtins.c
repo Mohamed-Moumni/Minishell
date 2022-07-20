@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/19 21:52:58 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/20 09:19:19 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	ft_echo(char ** str)
 	int	i;
 	
 	i = 0;
-	// printf("%s\n",str[0]);
 	while (str[i])
 	{
 		if (is_nl_valid(str[i]))
@@ -30,6 +29,7 @@ void	ft_echo(char ** str)
 		ft_print(&str[i], 0);
 	else
 		ft_print(&str[i], 1);
+	g_minishell.exit_status = 0;
 }
 
 void	ft_pwd(char **argv)

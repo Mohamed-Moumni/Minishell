@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 08:45:50 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/15 16:34:11 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 08:35:17 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,12 @@ t_envp	*envp_to_list(char **envp)
 	}
 	while (envp[i])
 	{
-		envp_add_back(&envp_list, creat_node(envp[i]));
+		if (!ft_strncmp(envp[i], "SHLVL", 5))
+		{
+			envp_add_back(&envp_list, creat_node(ft_strjoin("SHLVL=", ft_itoa(ft_atoi(&envp[i][6]) + 1))));
+		}
+		else
+			envp_add_back(&envp_list, creat_node(envp[i]));
 		i++;
 	}
 	return (envp_list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/19 21:53:16 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/20 08:41:01 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,6 @@ int start_execution(t_lexer *list, t_envp **env)
 		}
 		tmp = tmp->next;
 	}
-	// print_cmd(cmds);
 	begin_execution(cmds, env);
 	return (1);
 }

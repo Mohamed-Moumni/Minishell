@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:04:25 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/17 16:36:56 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 12:13:31 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ void            ft_unset(t_envp **env, t_char *args);
 void			delete_node(t_envp **env, t_char *arg);
 int				valid_unset(char *str);
 char            **list_to_envp(t_envp *env_list);
-// void            is_builtin(t_cmds *cmd, t_envp **env, int *res);
+t_envp	*without_env(void);
 void            run_builtin(t_cmds *cmd, t_envp **env);
 void            is_builtin(t_cmds *cmd, int *res);
 t_envp          *delete_head(t_envp *head);
 void            ft_split_key_val(char *str, char c, char **key, char **value);
 void            ft_exit(t_char *args);
 int             ft_atoi(const char *str);
+void	add_arg_trait(t_envp **env, t_char *arg);
 #endif

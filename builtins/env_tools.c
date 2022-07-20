@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 08:45:50 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:26:16 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 12:03:23 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,28 +57,19 @@ t_envp	*envp_to_list(char **envp)
 {
 	int		i;
 	t_envp	*envp_list;
-	char	cwd[PATH_MAX];
 	char	*pwd;
 
 	i = 0;
 	envp_list = NULL;
 	pwd = NULL;
 	if (!(*envp))
-	{
-		pwd = ft_strjoin("", "PWD=");
-		pwd = ft_strjoin(pwd, getcwd(cwd, PATH_MAX));
-		envp_add_back(&envp_list, creat_node(pwd));
-		envp_add_back(&envp_list, creat_node(SHLVL));
-		envp_add_back(&envp_list, creat_node(USRBINENV));
-		envp_add_back(&envp_list, creat_node(OLDPWD));
-		return (envp_list);
-	}
+		envp_list = without_env();
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "SHLVL", 5))
-		{
-			envp_add_back(&envp_list, creat_node(ft_strjoin("SHLVL=", ft_itoa(ft_atoi(&envp[i][6]) + 1))));
-		}
+			envp_add_back(&envp_list, \
+			creat_node(ft_strjoin("SHLVL=", \
+			ft_itoa(ft_atoi(&envp[i][6]) + 1))));
 		else
 			envp_add_back(&envp_list, creat_node(envp[i]));
 		i++;
@@ -86,42 +77,11 @@ t_envp	*envp_to_list(char **envp)
 	return (envp_list);
 }
 
-t_envp	*search_key(t_envp *envp_list, char *key)
-{
-	t_envp	*tmp_envp;
-
-	tmp_envp = envp_list;
-	if (!key)
-		return (NULL);
-	while (tmp_envp)
-	{
-		if (ft_strcmp(tmp_envp->key, key) == 0)
-			return (tmp_envp);
-		tmp_envp = tmp_envp->next;
-	}
-	return (NULL);
-}
-
-unsigned int	t_envp_size(t_envp *env_list)
-{
-	unsigned int	size;
-	t_envp			*temp;
-
-	temp = env_list;
-	size = 0;
-	while (temp)
-	{
-		size++;
-		temp = temp->next;
-	}
-	return (size);
-}
-
 char	**list_to_envp(t_envp *env_list)
 {
-	char **env_tab;
-	t_envp *temp;
-	unsigned int i;
+	char			**env_tab;
+	t_envp			*temp;
+	unsigned int	i;
 
 	temp = env_list;
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:19:26 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/17 16:58:20 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 11:52:51 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@
 
 void	ft_unset(t_envp **env, t_char *args)
 {
-    t_char  *temp;
+	t_char	*temp;
 
-    temp = args;
-    while (temp)
-    {
-        if (!valid_unset(args->argv))
+	temp = args;
+	while (temp)
+	{
+		if (!valid_unset(args->argv))
 		{
-            printf("minishell: unset: `%s': not a valid identifier\n",args->argv);
+			printf("minishell: unset: `%s': not a valid identifier\n", \
+			args->argv);
 			g_minishell.exit_status = 1;
 		}
 		else
@@ -33,18 +34,18 @@ void	ft_unset(t_envp **env, t_char *args)
 			delete_node(env, temp);
 		}
 		temp = temp->next;
-    }
+	}
 }
 
 t_envp	*delete_head(t_envp *head)
 {
-	t_envp *temp;
+	t_envp	*temp;
 	t_envp	*next;
-	
+
 	temp = head;
 	next = head->next;
 	free(temp);
-	return (next); 
+	return (next);
 }
 
 void	delete_node(t_envp **env, t_char *arg)
@@ -74,12 +75,13 @@ void	delete_node(t_envp **env, t_char *arg)
 	}
 }
 
-int valid_unset(char *str)
+int	valid_unset(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i])))
+	i = 0;
+	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_' || \
+	ft_isdigit(str[i])))
 		i++;
 	if (str[i] == '\0')
 		return (1);

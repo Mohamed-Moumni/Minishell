@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:19:19 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 12:54:42 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-void	ft_echo(char ** str)
+void	ft_echo(char **str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i])
 	{
@@ -101,18 +101,19 @@ int	ft_cd(t_envp **env, t_char *argv)
 	return (1);
 }
 
-t_envp *without_env(void)
+t_envp	*without_env(void)
 {
-	t_envp *env;
+	t_envp	*envp_list;
 	char	cwd[PATH_MAX];
 	char	*pwd;
 
-	env = NULL;
+	envp_list = NULL;
 	pwd = NULL;
 	pwd = ft_strjoin("", "PWD=");
 	pwd = ft_strjoin(pwd, getcwd(cwd, PATH_MAX));
-	envp_add_back(&env, creat_node(pwd));
-	envp_add_back(&env, creat_node(SHLVL));
-	envp_add_back(&env, creat_node(USRBINENV));
-	return (env);
+	envp_add_back(&envp_list, creat_node(pwd));
+	envp_add_back(&envp_list, creat_node(SHLVL));
+	envp_add_back(&envp_list, creat_node(USRBINENV));
+	envp_add_back(&envp_list, creat_node(OLDPWD));
+	return (envp_list);
 }

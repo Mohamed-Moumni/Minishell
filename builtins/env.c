@@ -6,10 +6,9 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 08:47:21 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 10:35:51 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 11:49:07 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../headers/builtins.h"
 #include "../headers/minishell.h"
@@ -23,14 +22,14 @@ void	ft_env(t_envp *env, t_char *args)
 	if (args->next)
 	{
 		printf("Invalid Syntax\n");
-		g_minishell.exit_status = 1;	
+		g_minishell.exit_status = 1;
 	}
 	else
 	{
 		while (temp)
 		{
 			if (ft_strcmp(temp->value, ""))
-				printf("%s=%s\n",temp->key,temp->value);
+				printf("%s=%s\n", temp->key, temp->value);
 			temp = temp->next;
 		}
 	}
@@ -49,7 +48,7 @@ void	env_sort(t_envp *env)
 		{
 			if (ft_strcmp(temp1->key, temp2->key) <= 0)
 				ft_swap(temp1, temp2);
-			temp2 = temp2->next;	
+			temp2 = temp2->next;
 		}
 		temp1 = temp1->next;
 	}

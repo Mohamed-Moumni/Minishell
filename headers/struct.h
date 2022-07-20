@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:28:27 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/20 13:11:17 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 22:59:10 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_update
 	int				old_pwd;
 	int				unset_path;
 	int				herdoc;
+	int				child;
 }	t_upd;
 
 t_upd	g_minishell;

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/20 15:25:25 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 22:59:28 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	set_gminishell(void)
 	g_minishell.exit_status = 0;
 	g_minishell.unset_path = 0;
 	g_minishell.herdoc = 0;
+	g_minishell.child = 0;
 }
 
 int	readline_valid(char *read_line)
@@ -107,7 +108,8 @@ int	main(int ac, char **av, char **env)
 	t_lexer		*list;
 	t_envp		*envp;
 	char		*read_line;
-	
+	char		*line;
+
 	(void)av;
 	(void)ac;
 	signal(SIGINT, sig_handler);
@@ -126,14 +128,15 @@ int	main(int ac, char **av, char **env)
 		add_history(read_line);
 		if (!readline_valid(read_line))
 		{
-			list = get_lexer(read_line);
+			line = ft_strdup(read_line);
+			list = get_lexer(line);
 			if (list)
 			{
 				if (adjust_heredoc(list))
 					start_execution(list, &envp);
 			}
+			free_lexer(&list);
 		}
-		free_lexer(&list);
 		free (read_line);
 	}
 	free_envp_list(&envp);

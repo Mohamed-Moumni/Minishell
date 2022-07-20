@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:19:26 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 11:52:51 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 21:09:52 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_unset(t_envp **env, t_char *args)
 		}
 		temp = temp->next;
 	}
+	g_minishell.exit_status = 0;
 }
 
 t_envp	*delete_head(t_envp *head)

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 09:40:38 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 15:07:59 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 22:44:51 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ void	run_builtin(t_cmds *cmd, t_envp **env)
 	{
 		str = conv_t_char_to_tab(cmd->argv);
 		ft_pwd(str);
-		free_tab((void *)str);
+		free (str);
 	}
 	else if (!ft_strcmp(temp, "ECHO") || !ft_strcmp(temp, "echo"))
 	{
 		str = conv_t_char_to_tab(cmd->argv);
-		ft_echo(&str[1]);
-		free_tab((void *)str);
+		ft_echo(str);
 	}
 	else if (!ft_strcmp(temp, "EXPORT") || !ft_strcmp(temp, "export"))
 		ft_export(env, cmd->argv);

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:05:13 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 12:54:29 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 21:09:31 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_export(t_envp **env, t_char *args)
 			tem_env = tem_env->next;
 		}	
 	}
+	g_minishell.exit_status = 0;
 }
 
 void	add_export_vars(t_envp **env, t_char *args)

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:03 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/20 15:24:28 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 22:21:54 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_lexer	*get_lexer(char *line)
 			return NULL;
 	}
 	else
-		add_node(&list, ft_strdup(line), WORD);
+		add_node(&list, line, WORD);
 	if (check_last_node(list) == 0)
 	{
 		printf("syntax error!\n");

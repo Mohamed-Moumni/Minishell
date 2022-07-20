@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 16:16:03 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 20:59:43 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_echo(char **str)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (str[i])
 	{
 		if (is_nl_valid(str[i]))
@@ -30,7 +30,7 @@ void	ft_echo(char **str)
 	else
 		ft_print(&str[i], 1);
 	g_minishell.exit_status = 0;
-
+	free(str);
 }
 
 void	ft_pwd(char **argv)
@@ -116,6 +116,7 @@ int	ft_cd(t_envp **env, t_char *argv)
 		g_minishell.exit_status = 0;
 	pwd_env->value = getcwd(NULL, 10000);
 	free(path);
+	g_minishell.exit_status = 0;
 	return (1);
 }
 

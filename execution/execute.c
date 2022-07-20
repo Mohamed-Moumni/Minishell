@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 16:12:27 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 21:55:44 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	add_char_node(t_char **arg, char *word)
 
 int	element_count(t_char *list)
 {
-	int	n;
+	int		n;
 	t_char	*tmp;
 
 	n = 0;

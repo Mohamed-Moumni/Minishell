@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:41:52 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 22:57:08 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,113 +14,11 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-int	node_init_cmd(t_cmds **list, e_token token)
+int	adjust_arg(char *start, t_lexer *node, t_envp **env, t_cmds *cmd)
 {
-	*list = malloc(sizeof(t_cmds));
-	if (!(*list))
-		return (0);
-	(*list)->next = NULL;
-	(*list)->prev = NULL;
-	(*list)->argv = NULL;
-	(*list)->type = token;
-	return (1);
-}
-
-int	add_node_cmd(t_cmds **cmds, e_token token)
-{
-	t_cmds	*tmp;
-	t_cmds	*new_node;
-
-	if (!(*cmds))
-	{
-		if (!node_init_cmd(cmds, token))
-			return (0);
-	}
-	else
-	{	
-		tmp = *cmds;
-		if (!node_init_cmd(&new_node, token))
-			return (0);
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_node;
-		new_node->prev = tmp;
-	}
-	return (1);
-}
-
-int	node_char_init(t_char **arg, char *word)
-{
-	*arg = malloc(sizeof(t_char));
-	if (!(*arg))
-		return (0);
-	(*arg)->argv = word;
-	(*arg)->next = NULL;
-	return (1);
-}
-
-int	add_char_node(t_char **arg, char *word)
-{
-	t_char	*tmp;
-	t_char	*new_node;
-
-	if (!(*arg))
-	{
-		if (!node_char_init(arg, word))
-			return (0);
-	}
-	else
-	{	
-		tmp = *arg;
-		if (!node_char_init(&new_node, word))
-			return (0);
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_node;
-	}
-	return (1);
-}
-
-int	element_count(t_char *list)
-{
-	int	n;
-	t_char	*tmp;
-
-	n = 0;
-	tmp = list;
-	while (tmp)
-	{
-		n++;
-		tmp = tmp->next;
-	}
-	return (n);
-}
-
-t_cmds	*cmd_last_node(t_cmds *cmd)
-{
-	t_cmds	*tmp;
-
-	tmp = cmd;
-	while (tmp->next)
-		tmp = tmp->next;
-	return (tmp);
-}
-
-int	treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, e_token token)
-{
-	char	*start;
 	char	*end;
 	char	*word;
 
-	if (!add_node_cmd(cmds, token))
-		return (0);
-	if (node->prev && node->prev->token == HEREDOC && node->token != SINGLE_QUOTE)
-	{
-		ft_expand(&(node->content), env, node);
-		return (add_char_node(&cmd_last_node(*cmds)->argv, ft_strdupi(node->content, ft_strlen(node->content))));
-	}
-	node->content = ft_strtrim(node->content, " ");
-	start = node->content;
 	end = start;
 	while (start[0] && end[0])
 	{
@@ -134,7 +32,7 @@ int	treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, e_token token)
 					advanced_strlen(start, end)), env, node);
 				if (!word)
 					return (0);
-				if (!add_char_node(&cmd_last_node(*cmds)->argv, word))
+				if (!add_char_node(&cmd_last_node(cmd)->argv, word))
 					return (0);
 			}
 			start = end + 1;
@@ -143,28 +41,24 @@ int	treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, e_token token)
 	return (1);
 }
 
-t_char	*char_last_node(t_char *node)
+int	treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, e_token token)
 {
-	t_char *ch;
+	char	*start;
 
-	ch = node;
-	while (ch->next)
-		ch = ch->next;
-	return (ch);
-}
-
-void	add_front_node_cmd(t_cmds **cmd, t_char *tmp, e_token token)
-{
-	t_cmds *new_node;
-	t_cmds *old_head;
-
-	old_head = *cmd;
-	new_node = NULL;
-	add_node_cmd(&new_node, token);
-	new_node->argv = tmp;
-	old_head->prev = new_node;
-	new_node->next = old_head;
-	*cmd = new_node;
+	if (!add_node_cmd(cmds, token))
+		return (0);
+	if (node->prev && node->prev->token != HEREDOC)
+	{
+		printf("I get in\n");
+		ft_expand(&(node->content), env, node);
+		return (add_char_node(&cmd_last_node(*cmds)->argv, \
+			ft_strdupi(node->content, ft_strlen(node->content))));
+	}
+	node->content = ft_strtrim(node->content, " ");
+	start = node->content;
+	if (!adjust_arg(start, node, env, *cmds))
+		return (0);
+	return (1);
 }
 
 int	adjust_filename(t_cmds **cmd)

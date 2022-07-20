@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/20 11:18:56 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 21:22:40 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "../headers/struct.h"
-#include "../headers/builtins.h"
+# include "../headers/struct.h"
+# include "../headers/builtins.h"
 
 t_cmds			*next_cmd(t_cmds *cmds);
 void			begin_execution(t_cmds *cmds, t_envp **env);
@@ -98,16 +98,25 @@ void            free_tab(void **tab);
 int             open_left_redir(t_cmds *cmds);
 void            one_cmd(t_cmds *cmds, t_envp **env);
 void            run_command(t_cmds *cmds, t_envp **env, int i, int **pipes);
-void	trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile);
-void	execute_cmd(t_cmds *cmd, t_envp **env);
-void	run_builtin(t_cmds *cmd, t_envp **env);
-void	begin_execution(t_cmds *cmds, t_envp **env);
-void	get_exit_status(int status);
-void	mutliple_cmds(t_cmds *cmds, t_envp **env, int **pipes);
-int	open_left_redir(t_cmds *cmds);
-void	is_builtin(t_cmds *cmd, int *res);
-t_cmds	*next_cmd(t_cmds *cmds);
-char	*check_path(char *path, int *cond);
-void	exceve_cmd(t_cmds *cmd, t_envp **env);
+void			trait_redirection(t_cmds *cmds, t_envp *env, int *infile, int *outfile);
+void			execute_cmd(t_cmds *cmd, t_envp **env);
+void			run_builtin(t_cmds *cmd, t_envp **env);
+void			begin_execution(t_cmds *cmds, t_envp **env);
+void			get_exit_status(int status);
+void			mutliple_cmds(t_cmds *cmds, t_envp **env, int **pipes);
+int				open_left_redir(t_cmds *cmds);
+void			is_builtin(t_cmds *cmd, int *res);
+t_cmds			*next_cmd(t_cmds *cmds);
+char			*check_path(char *path, int *cond);
+void			exceve_cmd(t_cmds *cmd, t_envp **env);
+int				node_char_init(t_char **arg, char *word);
+int				add_char_node(t_char **arg, char *word);
+int				element_count(t_char *list);
+t_char			*char_last_node(t_char *node);
+int				node_init_cmd(t_cmds **list, e_token token);
+int				add_node_cmd(t_cmds **cmds, e_token token);
+void			add_front_node_cmd(t_cmds **cmd, t_char *tmp, e_token token);
+t_cmds			*cmd_last_node(t_cmds *cmd);
+int				adjust_heredoc(t_lexer **list);
+void			add_front_lexer(t_lexer **head, char *word, e_token token);
 #endif
-

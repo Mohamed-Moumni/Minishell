@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/20 09:34:52 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 21:41:52 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,81 +33,12 @@ int	readline_valid(char *read_line)
 	return (0);
 }
 
-void	replace_content(t_lexer *node, int *fd)
-{
-	char	*line;
-	char	*double_quote;
-	char	*single_quote;
-
-	if (!node)
-		return ;
-	double_quote = ft_strchr(node->content, '"');
-	single_quote = ft_strchr(node->content, '\'');
-	if (double_quote[0] || single_quote[0])
-		node->token = SINGLE_QUOTE;
-	write(1, "> ", 2);
-	line = get_next_line(0);
-	if (line == NULL)
-		exit (EXIT_SUCCESS);
-	node->content = hundle_quote(node->content, NULL, node);
-	while (ft_strcmp(line, node->content))
-	{
-		line = ft_strjoin(line, "\n");
-		close (fd[0]);
-		write(fd[1], line, ft_strlen(line));
-		write(1, "> ", 2);
-		line = get_next_line(0);
-		if (line == NULL)
-		{
-			close(fd[1]);
-			exit (EXIT_SUCCESS);
-		}
-	}
-	close(fd[1]);
-	exit(EXIT_SUCCESS);
-}
-
-int	adjust_heredoc(t_lexer *list)
-{
-	t_lexer	*node;
-	int		end;
-	int		pid;
-	int		fd[2];
-	char	*buff;
-
-	node = list;
-	while (node)
-	{
-		if (!ft_strcmp(node->content, "<<"))
-		{
-			pipe(fd);
-			pid = fork();
-			if (pid == 0)
-				replace_content(node->next, fd);
-			else
-				g_minishell.herdoc = pid;
-			wait(NULL);
-			if (!g_minishell.herdoc)
-				return (0);
-			close(fd[1]);
-			buff = malloc(sizeof(char) * MAX_INPUT);
-			end = read(fd[0], buff, MAX_INPUT);
-			buff[end] = '\0';
-			close(fd[0]);
-			free(node->next->content);
-			node->next->content = buff;
-		}
-		node = node->next;
-	}
-	return (1);
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_lexer		*list;
 	t_envp		*envp;
 	char		*read_line;
-	
+
 	(void)av;
 	(void)ac;
 	signal(SIGINT, sig_handler);
@@ -129,10 +60,8 @@ int	main(int ac, char **av, char **env)
 			list = get_lexer(read_line);
 			if (list)
 			{
-				if (adjust_heredoc(list))
-				{
+				if (adjust_heredoc(&list))
 					start_execution(list, &envp);
-				}
 			}
 		}
 	}

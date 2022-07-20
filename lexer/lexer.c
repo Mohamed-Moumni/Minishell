@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:03 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/16 18:33:44 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/20 21:29:01 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,25 @@ int	between_quote(char *line, char *operator, char quote)
 	{
 		second_quote = ft_strchr(first_quote + 1, quote);
 		if (!second_quote[0])
-		{
-			printf("error! unmatched quote\n");
-			return (-1);
-		}
+			return (1);
 		if (first_quote < operator && second_quote > operator)
 			return (0);
 	}
 	return (1);
+}
+
+void	add_front_lexer(t_lexer **head, char *word, e_token token)
+{
+	t_lexer	*new_node;
+	t_lexer	*old_head;
+
+	old_head = *head;
+	new_node = NULL;
+	add_node(&new_node, word, token);
+	new_node->content = word;
+	old_head->prev = new_node;
+	new_node->next = old_head;
+	*head = new_node;
 }
 
 t_lexer	*get_lexer(char *line)
@@ -81,7 +92,7 @@ t_lexer	*get_lexer(char *line)
 	if (state)
 	{
 		if (!split_operator(&list, line))
-			return NULL;
+			return (NULL);
 	}
 	else
 		add_node(&list, line, WORD);
@@ -93,30 +104,3 @@ t_lexer	*get_lexer(char *line)
 	}
 	return (list);
 }
-
-// t_lexer	*get_lexer(char *line)
-// {
-// 	t_lexer		*list;
-// 	char		*start;
-// 	char		*word;
-// 	int			word_len;
-
-// 	list = NULL;
-// 	start = line;
-// 	while (start[0] && line[0])
-// 	{
-// 		start = ft_strchr(line, ' ');
-// 		word_len = advanced_strlen(line, start);
-// 		if (word_len > 0)
-// 		{
-// 			word = ft_substr(line, 0, word_len);
-// 			start = quote_handle(&word, line, start);
-// 			if (!start)
-// 				return (NULL);
-// 		}
-// 		line = start + 1;
-// 		add_node(&list, word);
-// 	}
-// 	return (list);
-// }
-

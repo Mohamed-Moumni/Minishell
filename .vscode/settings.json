@@ -6,6 +6,9 @@
 		"limits.h": "c",
 		"errno.h": "c",
 		"struct.h": "c",
-		"builtins.h": "c"
+		"builtins.h": "c",
+		"locale": "c",
+		"string": "c",
+		"__node_handle": "c"
 	}
 }

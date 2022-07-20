@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:34:00 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/16 20:27:19 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 22:15:35 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 char	*hundle_quote(char	*word, t_envp **env, t_lexer *node)
 {
-	int i;
-    char s;
-    char *new_word;
+	int		i;
+	char	s;
+	char	*new_word;
 
 	i = 0;
 	s = 0;
@@ -27,87 +27,53 @@ char	*hundle_quote(char	*word, t_envp **env, t_lexer *node)
 	new_word = ft_strdupi("", 1);
 	if (env)
 		ft_expand(&word, env, node);
-    while(word[i])
-    {
-        if (s == 0 && (word[i] == '\'' || word[i] == '"'))
-            s = word[i++];
-        if (word[i] == s)
-            s = 0;
-        else
-		{
-            new_word = ft_strjoin(new_word, ft_strdupi(&word[i], 1));
-			if (!new_word)
-				return (NULL);
-		}
-        i++;
-    }
-	if (s != 0)
+	while (word[i])
 	{
-		printf("unmatched quote\n");
-		return (NULL);
+		if (s == 0 && (word[i] == '\'' || word[i] == '"'))
+			s = word[i++];
+		if (word[i] == s)
+			s = 0;
+		else
+			new_word = ft_strjoin(new_word, ft_strdupi(&word[i], 1));
+		i++;
 	}
-	free(word);
-	return (new_word);
+	if (s != 0)
+		return (printf("unmatched quote\n"), NULL);
+	return (free(word), new_word);
 }
 
-// char	*add_after_quote(char *quote_ad)
-// {
-// 	char	*tmp;
+int	specify_operator(char *word, e_token *token)
+{
+	if (!ft_strcmp(word, ">>"))
+		*token = DOUBLE_RIGHT_REDIR;
+	else if (!ft_strcmp(word, ">"))
+		*token = RIGHT_REDIR;
+	else if (!ft_strcmp(word, "<<"))
+		*token = HEREDOC;
+	else if (!ft_strcmp(word, "<"))
+		*token = LEFT_REDIR;
+	else if (!ft_strcmp(word, "|") && ft_strlen(word) == 1)
+		*token = PIPE;
+	else
+	{
+		printf("syntax error!\n");
+		return (0);
+	}
+	return (1);
+}
 
-// 	if (quote_ad[0] == 0)
-// 	{
-// 		printf("error! unmatched quote\n");
-// 		return (NULL);
-// 	}
-// 	tmp = quote_ad + 1;
-// 	while (tmp[0] && tmp[0] != ' ')
-// 		tmp++;
-// 	quote_ad = tmp - 1;
-// 	return (quote_ad);
-// }
+int	ft_char_counter(char *str, char ch)
+{
+	int	n;
+	int	i;
 
-// char	*add_before_quote(char *quote, char *line)
-// {
-// 	char	*tmp;
-
-// 	tmp = quote - 1;
-// 	while (tmp[0] != ' ' && tmp != line)
-// 		tmp--;
-// 	if (tmp != line)
-// 		quote = tmp + 1;
-// 	else
-// 		quote = line;
-// 	return (quote);
-// }
-
-// char	*quote_handle(char **word, char *line, char *start)
-// {
-// 	char	*start_quote;
-// 	char	*double_q;
-// 	char	*single_q;
-
-// 	double_q = ft_strchr(*word, '"');
-// 	single_q = ft_strchr(*word, '\'');
-// 	if (double_q[0] || single_q[0])
-// 	{
-// 		if (double_q < single_q)
-// 		{
-// 			printf("word: %s\n", *word);
-// 			double_q = ft_strchr(line, '"');
-// 			start_quote = add_before_quote(double_q, line);
-// 			start = double_quote(word, line, double_q, start_quote);
-// 			remove_quote(word, *double_q, ft_char_counter(*word, *double_q));
-// 		}
-// 		else
-// 		{
-// 			single_q = ft_strchr(line, '\'');
-// 			start_quote = add_before_quote(single_q, line);
-// 			start = single_quote(word, line, single_q, start_quote);
-// 			remove_quote(word, *single_q, ft_char_counter(*word, *double_q));
-// 		}
-// 		if (!start)
-// 			return (NULL);
-// 		return (start + 1);
-// 	}
-// 	return (start);
-// }
+	i = 0;
+	n = 0;
+	while (str[i])
+	{
+		if (str[i] == ch)
+			n++;
+		i++;
+	}
+	return (n);
+}

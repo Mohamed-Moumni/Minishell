@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/20 14:07:56 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/21 08:45:55 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ char			*check_path(char *path, int *cond);
 void			exceve_cmd(t_cmds *cmd, t_envp **env);
 void			free_str(char *str1, char *str2, int cond);
 char			*ft_strjoin_ad(char *s1, char *s2, int cond);
+void            sig_handl(int signal);
 
 #endif

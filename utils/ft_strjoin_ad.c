@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:43:15 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 15:06:45 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/21 09:13:03 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin_ad(char *s1, char *s2, int cond)
 	size_t	i;
 	size_t	j;
 	size_t	k;
-	
+
 	if (!s1)
 		s1 = ft_strdup("");
 	if (!s2)

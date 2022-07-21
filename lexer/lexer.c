@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:03 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/20 21:29:01 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/21 14:25:49 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/builtins.h"
 #include "../headers/struct.h"
 
-int	node_init(t_lexer **list, char *word, e_token token)
+int	node_init(t_lexer **list, char *word, t_token token)
 {
 	int	state;
 
@@ -31,7 +31,7 @@ int	node_init(t_lexer **list, char *word, e_token token)
 	return (state);
 }
 
-int	add_node(t_lexer **list, char *word, e_token token)
+int	add_node(t_lexer **list, char *word, t_token token)
 {
 	int		state;
 	t_lexer	*tmp;
@@ -68,7 +68,7 @@ int	between_quote(char *line, char *operator, char quote)
 	return (1);
 }
 
-void	add_front_lexer(t_lexer **head, char *word, e_token token)
+void	add_front_lexer(t_lexer **head, char *word, t_token token)
 {
 	t_lexer	*new_node;
 	t_lexer	*old_head;

@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:02:52 by Ma3ert            #+#    #+#             */
-/*   Updated: 2022/07/20 20:55:25 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/21 14:25:49 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-int	node_init_cmd(t_cmds **list, e_token token)
+int	node_init_cmd(t_cmds **list, t_token token)
 {
 	*list = malloc(sizeof(t_cmds));
 	if (!(*list))
@@ -26,7 +26,7 @@ int	node_init_cmd(t_cmds **list, e_token token)
 	return (1);
 }
 
-int	add_node_cmd(t_cmds **cmds, e_token token)
+int	add_node_cmd(t_cmds **cmds, t_token token)
 {
 	t_cmds	*tmp;
 	t_cmds	*new_node;
@@ -49,7 +49,7 @@ int	add_node_cmd(t_cmds **cmds, e_token token)
 	return (1);
 }
 
-void	add_front_node_cmd(t_cmds **cmd, t_char *tmp, e_token token)
+void	add_front_node_cmd(t_cmds **cmd, t_char *tmp, t_token token)
 {
 	t_cmds	*new_node;
 	t_cmds	*old_head;

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 09:40:38 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 11:19:22 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 22:44:51 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,20 @@ int	**two_dim_arr(int a)
 void	run_builtin(t_cmds *cmd, t_envp **env)
 {
 	char	*temp;
+	char	**str;
 
 	temp = cmd->argv->argv;
 	if (!ft_strcmp(temp, "PWD") || !ft_strcmp(temp, "pwd"))
-		ft_pwd(conv_t_char_to_tab(cmd->argv));
+	{
+		str = conv_t_char_to_tab(cmd->argv);
+		ft_pwd(str);
+		free (str);
+	}
 	else if (!ft_strcmp(temp, "ECHO") || !ft_strcmp(temp, "echo"))
-		ft_echo(&conv_t_char_to_tab(cmd->argv)[1]);
+	{
+		str = conv_t_char_to_tab(cmd->argv);
+		ft_echo(str);
+	}
 	else if (!ft_strcmp(temp, "EXPORT") || !ft_strcmp(temp, "export"))
 		ft_export(env, cmd->argv);
 	else if (!ft_strcmp(temp, "UNSET") || !ft_strcmp(temp, "unset"))

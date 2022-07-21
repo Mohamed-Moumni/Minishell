@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 09:19:19 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 20:59:43 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "../headers/minishell.h"
 #include "../headers/builtins.h"
 
-void	ft_echo(char ** str)
+void	ft_echo(char **str)
 {
 	int	i;
-	
-	i = 0;
+
+	i = 1;
 	while (str[i])
 	{
 		if (is_nl_valid(str[i]))
@@ -30,6 +30,7 @@ void	ft_echo(char ** str)
 	else
 		ft_print(&str[i], 1);
 	g_minishell.exit_status = 0;
+	free(str);
 }
 
 void	ft_pwd(char **argv)
@@ -42,6 +43,7 @@ void	ft_pwd(char **argv)
 	if (!path)
 		return ;
 	printf("%s\n", path);
+	g_minishell.exit_status = 0;
 }
 
 char	*ft_cd_home(char *path)
@@ -56,26 +58,18 @@ char	*ft_cd_home(char *path)
 		return (0);
 	}
 	if (chdir(home) < 0)
+	{
+		free(home);
 		return (0);
+	}
 	return (path + 1);
 }
 
-int	ft_cd(t_envp **env, t_char *argv)
+int	cd_exe(char *path, char *pwd)
 {
-	int		home;
-	char	*path;
-	char	*pwd;
-	char	cwd[PATH_MAX];
-	t_envp	*pwd_env;
+	int	home;
 
 	home = 0;
-	if (!argv->next)
-		path = ft_strdup("");
-	else
-		path = argv->next->argv;
-	pwd = getcwd(cwd, PATH_MAX);
-	pwd_env = search_key(*env, "PWD");
-	search_key(*env, "OLDPWD")->value = pwd_env->value;
 	if (path[0] == '~' || !path[0])
 	{
 		path = ft_cd_home(path);
@@ -97,22 +91,48 @@ int	ft_cd(t_envp **env, t_char *argv)
 			return (0);
 		}
 	}
-	pwd_env->value = getcwd(NULL, 10000);
 	return (1);
 }
 
-t_envp *without_env(void)
+int	ft_cd(t_envp **env, t_char *argv)
 {
-	t_envp *env;
+	char	*path;
+	char	*pwd;
+	char	cwd[PATH_MAX];
+	t_envp	*pwd_env;
+	t_envp	*temp;
+
+	if (!argv->next)
+		path = ft_strdup("");
+	else
+		path = ft_strdup(argv->next->argv);
+	pwd = getcwd(cwd, PATH_MAX);
+	pwd_env = search_key(*env, "PWD");
+	temp = search_key(*env, "OLDPWD");
+	if (temp)
+		free(temp->value);
+	temp->value = pwd_env->value;
+	if (cd_exe(path, pwd))
+		g_minishell.exit_status = 0;
+	pwd_env->value = getcwd(NULL, 10000);
+	free(path);
+	g_minishell.exit_status = 0;
+	return (1);
+}
+
+t_envp	*without_env(void)
+{
+	t_envp	*envp_list;
 	char	cwd[PATH_MAX];
 	char	*pwd;
 
-	env = NULL;
+	envp_list = NULL;
 	pwd = NULL;
 	pwd = ft_strjoin("", "PWD=");
-	pwd = ft_strjoin(pwd, getcwd(cwd, PATH_MAX));
-	envp_add_back(&env, creat_node(pwd));
-	envp_add_back(&env, creat_node(SHLVL));
-	envp_add_back(&env, creat_node(USRBINENV));
-	return (env);
+	pwd = ft_strjoin_ad(pwd, getcwd(cwd, PATH_MAX), 1);
+	envp_add_back(&envp_list, creat_node(pwd));
+	envp_add_back(&envp_list, creat_node(SHLVL));
+	envp_add_back(&envp_list, creat_node(USRBINENV));
+	envp_add_back(&envp_list, creat_node(OLDPWD));
+	return (envp_list);
 }

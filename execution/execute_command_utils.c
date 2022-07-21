@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 09:20:29 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 11:10:04 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/21 08:46:41 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	one_cmd(t_cmds *cmds, t_envp **env)
 			run_one_cmd(temp, env);
 			exit(EXIT_SUCCESS);
 		}
+		else
+			g_minishell.child = pid;
 		waitpid(pid, &g_minishell.exit_status, 0);
 		get_exit_status(g_minishell.exit_status);
 	}
@@ -67,6 +69,7 @@ void	mutliple_cmds(t_cmds *cmds, t_envp **env, int **pipes)
 			run_command(temp, env, i, pipes);
 			exit(EXIT_SUCCESS);
 		}
+		g_minishell.child = pid;
 		i++;
 		temp = next_cmd(temp);
 	}

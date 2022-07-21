@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:09:42 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/20 09:33:33 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/20 13:27:11 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,19 @@ char	*ft_strchr(char *s, int c)
 	if (s[i] == ch)
 		return ((char *)&s[i]);
 	return (&s[i]);
+}
+
+void	free_envp_list(t_envp **envp)
+{
+	t_envp	*envp_temp;
+	t_envp	*envp_next;
+
+	envp_temp = *envp;
+	while (envp_temp)
+	{
+		envp_next = envp_temp->next;
+		free(envp_temp);
+		envp_temp = envp_next;
+	}
+	free(envp_temp);
 }

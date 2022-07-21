@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:07:54 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 22:57:08 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/21 14:25:49 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	adjust_arg(char *start, t_lexer *node, t_envp **env, t_cmds *cmd)
 	return (1);
 }
 
-int	treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, e_token token)
+int	treat_word(t_cmds **cmds, t_lexer *node, t_envp **env, t_token token)
 {
 	char	*start;
 
@@ -117,5 +117,6 @@ int	start_execution(t_lexer *list, t_envp **env)
 		tmp = tmp->next;
 	}
 	begin_execution(cmds, env);
+	free_cmd_list(&cmds);
 	return (1);
 }

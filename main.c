@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:47:30 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/21 14:29:30 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/21 17:08:36 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,37 @@ int	readline_valid(char *read_line)
 	return (0);
 }
 
+void	minishell_porgram(char *read_line, t_envp *envp)
+{
+	t_lexer	*list;
+
+	if (read_line == NULL)
+	{
+		g_minishell.exit_status = 0;
+		printf("exit\n");
+		exit (EXIT_SUCCESS);
+	}
+	add_history(read_line);
+	if (!readline_valid(read_line))
+	{
+		list = get_lexer(read_line);
+		if (list)
+		{
+			if (adjust_heredoc(&list))
+				start_execution(list, &envp);
+			free_lexer(&list);
+		}
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
-	t_lexer		*list;
 	t_envp		*envp;
 	char		*read_line;
-	char		*line;
 
 	(void)av;
 	(void)ac;
+	rl_catch_signals = 0;
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	set_gminishell();
@@ -50,24 +72,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		read_line = readline("minishell$ ");
-		if (read_line == NULL)
-		{
-			g_minishell.exit_status = 0;
-			printf("exit\n");
-			exit (EXIT_SUCCESS);
-		}
-		add_history(read_line);
-		if (!readline_valid(read_line))
-		{
-			line = ft_strdup(read_line);
-			list = get_lexer(line);
-			if (list)
-			{
-				if (adjust_heredoc(&list))
-					start_execution(list, &envp);
-				free_lexer(&list);
-			}
-		}
+		minishell_porgram(read_line, envp);
 		free (read_line);
 	}
 	free_envp_list(&envp);

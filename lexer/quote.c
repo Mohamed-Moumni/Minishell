@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:34:00 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/21 14:28:20 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/21 15:29:59 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*hundle_quote(char	*word, t_envp **env, t_lexer *node)
 		if (word[i] == s)
 			s = 0;
 		else
-			new_word = ft_strjoin(new_word, ft_strdupi(&word[i], 1));
+			new_word = ft_strjoin_ad(new_word, ft_strdupi(&word[i], 1), 3);
 		i++;
 	}
 	if (s != 0)

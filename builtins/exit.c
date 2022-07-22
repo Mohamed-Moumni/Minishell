@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 21:41:53 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 11:58:49 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/21 16:24:40 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	exit_with_args(t_char *args)
 	}
 	else
 	{
-		g_minishell.exit_status = ft_atoi(args->next->argv);
+		g_minishell.exit_status = ft_atoi(args->argv);
 		exit (g_minishell.exit_status);
 	}
 }

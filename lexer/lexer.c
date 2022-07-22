@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:26:03 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/21 14:25:49 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/21 14:42:27 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_lexer	*get_lexer(char *line)
 			return (NULL);
 	}
 	else
-		add_node(&list, line, WORD);
+		add_node(&list, ft_strdup(line), WORD);
 	if (check_last_node(list) == 0)
 	{
 		printf("syntax error!\n");

@@ -6,7 +6,7 @@
 #    By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 11:20:52 by yait-iaz          #+#    #+#              #
-#    Updated: 2022/07/21 14:31:30 by Ma3ert           ###   ########.fr        #
+#    Updated: 2022/07/21 17:37:56 by Ma3ert           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,11 @@ OBJ = $(SRC:.c=.o)
 
 NAME = minishell
 
-HEADERS = ./headers/minishell.h ./headers/builtins.h
+HEADERS = ./headers/minishell.h ./headers/builtins.h ./headers/struct.h
 
-INCLUDES= -I/goinfre/yait-iaz/homebrew/opt/readline/include
-READLINE=-lreadline -L/goinfre/yait-iaz/homebrew/opt/readline/lib
+INCLUDES= -I/goinfre/$(USER)/homebrew/opt/readline/include
+
+READLINE= -lreadline -L/goinfre/$(USER)/homebrew/opt/readline/lib
 
 CC = gcc
 

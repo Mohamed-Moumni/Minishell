@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:48:02 by yait-iaz          #+#    #+#             */
-/*   Updated: 2022/07/21 14:27:04 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/21 16:11:48 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,6 @@ int				adjust_heredoc(t_lexer **list);
 void			add_front_lexer(t_lexer **head, char *word, t_token token);
 void			free_str(char *str1, char *str2, int cond);
 char			*ft_strjoin_ad(char *s1, char *s2, int cond);
-void            sig_handl(int signal);
-
+void			sig_handl(int signal);
+void			set_token(t_lexer *node);
 #endif

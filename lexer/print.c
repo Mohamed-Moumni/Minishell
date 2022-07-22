@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 21:27:59 by Ma3ert            #+#    #+#             */
-/*   Updated: 2022/07/20 21:28:33 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/21 15:57:09 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,15 @@ void	print_lexer(t_lexer *list)
 			list->token);
 		list = list->next;
 	}
+}
+
+void	set_token(t_lexer *node)
+{
+	char	*double_quote;
+	char	*single_quote;
+
+	double_quote = ft_strchr(node->content, '"');
+	single_quote = ft_strchr(node->content, '\'');
+	if (double_quote[0] || single_quote[0])
+		node->token = SINGLE_QUOTE;
 }

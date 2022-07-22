@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 08:45:50 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 21:21:11 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:57:56 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,21 @@ char	**list_to_envp(t_envp *env_list)
 	}
 	env_tab[i] = NULL;
 	return (env_tab);
+}
+
+t_envp	*without_env(void)
+{
+	t_envp	*envp_list;
+	char	cwd[PATH_MAX];
+	char	*pwd;
+
+	envp_list = NULL;
+	pwd = NULL;
+	pwd = ft_strjoin("", "PWD=");
+	pwd = ft_strjoin_ad(pwd, getcwd(cwd, PATH_MAX), 1);
+	envp_add_back(&envp_list, creat_node(pwd));
+	envp_add_back(&envp_list, creat_node(SHLVL));
+	envp_add_back(&envp_list, creat_node(USRBINENV));
+	envp_add_back(&envp_list, creat_node(OLDPWD));
+	return (envp_list);
 }

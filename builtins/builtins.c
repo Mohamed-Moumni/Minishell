@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:36:36 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/07/20 20:59:43 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:57:49 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,21 +118,4 @@ int	ft_cd(t_envp **env, t_char *argv)
 	free(path);
 	g_minishell.exit_status = 0;
 	return (1);
-}
-
-t_envp	*without_env(void)
-{
-	t_envp	*envp_list;
-	char	cwd[PATH_MAX];
-	char	*pwd;
-
-	envp_list = NULL;
-	pwd = NULL;
-	pwd = ft_strjoin("", "PWD=");
-	pwd = ft_strjoin_ad(pwd, getcwd(cwd, PATH_MAX), 1);
-	envp_add_back(&envp_list, creat_node(pwd));
-	envp_add_back(&envp_list, creat_node(SHLVL));
-	envp_add_back(&envp_list, creat_node(USRBINENV));
-	envp_add_back(&envp_list, creat_node(OLDPWD));
-	return (envp_list);
 }

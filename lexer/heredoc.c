@@ -6,7 +6,7 @@
 /*   By: Ma3ert <yait-iaz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:22:10 by Ma3ert            #+#    #+#             */
-/*   Updated: 2022/07/20 23:00:42 by Ma3ert           ###   ########.fr       */
+/*   Updated: 2022/07/21 15:57:00 by Ma3ert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	write_on_pipe(t_lexer *node, char *line, int *fd)
 {
 	while (ft_strcmp(line, node->content))
 	{
-		line = ft_strjoin(line, "\n");
+		line = ft_strjoin_ad(line, "\n", 1);
 		close (fd[0]);
 		write(fd[1], line, ft_strlen(line));
 		write(1, "> ", 2);
@@ -45,17 +45,6 @@ void	replace_content(t_lexer *node, int *fd)
 	write_on_pipe(node, line, fd);
 	close(fd[1]);
 	exit(EXIT_SUCCESS);
-}
-
-void	set_token(t_lexer *node)
-{
-	char	*double_quote;
-	char	*single_quote;
-
-	double_quote = ft_strchr(node->content, '"');
-	single_quote = ft_strchr(node->content, '\'');
-	if (double_quote[0] || single_quote[0])
-		node->token = SINGLE_QUOTE;
 }
 
 int	adjust_content(t_lexer *node, int *fd)
